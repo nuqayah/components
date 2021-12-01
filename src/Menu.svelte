@@ -7,9 +7,11 @@
   {/if}
 </button>
 
-<ul class=dropdown-menu {hidden} bind:this={menu} aria-label={menu_label}>
-  <slot></slot>
+<ul class=dropdown-menu class:style-btns={style_btns} style="max-width: {max_width}" {hidden} bind:this={menu} aria-label={menu_label}>
+  <slot/>
 </ul>
+
+<svelte:window on:resize={() => position_menu(menu, menu.previousElementSibling)}/>
 
 <script>
 import positioner from 'positioner'
@@ -18,7 +20,10 @@ export let btn_icon = ''
 export let btn_title = ''
 export let btn_label = ''
 export let menu_label = ''
+export let style_btns = true
+export let max_width = 250
 
+const position_menu = (el, attach_to) => { positioner(el, attach_to.getBoundingClientRect(), 'bottom') }
 async function toggle_menu(e) {
     if (window._useragent.safari)
         e.currentTarget.focus()
@@ -51,12 +56,11 @@ let hidden = true
   font-size: 0.85rem;
   box-shadow: 0 0 5px #aaa;
   transition: top 0.1s;
-  max-width: 250px;
   min-width: 5rem;
   min-width: 10rem;
 }
 
-.dropdown-menu :global(button), .dropdown-menu :global(a) {
+.dropdown-menu.style-btns :global(button), .dropdown-menu.style-btns :global(a) {
   width: 100%;
   display: flex;
   justify-content: space-between;

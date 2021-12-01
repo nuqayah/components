@@ -14,7 +14,46 @@
 
 <script context=module>
 import {writable} from 'svelte/store'
-export const options = writable({direction: 'top'}) // show: false, direction: 'top', msg: '', attach_to: null, ok_btn: false
+export const options = writable({direction: 'top'})
+
+function show(props, el) {
+    if (!props.msg) {
+        /*
+         * If a message isn't passed in, first see if the element as a title attribute.
+         * Second, see if the following element is <template>.
+         */
+        if (el.getAttribute('title')) {
+            props.msg = el.getAttribute('title')
+            el.removeAttribute('title')
+        }
+        else if (el.nextElementSibling?.tagName === 'TEMPLATE')
+            props.msg = el.nextElementSibling.innerHTML
+    }
+    const defaults = {show: true, direction: 'top', attach_to: el, ok_btn: false}
+    options.set({...defaults, ...props})
+}
+const hide = () => { options.set({show: false}) }
+
+export function hover_action(el, props) {
+    const cb = show(props || {}, el)
+    el.addEventListener('mouseover', cb)
+    el.addEventListener('mouseleave', hide)
+    return {
+        destroy() {
+            el.removeEventListener('mouseover', cb)
+            el.removeEventListener('mouseleave', hide)
+        },
+    }
+}
+export function click_action(el, props) {
+    const cb = show(props || {}, el)
+    el.addEventListener('click', cb)
+    return {
+        destroy() {
+            el.removeEventListener('click', cb)
+        },
+    }
+}
 </script>
 
 <script>

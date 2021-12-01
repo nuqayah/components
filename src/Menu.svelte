@@ -7,9 +7,15 @@
   {/if}
 </button>
 
-<ul class=dropdown-menu class:style-btns={style_btns} style="max-width: {max_width}" {hidden} bind:this={menu} aria-label={menu_label}>
-  <slot/>
-</ul>
+{#if list}
+  <ul class=dropdown-menu class:style-btns={style_btns} style="max-width: {max_width}" {hidden} bind:this={menu} aria-label={menu_label}>
+    <slot/>
+  </ul>
+{:else}
+  <div class=dropdown-menu class:style-btns={style_btns} style="max-width: {max_width}" {hidden} bind:this={menu} aria-label={menu_label}>
+    <slot/>
+  </div>
+{/if}
 
 <svelte:window on:resize={() => position_menu(menu, menu.previousElementSibling)}/>
 
@@ -22,6 +28,7 @@ export let btn_label = ''
 export let menu_label = ''
 export let style_btns = true
 export let max_width = 250
+export let list = true
 
 let menu
 let hidden = true

@@ -4,7 +4,7 @@
 </div>
 
 <script>
-export const title = 'هل تريد حذف هذه الحزمة؟';
+export const title = 'هل تريد حذف هذه الحزمة؟'
 export let callback
 </script>
 

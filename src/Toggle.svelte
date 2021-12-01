@@ -1,7 +1,7 @@
 <label><input type=checkbox hidden bind:checked={value} on:change><div/></label>
 
 <script>
-export let value = false;
+export let value = false
 </script>
 
 <style>

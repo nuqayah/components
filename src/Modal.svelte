@@ -1,6 +1,6 @@
 {#if modal_options.show}
 <div class=modal-overlay tabindex=-1 data-close on:click={overlay_click} transition:fade={{duration: 180}}>
-  <div class=modal-container role=dialog aria-modal=true style="max-width: {max_width}">
+  <div class=modal-container role=dialog aria-modal=true style="max-width: {modal_options.max_width}">
     <header>
       {#if title}<h2 class="text-lg font-bold">{title}</h2>{/if}
       <button data-close><icon id=close></button>

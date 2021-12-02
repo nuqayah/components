@@ -1,4 +1,4 @@
-<button class="btn dropdown-btn" on:click={toggle_menu}><icon id=people></button>
+<button class=btn on:click={toggle_menu}><icon id=people></button>
 <div class=dropdown-menu bind:this={menu} on:focusout={focusout} hidden>
   <slot/>
 </div>
@@ -31,15 +31,6 @@ async function toggle_menu(e) {
 </script>
 
 <style>
-.dropdown-btn {
-  display: flex;
-  align-items: center;
-  padding: 0 0.5rem 0 0.2rem;
-  min-width: revert !important;
-}
-.dropdown-btn .icon-chevron-bottom {
-  width: 17px;
-}
 .dropdown-menu {
   position: absolute;
   z-index: 10;

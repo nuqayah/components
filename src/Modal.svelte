@@ -1,6 +1,6 @@
 {#if modal_options.show}
 <div class=modal-overlay tabindex=-1 data-close on:click={overlay_click} transition:fade={{duration: 180}}>
-  <div class=modal-container role=dialog aria-modal=true class:full-width={modal_options.full_width}>
+  <div class=modal-container role=dialog aria-modal=true style="max-width: {max_width}">
     <header>
       {#if title}<h2 class="text-lg font-bold">{title}</h2>{/if}
       <button data-close><icon id=close></button>
@@ -33,7 +33,7 @@ function set_body_scroll(shown) {
 $: set_body_scroll(modal_options.show)
 
 let title
-let modal_options_tpl = {show: false, props: {}, component: null, full_width: false}
+let modal_options_tpl = {show: false, props: {}, component: null, max_width: '580px'}
 let modal_options = {...modal_options_tpl}
 function update_modal(ops) {
     if ('component' in ops && !('show' in ops))
@@ -78,13 +78,9 @@ function popstate() {
 }
 .modal-container {
   width: 90vw;
-  max-width: 580px;
   margin: 1rem auto 0.2rem;
   box-shadow: 0 3px 10px #555;
   background-color: white;
-}
-.modal-container.full-width {
-  max-width: unset;
 }
 header {
   position: relative;

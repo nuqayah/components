@@ -30,7 +30,7 @@ function show(props, el) {
             props.msg = el.nextElementSibling.innerHTML
     }
     const defaults = {show: true, direction: 'top', attach_to: el, ok_btn: false}
-    options.set({...defaults, ...props})
+    return () => options.set({...defaults, ...props})
 }
 const hide = () => { options.set({show: false}) }
 
@@ -60,7 +60,6 @@ export function click_action(el, props) {
 import positioner from 'positioner'
 import {debounce} from '~/util/util.js'
 
-const hide = () => $options.show = false
 function reposition(el) {
     async function update() {
         if (!$options.show)

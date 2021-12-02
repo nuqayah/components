@@ -42,15 +42,4 @@ async function toggle_menu(e) {
   max-width: 250px;
   min-width: 5rem;
 }
-.dropdown-menu button {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0.15rem 0.3rem;
-  border-radius: 0;
-  text-align: unset;
-}
-.dropdown-menu button:hover {
-  background: #eee;
-}
 </style>

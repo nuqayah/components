@@ -1,3 +1,4 @@
+<div on:mouseover={() => { should_hide = false }} on:mouseleave={hide_wrapped}>
 {#if $options.show}
 <div out:fade={{duration: 200}} role=tooltip class="tooltip tooltip-{$options.direction} slide-up-fade-in" use:reposition={$options}>
   <div class=tip-arrow />
@@ -9,6 +10,7 @@
   </div>
 </div>
 {/if}
+</div>
 
 <svelte:window on:resize={debounce(() => {$options = $options}, 12)} on:mousedown={hide}/>
 
@@ -30,18 +32,28 @@ function show(props, el) {
             props.msg = el.nextElementSibling.innerHTML
     }
     const defaults = {show: true, direction: 'top', attach_to: el, ok_btn: false}
-    return () => options.set({...defaults, ...props})
+    return () => {
+        should_hide = false
+        options.set({...defaults, ...props})
+    }
 }
-const hide = () => { options.set({show: false}) }
-
+const hide = debounce(() => {
+    if (should_hide)
+        options.set({show: false})
+}, 100)
+let should_hide = true
+function hide_wrapped(e) {
+    should_hide = true
+    hide()
+}
 export function hover_action(el, props) {
     const cb = show(props || {}, el)
     el.addEventListener('mouseover', cb)
-    el.addEventListener('mouseleave', hide)
+    el.addEventListener('mouseleave', hide_wrapped)
     return {
         destroy() {
             el.removeEventListener('mouseover', cb)
-            el.removeEventListener('mouseleave', hide)
+            el.removeEventListener('mouseleave', hide_wrapped)
         },
     }
 }

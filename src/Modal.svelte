@@ -77,6 +77,7 @@ function popstate() {
   justify-content: center;
 }
 .modal-container {
+  width: min(90vw, 580px);
   margin: 1rem auto 0.2rem;
   box-shadow: 0 3px 10px #555;
   background-color: white;

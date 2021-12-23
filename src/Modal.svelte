@@ -18,6 +18,10 @@
 import {writable} from 'svelte/store'
 
 export const options = writable({})
+
+export function show(component, props) {
+    options.set({component, ...props})
+}
 </script>
 <script>
 $: if (!$options.shown && Object.keys($options).length) update_modal($options)

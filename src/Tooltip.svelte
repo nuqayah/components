@@ -12,12 +12,13 @@
 {/if}
 </div>
 
-<svelte:window on:resize={debounce(() => {$options = $options}, 12)} on:mousedown={hide}/>
+<svelte:window on:resize={debounce(() => {$options = $options}, 12)} on:mousedown={hide_on_click}/>
 
 <script context=module>
-import {writable} from 'svelte/store'
+import {writable, get} from 'svelte/store'
 export const options = writable({direction: 'top'})
 
+let type = ''
 function show(props, el) {
     if (!props.msg) {
         /*
@@ -37,18 +38,28 @@ function show(props, el) {
         options.set({...defaults, ...props})
     }
 }
+function hide_on_click(e) {
+    // Make sure we aren't clicking within the tooltip
+    if (!e.target.closest('.tooltip')) // TODO: unsure if robust
+        options.set({show: false})
+}
 const hide = debounce(() => {
     if (should_hide)
         options.set({show: false})
 }, 100)
 let should_hide = true
+// Wrap `hide` so that we don't hide when mouseleaving to tooltip
 function hide_wrapped(e) {
-    should_hide = true
-    hide()
+    if (get(options).type === 'hover') {
+        should_hide = true
+        hide()
+    }
 }
 export function hover_action(el, props) {
-    const cb = show(props || {}, el)
+    const cb = show({...props, type: 'hover'}, el)
     el.addEventListener('mouseover', cb)
+    // hide_wrapped -> hide, but if we moused over the tooltip, then
+    // should_hide was sent to false before the debounce timer ends
     el.addEventListener('mouseleave', hide_wrapped)
     return {
         destroy() {
@@ -58,7 +69,7 @@ export function hover_action(el, props) {
     }
 }
 export function click_action(el, props) {
-    const cb = show(props || {}, el)
+    const cb = show({...props, type: 'click'}, el)
     el.addEventListener('click', cb)
     return {
         destroy() {

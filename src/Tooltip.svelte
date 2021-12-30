@@ -1,4 +1,4 @@
-<div on:mouseover={() => { should_hide = false }} on:mouseleave={hide_wrapped}>
+<div on:mouseover={() => { should_hide = false }} on:focus={() => { should_hide = false }} on:mouseleave={hide_wrapped}>
 {#if $options.show}
 <div out:fade={{duration: 200}} role=tooltip class="tooltip tooltip-{$options.direction} slide-up-fade-in" use:reposition={$options}>
   <div class=tip-arrow />

@@ -3,6 +3,7 @@ import {debounce} from '~/util/util.js'
 const strip_harakat = s => ('' + s).replace(/[ً-ْۖ-ٰۜ]/g, '')
 const multi_match_map = {ا: 'اأآإى', أ: 'أإءؤئ', ء: 'ءأإؤئ', ت: 'تة', ة: 'ةته', ه: 'هة', ى: 'ىاي', ي: 'يى'}
 const multi_match_re = RegExp(`[${Object.keys(multi_match_map).join('')}]`, 'g')
+const escape_regex = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 function prep_ar_query(q) {
     q = escape_regex(strip_harakat(q)).replace(/[ء-يّ]/g, '$&[ً-ْ]*')
     // 'g' isn't usually needed since we only .test, but if highlighting we need 'g'

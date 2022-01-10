@@ -1,5 +1,5 @@
 <ul bind:this={container} on:scroll={debounce(add_results, 5)} style="max-height: {max_height}">
-  {#each visible as item}
+  {#each visible as item (get_key ? get_key(item) : item), i}
     <li class=row><slot {item}/></li>
   {:else}
     <li class=no-results>{no_results_msg}</li>
@@ -15,6 +15,7 @@ export let OFFSET = 200
 export let PER_PAGE = 12
 export let max_height = '50vh'
 export let no_results_msg = 'لا نتائج'
+export let get_key = null
 
 let container
 let visible = []

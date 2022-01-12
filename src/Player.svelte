@@ -26,7 +26,6 @@
 </section>
 
 <script>
-import {debounce} from '~/util/util.js'
 import PlayButton from './PlayButton.svelte'
 
 const fmt_time = s => (new Date(s * 1000).toISOString().substr(10, 9)).replace(/T(00:)?/, '')
@@ -75,12 +74,11 @@ async function set_time(time) {
 async function set_audio(src) {
     const pbr = audio.playbackRate
     audio.src = src
-    await audio.play().catch(() => {})
+    audio.play().catch(() => {})
     audio.playbackRate = pbr
     if (!duration)
         audio.addEventListener('durationchange', () => {
             duration = audio.duration
-            time_passed = audio.duration
         }, {once: true})
 }
 $: set_audio(src)
@@ -126,6 +124,11 @@ function init_seek_btns(cont) {
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && document.activeElement !== play_btn)
         toggle_playing()
+})
+
+onDestroy(() => {
+    audio.src = ''
+    audio.pause()
 })
 </script>
 

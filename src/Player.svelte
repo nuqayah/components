@@ -32,7 +32,7 @@ import PlayButton from './PlayButton.svelte'
 const fmt_time = s => (new Date(s * 1000).toISOString().substr(10, 9)).replace(/T(00:)?/, '')
 const int_bound = (int, min, max) => Math.max(Math.min(int, max), min)
 
-export let audio_src
+export let src
 export let duration = 0
 
 
@@ -72,9 +72,9 @@ async function set_time(time) {
     audio.dispatchEvent(new CustomEvent('timeupdate')) // TODO: if safari isnt't this wrong?
 }
 
-async function set_audio(audio_src) {
+async function set_audio(src) {
     const pbr = audio.playbackRate
-    audio.src = audio_src
+    audio.src = src
     await audio.play().catch(() => {})
     audio.playbackRate = pbr
     if (!duration)
@@ -82,7 +82,7 @@ async function set_audio(audio_src) {
             duration = audio.duration
         }, {once: true})
 }
-$: set_audio(audio_src)
+$: set_audio(src)
 
 
 // Seeker

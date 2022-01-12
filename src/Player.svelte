@@ -80,6 +80,7 @@ async function set_audio(src) {
     if (!duration)
         audio.addEventListener('durationchange', () => {
             duration = audio.duration
+            time_passed = audio.duration
         }, {once: true})
 }
 $: set_audio(src)

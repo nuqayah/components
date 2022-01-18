@@ -1,6 +1,6 @@
 <simple-slider class=block>
   <section class=wrapper use:observe bind:this={wrapper}>
-    {@html inner_html}
+    <slot/>
   </section>
   <ul class=crumbs on:click={crumbs_clicked} bind:this={crumbs}>
     {#each Array(count) as _, i}<li/>{/each}
@@ -8,11 +8,9 @@
 </simple-slider>
 
 <script>
-import { onDestroy } from 'svelte'
 const el_index = el => [...el.parentElement.children].indexOf(el)
 
 export let count
-export let inner_html
 let crumbs
 let wrapper
 
@@ -20,7 +18,7 @@ if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
     const src = 'https://cdn.jsdelivr.net/npm/seamless-scroll-polyfill@0.5.3/dist/seamless.browser.min.js'
     document.head.append(Object.assign(document.createElement('script'), {src: src}))
 }
-const observer = new IntersectionObserver(handle_intersection, {threshold: 0.5}) // TODO: make any horizontal threshhold is sufficient
+const observer = new IntersectionObserver(handle_intersection, {threshold: 0.5})
 function handle_intersection(entries) {
     entries.forEach(entry => {
         const crumb = crumbs.children[el_index(entry.target)]
@@ -28,7 +26,7 @@ function handle_intersection(entries) {
     })
 }
 function observe(el) {
-    [...el.children].forEach(el => { observer.observe(el); })
+    [...el.children].forEach(el => { observer.observe(el) })
 }
 function crumbs_clicked(e) {
     if (e.target === e.currentTarget)

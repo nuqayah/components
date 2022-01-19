@@ -1,5 +1,5 @@
 <ul bind:this={container} on:scroll={debounce(add_results, 5)} style="max-height: {max_height}">
-  {#each visible as item (get_key ? get_key(item) : item), i}
+  {#each visible as item (get_key ? get_key(item) : item)}
     <li class=row><slot {item}/></li>
   {:else}
     <li class=no-results>{no_results_msg}</li>

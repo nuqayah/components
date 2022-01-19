@@ -1,10 +1,11 @@
 <div class="flex justify-center">
   <button class="btn cancel" data-close>إلغاء</button>
-  <button class="btn confirm" on:click={callback} data-close>نعم، احذف هذه الحزمة</button>
+  <button class="btn confirm" on:click={callback} data-close>{confirm_msg}</button>
 </div>
 
 <script>
-export const title = 'هل تريد حذف هذه الحزمة؟'
+export let title = ''
+export let confirm_msg
 export let callback
 </script>
 

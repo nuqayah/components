@@ -9,6 +9,7 @@ function prep_ar_query(q) {
     // 'g' isn't usually needed since we only .test, but if highlighting we need 'g'
     return RegExp(q.replace(multi_match_re, m => `[${multi_match_map[m]}]`), 'g')
 }
+const basic_searcher = (item, q) => q instanceof RegExp ? q.test(item) : item.includes(q)
 
 export function filterer(el, props) {
     let items
@@ -20,7 +21,9 @@ export function filterer(el, props) {
         items = props.items || ([])
         matches = props.matches || ([])
         prepare_query = props.prepare_query || (q => /[ء-ي]/.test(q) ? prep_ar_query(q) : q)
-        filter = props.filter || ((item, q) => q instanceof RegExp ? q.test(item) : item.includes(q))
+        filter = props.search_keys
+            ? (item, q) => props.search_keys.some(key => basic_searcher(item[key] || '', q))
+            : props.filter || basic_searcher
         callback = props.callback || (() => {})
     }
     update(props)

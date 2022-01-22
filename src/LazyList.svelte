@@ -21,7 +21,8 @@ let container
 let visible = []
 
 $: {
-    visible = items.slice(0, PER_PAGE)
+    // `visible.length` first to avoid resetting size if items change
+    visible = items.slice(0, visible.length || PER_PAGE)
     if (!hidden && container)
         pad_results()
 }

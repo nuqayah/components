@@ -47,9 +47,11 @@ function paginate(cur_pg, last_pg, delta = 2) {
     return rangeWithDots
 }
 export function go_to_page(pg) {
-    if (pg < 1)
-        pg += total_pages
-    cur_page = Math.min(pg, 1)
+    if (pg < 0)
+        pg += total_pages + 1 // Add one since pages are 1-indexed
+    else if (pg === 0)
+        pg = 1
+    cur_page = Math.min(pg, total_pages)
 }
 
 /*

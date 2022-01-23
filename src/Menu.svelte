@@ -1,4 +1,4 @@
-<button type=button title={btn_label} on:click={toggle_menu} on:blur={btn_blur}>
+<button type=button title={btn_label} on:click={toggle_menu} on:blur={btn_blur} class={btn_class}>
   {#if btn_title}
     {btn_title}
   {/if}
@@ -25,6 +25,7 @@ import positioner from 'positioner'
 export let btn_icon = ''
 export let btn_title = ''
 export let btn_label = ''
+export let btn_class = ''
 export let menu_label = ''
 export let style_btns = true
 export let max_width = 250

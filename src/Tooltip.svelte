@@ -18,22 +18,24 @@
 import {writable, get} from 'svelte/store'
 export const options = writable({direction: 'top'})
 
-let type = ''
 function show(props, el) {
-    if (!props.msg) {
+    function get_msg() {
+        let msg = ''
         /*
          * If a message isn't passed in, first see if the element as a title attribute.
          * Second, see if the following element is <template>.
          */
         if (el.getAttribute('title')) {
-            props.msg = el.getAttribute('title')
+            msg = el.getAttribute('title')
             el.removeAttribute('title')
         }
         else if (el.nextElementSibling?.tagName === 'TEMPLATE')
-            props.msg = el.nextElementSibling.innerHTML
+            msg = el.nextElementSibling.innerHTML
+        return msg
     }
     const defaults = {show: true, direction: 'top', attach_to: el, ok_btn: false}
     return () => {
+        props.msg = get_msg() // Get the message each time as it could update
         should_hide = false
         options.set({...defaults, ...props})
     }

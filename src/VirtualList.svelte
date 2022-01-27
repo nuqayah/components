@@ -17,7 +17,7 @@ import {debounce} from '~/util/util.js'
 
 export let count
 export let item_height
-export let on_first_changed
+export let on_first_changed = undefined
 export let hidden = false
 export let show_no_results = true
 

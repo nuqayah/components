@@ -107,7 +107,7 @@ button[data-close] {
   top: -18px;
   right: -15px;
   z-index: 1;
-  background: white;
+  background: var(--bg-color, white);
   border-radius: 50%;
   border: 4px solid #666;
   padding: 0.25rem;

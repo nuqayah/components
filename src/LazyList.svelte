@@ -12,7 +12,7 @@ import {debounce} from '~/util/util.js'
 export let items
 export let hidden = false
 export let OFFSET = 200
-export let PER_PAGE = 12
+export let PER_PAGE = 25
 export let max_height = '50vh'
 export let no_results_msg = 'لا نتائج'
 export let get_key = null

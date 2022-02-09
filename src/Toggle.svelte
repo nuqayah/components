@@ -18,7 +18,7 @@ div {
   cursor: pointer;
   user-select: none;
 
-  background: #f0f0f0;
+  background: var(--border-color, #ddd);
   border-radius: 1.5rem;
   padding: 2px;
   transition: background 0.4s ease;

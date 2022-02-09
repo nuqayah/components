@@ -84,7 +84,7 @@ function popstate() {
   width: min(90vw, 580px);
   margin: 1rem auto 0.2rem;
   box-shadow: 0 3px 10px #555;
-  background-color: white;
+  background-color: var(--bg-color, #fff);
 }
 header {
   position: relative;
@@ -107,7 +107,7 @@ button[data-close] {
   top: -18px;
   right: -15px;
   z-index: 1;
-  background: white;
+  background: var(--bg-color, #fff);
   border-radius: 50%;
   border: 4px solid #666;
   padding: 0.25rem;

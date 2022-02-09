@@ -59,7 +59,7 @@ function btn_blur(e) {
 .dropdown-menu {
   position: absolute;
   z-index: 10;
-  background: #fff;
+  background: var(--bg-color, #fff);
   border-radius: 0.3rem;
   font-size: 0.85rem;
   box-shadow: 0 0 5px #aaa;
@@ -77,7 +77,7 @@ function btn_blur(e) {
   border-radius: 0;
 }
 .dropdown-menu :global(button:hover), .dropdown-menu :global(a:hover) {
-  background: #eee;
+  background: var(--border-color, #eee);
 }
 button {
   padding: 0 0.4rem;

@@ -25,9 +25,10 @@ function show(props, el) {
          * If a message isn't passed in, first see if the element as a title attribute.
          * Second, see if the following element is <template>.
          */
-        if (el.getAttribute('title')) {
-            msg = el.getAttribute('title')
+        if (el.getAttribute('title') || el.dataset.title) {
+            msg = el.getAttribute('title') || el.dataset.title
             el.removeAttribute('title')
+            el.dataset.title = msg
         }
         else if (el.nextElementSibling?.tagName === 'TEMPLATE')
             msg = el.nextElementSibling.innerHTML

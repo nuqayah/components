@@ -2,7 +2,7 @@
   <div bind:this={contents} style="padding-top: {top}px; padding-bottom: {bottom}px;">
     {#each visible as index (index)}
       {@const cmp = get_component(index)}
-      <div class=page>
+      <div class=page in:slide>
         <svelte:component this={cmp.component} {...cmp.props}/>
       </div>
     {/each}

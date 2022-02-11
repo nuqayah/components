@@ -106,7 +106,7 @@ function reposition(el) {
   100% { opacity: 1; transform: translate(0, 0); }
 }
 .tooltip {
-  --tip-color: #fbfbfb;
+  --tip-color: var(--second-bg-color, #fbfbfb);
   position: absolute;
   z-index: 2;
   word-wrap: break-word;
@@ -186,7 +186,7 @@ function reposition(el) {
   border-left-color: var(--tip-color);
 }
 .tooltip-inner {
-  color: #444;
+  color: var(--text-color, #444);
   background: var(--tip-color);
   box-shadow: 0 0 10px #ccc;
 }

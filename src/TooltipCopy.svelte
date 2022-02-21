@@ -39,10 +39,13 @@ function show(props, el) {
         should_hide = false
         options.set({...defaults, ...props})
         tick().then(() => {
-          const el = get_msg()
-          if (el.hidden)
-              inner.querySelector('.tooltip-inner').appendChild(el)
-          el.hidden = false
+            const el = get_msg()
+            if (el.hidden) {
+                // TODO: better cleanup may be warranted
+                inner.querySelector('.tooltip-inner').textContent = ''
+                inner.querySelector('.tooltip-inner').appendChild(el)
+            }
+            el.hidden = false
         })
     }
 }

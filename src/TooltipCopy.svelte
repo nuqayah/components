@@ -16,7 +16,6 @@ import {writable, get} from 'svelte/store'
 export const options = writable({direction: 'top'})
 
 let inner
-let first_show = true
 function show(props, el) {
     function get_msg() {
         let msg = ''
@@ -41,10 +40,9 @@ function show(props, el) {
         options.set({...defaults, ...props})
         tick().then(() => {
           const el = get_msg()
-          el.hidden = false
-          if (first_show)
+          if (el.hidden)
               inner.querySelector('.tooltip-inner').appendChild(el)
-          first_show = false
+          el.hidden = false
         })
     }
 }

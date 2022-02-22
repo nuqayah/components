@@ -1,7 +1,7 @@
 <slot name=button {toggle}/>
 
 {#if show}
-  <div class="absolute z-10" transition:fly={{duration: 150, y: 10}} bind:this={wrapper}>
+  <div class="absolute z-10" transition:fly|local={{duration: 150, y: 10}} bind:this={wrapper}>
     <slot/>
   </div>
 {/if}

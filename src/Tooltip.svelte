@@ -1,4 +1,4 @@
-<div on:mouseover={() => { should_hide = false }} on:focus={() => { should_hide = false }} on:mouseleave={hide_wrapped}>
+<div on:mouseover={() => { should_hide = false }} on:focus={() => { should_hide = false }} on:mouseleave={hide_wrapped} bind:this={tooltip_cont}>
 {#if $options.show}
 <div out:fade={{duration: 200}} role=tooltip class="tooltip tooltip-{$options.direction} slide-up-fade-in" use:reposition={$options}>
   <div class=tip-arrow />
@@ -18,6 +18,7 @@
 import {writable, get} from 'svelte/store'
 export const options = writable({direction: 'top'})
 
+let tooltip_cont
 function show(props, el) {
     function get_msg() {
         let msg = ''
@@ -43,7 +44,7 @@ function show(props, el) {
 }
 function hide_on_click(e) {
     // Make sure we aren't clicking within the tooltip
-    if (!e.target.closest('.tooltip')) // TODO: unsure if robust
+    if (!tooltip_cont.contains(e.target))
         options.set({show: false})
 }
 const hide = debounce(() => {

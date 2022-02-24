@@ -14,9 +14,10 @@ import positioner from 'positioner'
 let wrapper
 let show = false
 
-const position_cont = (el, attach_to) => { if (wrapper) positioner(el, attach_to.getBoundingClientRect(), 'bottom') }
+const position_cont = (el, attach_to) => { if (show && wrapper) positioner(el, attach_to.getBoundingClientRect(), 'bottom') }
 async function toggle(e) {
     show = !show
+
     if (show) {
         await tick()
         position_cont(wrapper, e.target)

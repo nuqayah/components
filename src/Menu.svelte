@@ -34,7 +34,7 @@ export let list = true
 let menu
 let hidden = true
 
-const position_menu = (el, attach_to) => { positioner(el, attach_to.getBoundingClientRect(), 'bottom') }
+const position_menu = (el, attach_to) => { if (!hidden) positioner(el, attach_to.getBoundingClientRect(), 'bottom') }
 async function toggle_menu(e) {
     if (window._useragent.safari)
         e.currentTarget.focus()

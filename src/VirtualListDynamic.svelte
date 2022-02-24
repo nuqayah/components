@@ -23,17 +23,26 @@ let top = 0
 let bottom = 0
 let height_map = {}
 
+let go_to_page_first = -1 // Needed when going to end of deck I think
 let viewport
 let contents
 
-const change_min_height = debounce(async () => {
-    let old_start = start
-    min_height = median(Object.values(height_map))
-    await tick()
-    start = old_start
-}, 500)
+const recalc_min_height = debounce(async () => {
+    if (!viewport) return
+    let old_start = start // Likely unneeded, but might be
+    let new_min_height = median(Object.values(height_map))
+    if (Math.abs(min_height - new_min_height) > 20) {
+        min_height = new_min_height
+        top = start * min_height
+        await tick()
+        viewport.scrollTop = min_height * (go_to_page_first || old_start)
+        go_to_page_first = null
+    }
+}, 100)
 
 export function go_to_page(page_no) {
+    if (go_to_page_first === -1)
+        go_to_page_first = page_no - 1
     // This makes going to a page a bit more robust, especially on first load.
     setTimeout(() => {
         if (!viewport) // Likely destroyed
@@ -42,9 +51,12 @@ export function go_to_page(page_no) {
             handle_scroll()
         else {
             viewport.scrollTop = min_height * (page_no - 1)
-            setTimeout(() => {
-                if (viewport)
-                    viewport.scrollTop = min_height * (page_no - 1)
+            setTimeout(async () => {
+                if (!viewport)
+                    return
+                viewport.scrollTop = min_height * (page_no - 1)
+                await tick()
+                get_page_el(page_no - 1)?.classList?.add('color-bg')
             }, 50)
         }
     }, 0)
@@ -127,7 +139,7 @@ function handle_scroll() {
             if (!height_map[i] && get_page_el(i)?.scrollHeight)
                 height_map[i] = get_page_el(i).scrollHeight
         })
-        change_min_height()
+        recalc_min_height()
     })
 }
 onMount(handle_scroll)
@@ -147,5 +159,8 @@ onMount(handle_scroll)
   font-size: calc(0.0525rem * var(--font-size));
   border-bottom: 1px solid #aaa;
   overflow-x: auto;
+}
+.viewport :global(.color-bg) {
+  background: #fffef6;
 }
 </style>

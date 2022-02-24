@@ -10,18 +10,28 @@
 </div>
 
 <script>
+import {debounce, median} from '~/util/util.js'
+
 export let get_component
 export let count
 export let font_size
 export let start = 0
 
 export let min_height = 101
-let end = 1
+let end = 0
 let top = 0
 let bottom = 0
+let height_map = {}
 
 let viewport
 let contents
+
+const change_min_height = debounce(async () => {
+    let old_start = start
+    min_height = median(Object.values(height_map))
+    await tick()
+    start = old_start
+}, 500)
 
 export function go_to_page(page_no) {
     // This makes going to a page a bit more robust, especially on first load.
@@ -112,6 +122,13 @@ function handle_scroll() {
     // Add an extra page to the end. This avoids a bug where a page sometimes disappears.
     end = Math.min(item + 1, count)
     bottom = min_height * (count - end)
+    tick().then(() => {
+        visible.forEach(i => {
+            if (!height_map[i] && get_page_el(i)?.scrollHeight)
+                height_map[i] = get_page_el(i).scrollHeight
+        })
+        change_min_height()
+    })
 }
 onMount(handle_scroll)
 </script>

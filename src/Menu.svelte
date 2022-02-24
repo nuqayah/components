@@ -17,7 +17,7 @@
   </div>
 {/if}
 
-<svelte:window on:resize={() => position_menu(menu, menu.previousElementSibling)}/>
+<svelte:window on:resize={position_cont}/>
 
 <script>
 import positioner from 'positioner'
@@ -34,7 +34,10 @@ export let list = true
 let menu
 let hidden = true
 
-const position_menu = (el, attach_to) => { if (!hidden) positioner(el, attach_to.getBoundingClientRect(), 'bottom') }
+function position_cont() {
+   if (!hidden && menu)
+      positioner(menu, menu.previousElementSibling.getBoundingClientRect(), 'bottom')
+}
 async function toggle_menu(e) {
     if (window._useragent.safari)
         e.currentTarget.focus()
@@ -44,7 +47,7 @@ async function toggle_menu(e) {
         e.target.blur()
     else {
         await tick()
-        positioner(menu, e.target.getBoundingClientRect(), 'bottom')
+        position_cont()
     }
 }
 function btn_blur(e) {

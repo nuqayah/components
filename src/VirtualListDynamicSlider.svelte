@@ -16,7 +16,7 @@
 </div>
 
 <script>
-import {get_x_offset_percent} from '~/util/util.js'
+import {get_x_offset_percent, ar_nums_fmt} from '~/util/util.js'
 
 export let virtual_list
 export let cur_page_i
@@ -35,7 +35,7 @@ function start_move_thumb(e) {
 let output_offset
 function update_output(e) {
     const pg = +e.target.value
-    output_text = pg
+    output_text = ar_nums_fmt(pg)
     output_offset = ((max - pg) / max) * (e.target.offsetWidth - 10)
 }
 function end_move_thumb(e) {

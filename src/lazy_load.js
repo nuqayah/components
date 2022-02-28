@@ -1,6 +1,6 @@
 import {tick} from 'svelte'
 
-export function lazy_load(el, props) {
+export default function lazy_load(el, props) {
     let OFFSET = 200
     let PER_PAGE = 25
     let visible = []

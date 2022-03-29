@@ -27,7 +27,7 @@ async function toggle() {
     }
 }
 function hide_cont(e) {
-    if (wrapper && !wrapper.contains(e.target))
+    if (show && wrapper && !wrapper.contains(e.target))
         setTimeout(() => show = false, 50)
 }
 </script>

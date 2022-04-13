@@ -33,6 +33,7 @@ const int_bound = (int, min, max) => Math.max(Math.min(int, max), min)
 
 export let src
 export let duration = 0
+export let timeupdate = false
 
 
 let playback_rate = 1
@@ -43,7 +44,7 @@ let seeker_style = 0
 
 
 // Audio
-const audio = new Audio()
+export const audio = new Audio()
 audio.addEventListener('play', () => { playing = true })
 audio.addEventListener('pause', () => {
     setTimeout(() => {
@@ -61,6 +62,8 @@ audio.addEventListener('timeupdate', () => {
         seeker_value = cur
         seeker_style = int_bound((cur / (duration || 1)) * 100, 1, 100)
     })
+    if (timeupdate)
+        dispatch('timeupdate', audio.currentTime)
 })
 const toggle_playing = () => { audio[audio.paused ? 'play' : 'pause']() }
 
@@ -110,6 +113,7 @@ function init_seek_btns(cont) {
     let repeat_interval
     function val_change_wrapper(e) {
         val_change(e)
+        clearInterval(repeat_interval)
         repeat_interval = setInterval(() => val_change(e), 150)
     }
     const btns = cont.querySelectorAll('button')

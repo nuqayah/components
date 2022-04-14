@@ -65,6 +65,7 @@ audio.addEventListener('timeupdate', () => {
     if (timeupdate)
         dispatch('timeupdate', audio.currentTime)
 })
+$: audio.playbackRate = playback_rate
 const toggle_playing = () => { audio[audio.paused ? 'play' : 'pause']() }
 
 async function set_time(time) {
@@ -75,14 +76,14 @@ async function set_time(time) {
 }
 
 async function set_audio(src) {
-    const pbr = audio.playbackRate
     audio.src = src
     audio.play().catch(() => {})
-    audio.playbackRate = pbr
-    if (!duration)
-        audio.addEventListener('durationchange', () => {
-            duration = audio.duration
-        }, {once: true})
+    const pbr = playback_rate
+    playback_rate = -1
+    playback_rate = pbr
+    audio.addEventListener('durationchange', () => {
+        duration = audio.duration
+    }, {once: true})
 }
 $: set_audio(src)
 
@@ -103,8 +104,7 @@ function init_seek_btns(cont) {
         if (e.target.classList.contains('skip'))
             audio.currentTime += 5 * sign
         else {
-            audio.playbackRate = int_bound(audio.playbackRate + 0.1 * sign, 0.4, 4)
-            playback_rate = audio.playbackRate
+            playback_rate = int_bound(playback_rate + 0.1 * sign, 0.4, 4)
         }
         if (e.preventDefault)
             e.preventDefault()
@@ -222,9 +222,6 @@ input[type=range]::-ms-fill-lower {
 }
 .seek-btns .icon {
   color: #777;
-}
-.seek-btns .speed > .icon {
-  width: 16px;
 }
 .play-speed {
   font: 0.6rem sans-serif;

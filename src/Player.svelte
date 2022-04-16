@@ -11,7 +11,7 @@
   >
   <div class=now-playing>
     <span class=time-passed>{fmt_time(time_passed)}</span>
-    <PlayButton on:click={toggle_playing} {playing}/>
+    <PlayButton on:click={toggle_playing} {playing} bind:button={play_btn}/>
     <span class=time-remaining>-{fmt_time(duration - time_passed)}</span>
   </div>
   <div class=seek-btns use:init_seek_btns>
@@ -25,10 +25,12 @@
   </div>
 </section>
 
+<svelte:window on:keydown={handle_keydown}/>
+
 <script>
 import PlayButton from './PlayButton.svelte'
 
-const fmt_time = s => (new Date(s * 1000).toISOString().substr(10, 9)).replace(/T(00:)?/, '')
+const fmt_time = s => (new Date(s * 1000).toISOString().slice(10, 19)).replace(/T(00:)?/, '')
 const int_bound = (int, min, max) => Math.max(Math.min(int, max), min)
 
 export let src
@@ -36,6 +38,7 @@ export let duration = 0
 export let timeupdate = false
 
 
+let play_btn
 let playback_rate = 1
 let playing = false
 let time_passed = duration
@@ -125,10 +128,10 @@ function init_seek_btns(cont) {
 
 
 // Misc
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && document.activeElement !== play_btn)
+function handle_keydown(e) {
+    if (e.key === ' ' && document.activeElement !== play_btn)
         toggle_playing()
-})
+}
 
 onDestroy(() => {
     audio.src = ''

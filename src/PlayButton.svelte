@@ -1,4 +1,4 @@
-<button title="Play or pause" class=play-btn tabindex=0 on:click>
+<button title="Play or pause" tabindex=0 bind:this={button} on:click>
   <svg viewBox="8 10 16 16" fill="#555555" use:animate_play_btn={playing}>
     <path d="M11,10 L16.46,13.74 L16.46,22.28 L11,26 M16.46,13.74 L22.7,18 L22.7,18 L16.46,22.28">
       <animate begin=indefinite attributeName=d fill=freeze dur=0.1s
@@ -10,6 +10,7 @@
 
 <script>
 export let playing = false
+export let button
 
 function animate_play_btn(btn) {
     const el = btn.querySelector('animate')
@@ -24,10 +25,9 @@ function animate_play_btn(btn) {
 </script>
 
 <style>
-.play-btn {
-  width: 3rem;
-  height: 3rem;
-  margin-bottom: 0.5rem;
-  padding: 0.8rem 0.8rem;
+button {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.5rem 0.5rem;
 }
 </style>

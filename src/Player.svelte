@@ -79,11 +79,10 @@ async function set_time(time) {
 }
 
 async function set_audio(src) {
+    const pbr = audio.playbackRate
     audio.src = src
     audio.play().catch(() => {})
-    const pbr = playback_rate
-    playback_rate = -1
-    playback_rate = pbr
+    audio.playbackRate = pbr
     audio.addEventListener('durationchange', () => {
         duration = audio.duration
     }, {once: true})

@@ -10,7 +10,7 @@
 
 <script>
 export let playing = false
-export let button
+export let button = undefined
 
 function animate_play_btn(btn) {
     const el = btn.querySelector('animate')

@@ -60,7 +60,14 @@ function hide_wrapped(e) {
     }
 }
 export function hover_action(el, props) {
-    const cb = show({...props, type: 'hover'}, el)
+    const cb = () => {
+        options.set({type: 'hover'})
+        should_hide = false
+        setTimeout(() => {
+            if (!should_hide)
+                show({...props, type: 'hover'}, el)()
+        }, 450)
+    }
     el.addEventListener('mouseover', cb)
     // hide_wrapped -> hide, but if we moused over the tooltip, then
     // should_hide was sent to false before the debounce timer ends

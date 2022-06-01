@@ -43,7 +43,7 @@ export function filterer(el, props) {
         const prepped_query = prepare_query(query)
         for (let i = 0, l = items.length; i < l; i++) {
             if (filter(items[i], prepped_query))
-                matches.push(items[i], i)
+                matches.push([i, items[i]])
         }
         callback(matches)
     }

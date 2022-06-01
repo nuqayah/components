@@ -14,13 +14,14 @@ export default function lazy_load(el, props) {
     async function pad_results(props_updated) {
         props = props_updated
         visible = []
+        props.set_items([])
         await tick()
         // If the current props.items don't overflow then add until they do
         if (!el.clientHeight)
             return
         while (visible.length < props.items.length && el.scrollHeight <= el.clientHeight + 100) {
             await tick()
-            visible = visible.concat(props.items.slice(visible.length, visible.length + 1))
+            visible = visible.concat(props.items.slice(visible.length, visible.length + 3))
             props.set_items(visible)
         }
     }

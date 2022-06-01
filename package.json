@@ -1,6 +1,6 @@
 {
   "name": "components",
-  "version": "1.0.48",
+  "version": "1.0.49",
   "svelte": "src/index.js",
   "repository": "github:mustafa0x/components",
   "type": "module"

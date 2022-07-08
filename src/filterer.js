@@ -45,7 +45,7 @@ export function filterer(el, props) {
             if (filter(items[i], prepped_query))
                 matches.push(items[i])
         }
-        callback(matches)
+        callback(matches, prepped_query)
     }
     const cb = debounce(search, 100)
     el.addEventListener('input', cb)

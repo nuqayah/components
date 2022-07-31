@@ -25,7 +25,14 @@ export default function lazy_load(el, props) {
             props.set_items(visible)
         }
     }
-    el.addEventListener('scroll', debounce(add_results, 5))
+    const add_results_debounced = debounce(add_results, 5)
+    window.addEventListener('resize', add_results_debounced)
+    el.addEventListener('scroll', add_results_debounced)
     setTimeout(() => pad_results(props), 50)
-    return {update: pad_results}
+    return {
+        update: pad_results,
+        destroy() {
+            window.removeEventListener('resize', add_results_debounced)
+        },
+    }
 }

@@ -79,3 +79,25 @@ export const multi_match_map = {ا: 'اأآإى', أ: 'أإءؤئ', ء: 'ءأإ�
 export const multi_match_re = RegExp(`[${Object.keys(multi_match_map).join('')}]`, 'g')
 export const escape_regex = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 export const strip_harakat = s => ('' + s).replace(/[ً-ْۖ-ٰۜ]/g, '')
+
+export function copy_text(text) {
+    if ('clipboard' in navigator)
+        return navigator.clipboard.writeText(text)
+    else {
+        const ta = document.createElement('textarea')
+        Object.assign(ta, {value: text, style: 'position: fixed; top: -9999em'})
+        document.body.appendChild(ta)
+        if (window._useragent.ios) {
+            const range = document.createRange()
+            getSelection().removeAllRanges()
+            range.selectNode(ta)
+            getSelection().addRange(range)
+        }
+        else
+            ta.select()
+        document.execCommand('copy')
+        ta.remove()
+        if (window._useragent.ios)
+            getSelection().removeAllRanges()
+    }
+}

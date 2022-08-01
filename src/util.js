@@ -78,7 +78,6 @@ export function add_zwj(str) {
 export const multi_match_map = {ا: 'اأآإى', أ: 'أإءؤئ', ء: 'ءأإؤئ', ت: 'تة', ة: 'ةته', ه: 'هة', ى: 'ىاي', ي: 'يى'}
 export const multi_match_re = RegExp(`[${Object.keys(multi_match_map).join('')}]`, 'g')
 export const escape_regex = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-export const strip_harakat = s => ('' + s).replace(/[ً-ْۖ-ٰۜ]/g, '')
 
 export function copy_text(text) {
     if ('clipboard' in navigator)

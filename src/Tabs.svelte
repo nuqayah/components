@@ -63,10 +63,4 @@ onMount(() => {
 .tabs-cont > :global(section:not(.active)) {
   display: none !important;
 }
-.tabs-cont::-webkit-scrollbar {
-  width: 2px;
-}
-.tabs-cont::-webkit-scrollbar-thumb {
-  background-color: #ddd;
-}
 </style>

@@ -4,6 +4,7 @@ export const ar_nums_fmt = num => Intl.NumberFormat('ar-SA').format(num)
 export const strip_harakat = s => ('' + s).replace(/[ً-ْۖ-ٰۜ]/g, '')
 export const now_hours = () => ms_to_hours(Date.now())
 export const clone_object = o => JSON.parse(JSON.stringify(o))
+export const int_clamp = (int, min, max) => Math.max(Math.min(int, max), min)
 export function debounce(fn, timeout) {
     let timeout_id
     return (...args) => {

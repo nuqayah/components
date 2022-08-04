@@ -1,6 +1,6 @@
-<slot name=button {toggle}/>
+<slot name=button {show}/>
 
-{#if show}
+{#if shown}
   <div class="absolute z-10" transition:fly|local={{duration: 150, y: 10}} bind:this={wrapper}>
     <slot/>
   </div>
@@ -12,22 +12,22 @@
 import positioner from 'positioner'
 
 let wrapper
-let show = false
+let shown = false
 
 function position_cont() {
-   if (show && wrapper)
+   if (shown && wrapper)
       positioner(wrapper, wrapper.previousElementSibling.getBoundingClientRect(), 'bottom')
 }
-async function toggle() {
-    show = !show
-
-    if (show) {
-        await tick()
-        position_cont()
-    }
+async function show() {
+    if (shown)
+        return
+    shown = true
+    await tick()
+    position_cont()
 }
 function hide_cont(e) {
-    if (show && wrapper && !wrapper.contains(e.target))
-        setTimeout(() => show = false, 50)
+    if (shown && wrapper && !wrapper.contains(e.target))
+        // The delay causes show to run first
+        setTimeout(() => shown = false, 100)
 }
 </script>

@@ -28,6 +28,6 @@ async function show() {
 function hide_cont(e) {
     if (shown && wrapper && !wrapper.contains(e.target))
         // The delay causes show to run first
-        setTimeout(() => shown = false, 100)
+        setTimeout(() => shown = false, 120)
 }
 </script>

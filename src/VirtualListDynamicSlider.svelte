@@ -16,7 +16,7 @@
 </div>
 
 <script>
-import {get_x_offset_percent, ar_nums_fmt} from '~/util/util.js'
+import {get_x_offset_percent, ar_nums_fmt} from 'components/src/util.js'
 
 export let virtual_list
 export let cur_page_i

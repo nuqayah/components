@@ -1,4 +1,4 @@
-import {debounce} from '~/util/util.js'
+import {debounce} from 'components/src/util.js'
 
 const strip_harakat = s => ('' + s).replace(/[ً-ْۖ-ٰۜ]/g, '')
 const multi_match_map = {ا: 'اأآإى', أ: 'أإءؤئ', ء: 'ءأإؤئ', ت: 'تة', ة: 'ةته', ه: 'هة', ى: 'ىاي', ي: 'يى'}

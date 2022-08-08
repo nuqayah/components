@@ -13,7 +13,7 @@
 <svelte:window on:resize={debounce(handle_scroll, 100)}/>
 
 <script>
-import {debounce} from '~/util/util.js'
+import {debounce} from 'components/src/util.js'
 
 export let count
 export let item_height

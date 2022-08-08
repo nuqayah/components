@@ -10,7 +10,7 @@
 </div>
 
 <script>
-import {debounce, median} from '~/util/util.js'
+import {debounce, median} from 'components/src/util.js'
 
 export let get_component
 export let count

@@ -92,7 +92,7 @@ export function click_action(el, props) {
 
 <script>
 import positioner from 'positioner'
-import {debounce} from '~/util/util.js'
+import {debounce} from 'components/src/util.js'
 
 function reposition(el) {
     async function update() {

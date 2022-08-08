@@ -7,7 +7,7 @@
 </ul>
 
 <script>
-import {debounce} from '~/util/util.js'
+import {debounce} from 'components/src/util.js'
 
 export let items
 export let hidden = false

@@ -18,6 +18,11 @@ export function split(string, delimiter, n) {
 }
 export const add_tatweel = s => s.replace(/([بت-خس-غف-نهي][ً-ْ]*)(?=[ء-ي])/g, '$1ـ').replaceAll('لـا', 'لا')
 
+export function html_entities(s) {
+    const repls = {'&': '&amp;', '<': '&lt;', '>': '&gt;'}
+    return s.replace(RegExp(`[${Object.keys(repls).join('')}]`, 'g'), m => repls[m])
+}
+
 export function shuffle(ar) {
     ar = [...ar]
     for (let j, x, i = ar.length; i; j = parseInt(Math.random() * i), x = ar[--i], ar[i] = ar[j], ar[j] = x);
@@ -72,13 +77,15 @@ export function set_top_offset(el, visible=true) {
         update(visible)
     return {update}
 }
-export const escaped_to_raw = s => s.replace(/(?<!\\)\\(n|t|u[0-9a-f]{4})/g, m => JSON.parse(`"${m}"`))
+export const unescape_str = s => s.replace(/(?<!\\)\\(n|t|u[0-9a-f]{4})/g, m => JSON.parse(`"${m}"`))
 export function add_zwj(str) {
     return window._useragent?.safari ? str.replace(/([ئبت-خس-غف-نهي])([^ء-ي ]*<[^>]+>[ً-ْٰۖۗۚۛۜ]*)(?=[آ-ي])/g, '$1&zwj;$2&zwj;') : str
 }
 export const multi_match_map = {ا: 'اأآإى', أ: 'أإءؤئ', ء: 'ءأإؤئ', ت: 'تة', ة: 'ةته', ه: 'هة', ى: 'ىاي', ي: 'يى'}
 export const multi_match_re = RegExp(`[${Object.keys(multi_match_map).join('')}]`, 'g')
 export const escape_regex = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+export const harakat_prep = s => RegExp(s.replace(/[ء-يّ]/g, '$&[ً-ْ]*'), 'g')
+export const rand_id = () => Math.random().toString(16).slice(2, 8)
 
 export function copy_text(text) {
     if ('clipboard' in navigator)
@@ -100,4 +107,48 @@ export function copy_text(text) {
         if (window._useragent.ios)
             getSelection().removeAllRanges()
     }
+}
+export const create_el = (tag, attrs) => Object.assign(document.createElement(tag), attrs)
+export const on = (object, ev, cb) => object.addEventListener(ev, cb, false)
+export const off = (object, ev, cb) => object.removeEventListener(ev, cb, false)
+export const insert_str_at = (str, i, sub, ln) => str.slice(0, i) + sub + str.slice(i + ln)
+export const apply_repls = (s, repls) => repls.reduce((a, b) => a[b[2] ? 'replaceAll' : 'replace'](b[0], b[1]), s)
+
+export function separate_diff(diff) {
+    const text = {old: '', new: ''}
+    for (let line of diff.split('\n')) {
+        if (/^(diff|index|--- a\/|\+\+\+ b\/)/.test(line))
+            continue
+        if (line.startsWith('@@')) {
+            if (text.old || text.new) {
+                text.old += '\n...\n'
+                text.new += '\n...\n'
+            }
+            continue
+        }
+        if (/^[-+ ]/.test(line)) {
+            const first = line[0]
+            line = line.slice(1) + '\n'
+            if (first === ' ') {
+                text.old += line
+                text.new += line
+            }
+            else if (first === '-')
+                text.old += line
+            else if (first === '+')
+                text.new += line
+        }
+    }
+    return text
+}
+
+export async function eval_script(script_text) {
+    const blob = new Blob([script_text], {type: 'application/javascript'})
+    const url = URL.createObjectURL(blob)
+    const script_el = create_el('script', {type: 'module', src: url})
+    document.body.appendChild(script_el)
+    const module = await import(/* @vite-ignore */ url)
+    script_el.remove()
+    URL.revokeObjectURL(url)
+    return module
 }

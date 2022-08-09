@@ -42,6 +42,12 @@ function change_tab(btn) {
         }, 50)
     }, {once: true})
 }
+export function set_tab(tab_num) {
+    const btn = [...tab_bar_cont.children][tab_num - 1]
+    if (btn.classList.contains('active') || CHANGING_TAB)
+        return
+    change_tab(btn)
+}
 
 onMount(() => {
     tab_bar_cont.querySelector(`button:nth-child(${current_tab})`).classList.add('active')

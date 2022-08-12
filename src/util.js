@@ -1,6 +1,7 @@
 export const round = n => Math.round(n * 10) / 10
 export const ar_nums = s => ('' + s).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'.substr(+d, 1))
 export const ar_nums_fmt = num => Intl.NumberFormat('ar-SA').format(num)
+export const en_nums = s => s.replace(/[٠-٩]/g, d => d.charCodeAt(0) - 0x660)
 export const strip_harakat = s => ('' + s).replace(/[ً-ْۖ-ٰۜ]/g, '')
 export const now_hours = () => ms_to_hours(Date.now())
 export const clone_object = o => JSON.parse(JSON.stringify(o))
@@ -153,4 +154,16 @@ export async function eval_script(script_text) {
     script_el.remove()
     URL.revokeObjectURL(url)
     return module
+}
+export function resize_textarea(el) {
+    function resize(el) {
+        el.style.height = ''
+        el.style.height = 5 + el.scrollHeight + 'px'
+    }
+    const resize_debounced = debounce(e => resize(e.target), 100)
+    el.addEventListener('input', resize_debounced)
+    resize(el)
+    return () => {
+        el.removeEventListener('input', resize_debounced)
+    }
 }

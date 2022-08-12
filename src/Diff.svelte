@@ -5,7 +5,14 @@
     {:else if op == DiffMatchPatch.DIFF_DELETE}
       <del>{text}</del>
     {:else if op == DiffMatchPatch.DIFF_EQUAL}
-      <span>{text}</span>
+      {@const [is_summarized, text_start, text_end] = summarize(text)}
+      {#if is_summarized}
+        <span>{text_start}</span>
+        <button class=more-btn on:click={e => show_block(e.target, text)}>... المزيد ...</button>
+        <span>{text_end}</span>
+      {:else}
+        <span>{text}</span>
+      {/if}
     {/if}
   {/each}
 </section>
@@ -70,6 +77,27 @@ export function highlight_change(dir) {
         e.target.classList.remove('active')
     }, {once: true})
 }
+
+function show_block(el, text) {
+    el.nextElementSibling.remove()
+    el.previousElementSibling.textContent = text
+    el.remove()
+}
+function summarize(text, TRUNC_AT = 500) {
+    if (text.length < TRUNC_AT)
+        return [false, text, '']
+    // Omit the text, while retaining the first and last 100 chars.
+    // If there is a space withing 30 chars of index 100 and -100, use it.
+    let start_i = TRUNC_AT - 100
+    let end_i = text.length - 100
+    let start_space = text.indexOf(' ', start_i)
+    let end_space = text.lastIndexOf(' ', end_i)
+    if (start_space > -1 && start_space - start_i <= 30)
+        start_i = start_space
+    if (end_space > -1 && end_i - end_space <= 30)
+        end_i = end_space
+    return [true, text.slice(0, start_i), text.slice(end_i)]
+}
 </script>
 
 <style>
@@ -93,5 +121,14 @@ ins, del {
 .diff-cont :global(:is(ins,del).active) {
   background-color: orange !important;
   padding: 0.2rem 0.5rem;
+}
+.more-btn {
+  display: block;
+  color: #2d71ec;
+  font-weight: bold;
+  user-select: none;
+  margin: 1rem auto;
+  padding-bottom: 3px;
+  border-bottom: 2px dashed #000;
 }
 </style>

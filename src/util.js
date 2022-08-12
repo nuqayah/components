@@ -167,3 +167,35 @@ export function resize_textarea(el) {
         el.removeEventListener('input', resize_debounced)
     }
 }
+
+export async function sha1(msg) {
+    const msgUint8 = new TextEncoder().encode(msg)
+    const hashBuffer = await crypto.subtle.digest('SHA-1', msgUint8)
+    const hashArray = [...new Uint8Array(hashBuffer)]
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+}
+
+export function remove_props(obj, props) {
+    props.forEach(prop => {
+        delete obj[prop]
+    })
+    return obj
+}
+export function longest_consecutive_sequence(nums) {
+    if (!nums.length)
+        return 0
+
+    nums = [...nums].sort((a, b) => a - b)
+    let curr_length = 1
+    let seq_length = 1
+    for (let i = 1; i < nums.length; i++) {
+        if (nums[i] - nums[i - 1] === 1)
+            curr_length++
+        else if (nums[i] - nums[i - 1] > 1) {
+            seq_length = Math.max(curr_length, seq_length)
+            curr_length = 1
+        }
+    }
+
+    return seq_length
+}

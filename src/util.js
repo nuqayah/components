@@ -199,3 +199,9 @@ export function longest_consecutive_sequence(nums) {
 
     return seq_length
 }
+export const get_items_by_keys = (keys, o) => Object.fromEntries(keys.filter(k => k in o).map(k => [k, o[k]]))
+export const to_id_map = data => Object.fromEntries(data.map(f => [f.id, f]))
+
+export function set_title(t) {
+    document.title = (t ? (t + ' | ') : '') + window.BASE_TITLE
+}

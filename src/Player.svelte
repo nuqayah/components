@@ -34,6 +34,7 @@ const fmt_time = s => (new Date(s * 1000).toISOString().slice(10, 19)).replace(/
 const int_bound = (int, min, max) => Math.max(Math.min(int, max), min)
 
 export let src
+export let kv = undefined
 export let duration = 0
 export let timeupdate = false
 
@@ -57,7 +58,10 @@ audio.addEventListener('pause', () => {
 })
 audio.addEventListener('ended', () => {
     dispatch('ended')
+    if (kv)
+        kv.set(src, 0)
 })
+let every_forth = 0
 audio.addEventListener('timeupdate', () => {
     requestAnimationFrame(() => {
         const cur = audio.currentTime
@@ -65,17 +69,23 @@ audio.addEventListener('timeupdate', () => {
         seeker_value = cur
         seeker_style = int_bound((cur / (duration || 1)) * 100, 1, 100)
     })
-    if (timeupdate)
-        dispatch('timeupdate', audio.currentTime)
+    if (!(every_forth = (every_forth + 1) % 4)) {
+        if (timeupdate)
+            dispatch('timeupdate', audio.currentTime)
+        if (kv && audio.currentTime > 10)
+            kv.set(src, audio.currentTime)
+      }
 })
 $: audio.playbackRate = playback_rate
 const toggle_playing = () => { audio[audio.paused ? 'play' : 'pause']() }
 
-async function set_time(time) {
-    audio.currentTime = time
-    if (!audio.readyState && window._useragent.safari)
-        audio.addEventListener('canplay', () => { audio.currentTime = time }, {once: true})
-    audio.dispatchEvent(new CustomEvent('timeupdate')) // TODO: if safari isnt't this wrong?
+export function set_time(time) {
+    if (audio.readyState)
+        audio.currentTime = time
+    else {
+        const e = window._useragent?.safari ? 'canplay' : 'loadedmetadata'
+        audio.addEventListener(e, () => { audio.currentTime = time }, {once: true})
+    }
 }
 
 async function set_audio(src) {
@@ -86,6 +96,8 @@ async function set_audio(src) {
     audio.addEventListener('durationchange', () => {
         duration = audio.duration
     }, {once: true})
+    if (kv && await kv.get(src))
+        set_time(await kv.get(src))
 }
 $: set_audio(src)
 

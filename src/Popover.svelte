@@ -6,10 +6,12 @@
   </div>
 {/if}
 
-<svelte:window on:resize={position_cont} on:mousedown={hide_cont}/>
+<svelte:window on:resize={position_cont} on:mousedown={e => setTimeout(() => hide_cont(e), 5)}/>
 
 <script>
 import positioner from 'positioner'
+
+export let hide_on_click = true
 
 let wrapper
 let shown = false
@@ -26,8 +28,12 @@ async function show() {
     position_cont()
 }
 function hide_cont(e) {
-    if (shown && wrapper && !wrapper.contains(e.target))
-        // The delay causes show to run first
+    const el = e.target
+    // Even if hide_on_click is set, don't hide if the active element is an input
+    const should_hide = shown && wrapper &&
+        ((!hide_on_click && !wrapper.contains(el)) || document.activeElement.tagName !== 'INPUT')
+    if (should_hide)
+        // Delay so that show runs first
         setTimeout(() => shown = false, 120)
 }
 </script>

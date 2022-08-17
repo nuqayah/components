@@ -18,6 +18,7 @@ export function split(string, delimiter, n) {
     return [...parts.slice(0, n - 1), parts.slice(n - 1).join(delimiter)]
 }
 export const add_tatweel = s => s.replace(/([بت-خس-غف-نهي][ً-ْ]*)(?=[ء-ي])/g, '$1ـ').replaceAll('لـا', 'لا')
+export const honorifics_list = 'ﷻ﵎﷾﷿|ﷺ﵊﵌|﵇﵍﵈﵉|﵁﵂﵃﵄﵅|﵀﵏|﷽'.split('|')
 
 export function html_entities(s) {
     const repls = {'&': '&amp;', '<': '&lt;', '>': '&gt;'}

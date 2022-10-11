@@ -5,7 +5,7 @@
     max={duration || 1}
     step=any
     on:input={seeker_input}
-    on:click={window._useragent.ios ? ios_seeker_click : () => {}}
+    on:click={window._useragent?.ios ? ios_seeker_click : () => {}}
     value={seeker_value}
     style="--bg-size: {seeker_style}%"
   >
@@ -74,7 +74,7 @@ audio.addEventListener('timeupdate', () => {
             dispatch('timeupdate', audio.currentTime)
         if (kv && audio.currentTime > 10)
             kv.set(src, audio.currentTime)
-      }
+    }
 })
 $: audio.playbackRate = playback_rate
 const toggle_playing = () => { audio[audio.paused ? 'play' : 'pause']() }

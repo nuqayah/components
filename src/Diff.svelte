@@ -18,14 +18,14 @@
 </section>
 
 <script>
-import * as DiffMatchPatch from 'diff-match-patch'
+import DiffMatchPatch from 'diff-match-patch'
 import {debounce, int_clamp} from 'components/src/util.js'
 
 export let a = ''
 export let b = ''
 export let changes_count = 0
 
-const dmp = new DiffMatchPatch.diff_match_patch()
+const dmp = new DiffMatchPatch
 dmp.Diff_Timeout = 30
 dmp.Diff_EditCost = 4
 

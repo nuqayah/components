@@ -1,5 +1,5 @@
 {#if modal_options.show}
-<div class=modal-overlay tabindex=-1 data-close on:click={overlay_click} transition:fade={{duration: 180}}>
+<div class=modal-overlay tabindex=-1 data-close on:click={overlay_click} transition:fade={{duration: 180}} use:focus_trap>
   <div class=modal-container role=dialog aria-modal=true style="max-width: {modal_options.max_width}">
     <header>
       {#if title}<h2 class="text-lg font-bold">{title}</h2>{/if}
@@ -24,6 +24,13 @@ export function show(component, props) {
 }
 </script>
 <script>
+import {createFocusTrap} from 'focus-trap'
+function focus_trap(node, options) {
+    const trap = createFocusTrap(node, options)
+    trap.activate()
+    return {destroy() {trap.deactivate()}}
+}
+
 $: if (!$options.shown && Object.keys($options).length) update_modal($options)
 
 function overlay_click(e) {

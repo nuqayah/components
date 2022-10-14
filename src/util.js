@@ -1,3 +1,5 @@
+import escape_regex from 'escape-string-regexp'
+
 export const round = n => Math.round(n * 10) / 10
 export const ar_nums = s => ('' + s).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'.substr(+d, 1))
 export const ar_nums_fmt = num => Intl.NumberFormat('ar-SA').format(num)
@@ -85,7 +87,43 @@ export function add_zwj(str) {
 }
 export const multi_match_map = {ا: 'اأآإى', أ: 'أإءؤئ', ء: 'ءأإؤئ', ت: 'تة', ة: 'ةته', ه: 'هة', ى: 'ىاي', ي: 'يى'}
 export const multi_match_re = RegExp(`[${Object.keys(multi_match_map).join('')}]`, 'g')
-export const escape_regex = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+export function prep_ar_query(q) {
+    q = escape_regex(strip_harakat(q)).replace(/[ء-يّ]/g, '$&[ً-ْ]*')
+    // 'g' isn't usually needed since we only .test, but if highlighting we need 'g'
+    return RegExp(q.replace(multi_match_re, m => `[${multi_match_map[m]}]`), 'g')
+}
+
+export function basic_searcher(item, q) {
+    if (q instanceof RegExp) {
+        q.lastIndex = 0 // In case it has the g flag set
+        return q.test(item)
+    }
+    else
+        return item.includes(q)
+}
+export function filterer(query, items, filter, should_prep_query = true) {
+    // filter can be a fn, an array of keys to search, or unset
+    const filter_fn = Array.isArray(filter)
+        ? (item, q) => filter.some(key => basic_searcher(item[key] || '', q))
+        : filter || basic_searcher
+
+    if (!items.length) {
+        console.warn('No items')
+        return items
+    }
+    if (!query)
+        return items
+
+    if (should_prep_query && /[ء-ي]/.test(query))
+        query = prep_ar_query(query)
+    let matches = []
+    for (let i = 0, l = items.length; i < l; i++) {
+        if (filter_fn(query, items[i]))
+            matches.push(items[i])
+    }
+    return matches
+}
+
 export const harakat_prep = s => RegExp(s.replace(/[ء-يّ]/g, '$&[ً-ْ]*'), 'g')
 export const rand_id = () => Math.random().toString(16).slice(2, 8)
 

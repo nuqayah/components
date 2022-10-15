@@ -35,7 +35,7 @@ $: size = type === 'vertical' ? h : w
 
 $: min = 100 * (buffer / size)
 $: max = 100 - min
-$: pos = hide_b ? 100 : clamp(pos, min, max)
+$: pos = hide_b ? 100 : int_clamp(pos, min, max)
 onMount(() => {
     if (!hide_b && w < 1000)
         pos = 65

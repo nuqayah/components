@@ -92,7 +92,10 @@ export function prep_ar_query(q) {
     // 'g' isn't usually needed since we only .test, but if highlighting we need 'g'
     return RegExp(q.replace(multi_match_re, m => `[${multi_match_map[m]}]`), 'g')
 }
-export const highlight = (qry, str) => add_zwj(str.replace(prep_ar_query(qry), '<mark>$&</mark>'))
+export function highlight(qry, str, prep_query, should_prep_query = true) {
+    qry = qry instanceof RegExp || !should_prep_query ? qry : prep_ar_query(qry)
+    add_zwj(str.replace(qry, '<mark>$&</mark>'))
+}
 
 export function basic_searcher(q, str) {
     if (q instanceof RegExp) {

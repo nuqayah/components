@@ -94,13 +94,13 @@ export function prep_ar_query(q) {
 }
 export const highlight = (qry, str) => add_zwj(str.replace(prep_ar_query(qry), '<mark>$&</mark>'))
 
-export function basic_searcher(item, q) {
+export function basic_searcher(q, str) {
     if (q instanceof RegExp) {
         q.lastIndex = 0 // In case it has the g flag set
-        return q.test(item)
+        return q.test(str)
     }
     else
-        return item.includes(q)
+        return str.includes(q)
 }
 export function filterer(query, items, filter, should_prep_query = true) {
     // filter can be a fn, an array of keys to search, or unset

@@ -94,7 +94,7 @@ export function prep_ar_query(q) {
 }
 export function highlight(qry, str, prep_query, should_prep_query = true) {
     qry = qry instanceof RegExp || !should_prep_query ? qry : prep_ar_query(qry)
-    add_zwj(str.replace(qry, '<mark>$&</mark>'))
+    return add_zwj(str.replace(qry, '<mark>$&</mark>'))
 }
 
 export function basic_searcher(q, str) {

@@ -105,7 +105,7 @@ export function basic_searcher(q, str) {
 export function filterer(query, items, filter, should_prep_query = true) {
     // filter can be a fn, an array of keys to search, or unset
     const filter_fn = Array.isArray(filter)
-        ? (q, item) => filter.some(key => basic_searcher(item[key] || '', q))
+        ? (q, item) => filter.some(key => basic_searcher(q, item[key] || ''))
         : filter || basic_searcher
 
     if (!items.length) {

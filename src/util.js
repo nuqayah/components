@@ -92,6 +92,7 @@ export function prep_ar_query(q) {
     // 'g' isn't usually needed since we only .test, but if highlighting we need 'g'
     return RegExp(q.replace(multi_match_re, m => `[${multi_match_map[m]}]`), 'g')
 }
+export const highlight = (qry, str) => add_zwj(str.replace(prep_ar_query(qry), '<mark>$&</mark>'))
 
 export function basic_searcher(item, q) {
     if (q instanceof RegExp) {
@@ -152,6 +153,7 @@ export const create_el = (tag, attrs) => Object.assign(document.createElement(ta
 export const on = (object, ev, cb) => object.addEventListener(ev, cb, false)
 export const off = (object, ev, cb) => object.removeEventListener(ev, cb, false)
 export const get_x_offset_percent = e => (e.currentTarget.offsetWidth - e.offsetX) / e.currentTarget.offsetWidth
+export const el_index = el => [...el.parentElement.children].indexOf(el)
 
 export const insert_str_at = (str, i, sub, ln) => str.slice(0, i) + sub + str.slice(i + ln)
 export const apply_repls = (s, repls) => repls.reduce((a, b) => a[b[2] ? 'replaceAll' : 'replace'](b[0], b[1]), s)

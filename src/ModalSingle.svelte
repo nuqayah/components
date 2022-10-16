@@ -1,6 +1,8 @@
-<div class=modal-overlay tabindex=-1 data-close on:click={overlay_click} transition:fade={{duration: 180}} use:focus_trap>
-  <div class=modal-container role=dialog aria-modal=true><slot/></div>
-</div>
+{#if show}
+  <div class=modal-overlay tabindex=-1 data-close on:click={overlay_click} transition:fade={{duration: 180}} use:focus_trap>
+    <div class=modal-container role=dialog aria-modal=true><slot/></div>
+  </div>
+{/if}
 
 <svelte:window on:popstate={popstate} on:keydown={e => { if (e.key === 'Escape') show = false }}/>
 

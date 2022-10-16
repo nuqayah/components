@@ -24,12 +24,7 @@ export function show(component, props) {
 }
 </script>
 <script>
-import {createFocusTrap} from 'focus-trap'
-function focus_trap(node, options) {
-    const trap = createFocusTrap(node, options)
-    trap.activate()
-    return {destroy() {trap.deactivate()}}
-}
+import {focus_trap} from 'components/src/util.js'
 
 $: if (!$options.shown && Object.keys($options).length) update_modal($options)
 

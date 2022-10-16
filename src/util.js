@@ -1,4 +1,5 @@
 import escape_regex from 'escape-string-regexp'
+import {createFocusTrap} from 'focus-trap'
 
 export const round = n => Math.round(n * 10) / 10
 export const ar_nums = s => ('' + s).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'.substr(+d, 1))
@@ -248,4 +249,14 @@ export const to_id_map = data => Object.fromEntries(data.map(f => [f.id, f]))
 
 export function set_title(t) {
     document.title = (t ? (t + ' | ') : '') + window.BASE_TITLE
+}
+
+export function focus_trap(node, options) {
+    const trap = createFocusTrap(node, options)
+    trap.activate()
+    return {
+        destroy() {
+            trap.deactivate()
+        },
+    }
 }

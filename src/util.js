@@ -82,7 +82,7 @@ export function set_top_offset(el, visible=true) {
         update(visible)
     return {update}
 }
-export const unescape_str = s => s.replace(/(?<!\\)\\(n|t|u[0-9a-f]{4})/g, m => JSON.parse(`"${m}"`))
+export const unescape_str = s => s.replace(/(^|[^\\])\\(n|t|u[0-9a-f]{4})/g, (m, m1, m2) => JSON.parse(`"\\${m2}"`))
 export function add_zwj(str) {
     return window._useragent?.safari ? str.replace(/([ئبت-خس-غف-نهي])([^ء-ي ]*<[^>]+>[ً-ْٰۖۗۚۛۜ]*)(?=[آ-ي])/g, '$1&zwj;$2&zwj;') : str
 }

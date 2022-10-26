@@ -34,10 +34,8 @@ function hide_cont(e) {
     if (!e.screenX) // Vimium triggers mousedown
         return
     const el = e.target
-    // Even if hide_on_click is set, don't hide if the active element is an input
-    const should_hide = shown && wrapper &&
-        ((!hide_on_click && !wrapper.contains(el)) || document.activeElement.tagName !== 'INPUT')
-    if (should_hide)
+    // if clicked inside: only hide if hide_on_click is true and the el we clicked on isn't an input
+    if (shown && wrapper && (!wrapper.contains(el) || (hide_on_click && el.tagName !== 'INPUT')))
         // Delay so that show runs first
         setTimeout(() => shown = false, 120)
 }

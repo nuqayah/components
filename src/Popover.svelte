@@ -6,21 +6,34 @@
   </div>
 {/if}
 
-<svelte:window on:resize={position_cont} on:mousedown={e => setTimeout(() => hide_cont(e), 5)}/>
+<svelte:window on:resize={position_cont}/>
 
 <script>
 import positioner from 'positioner'
+import {on, off} from 'components/src/util.js'
 
 export let hide_on_click = true
+export let append_to_body = false
+
+// iOS rarely fires window.mousedown, so we need to use document
+const mousedown = e => setTimeout(() => hide_cont(e), 5)
+on(document, 'mousedown', mousedown)
+onDestroy(() => {
+    off(document, 'mousedown', mousedown)
+})
 
 let wrapper
 let shown = false
+let show_el = null
 
 function position_cont() {
    if (shown && wrapper)
       positioner(wrapper, wrapper.previousElementSibling.getBoundingClientRect(), 'bottom')
 }
 async function show(e) {
+    show_el = e.target
+    // For mobile, as this runs first, hide_cont will hide
+    await new Promise(r => setTimeout(r, 50))
     if (shown) {
         if (!e.screenX)
             shown = false // Only hide if kbd click; hide_cont takes care of mouse click.
@@ -29,6 +42,8 @@ async function show(e) {
     shown = true
     await tick()
     position_cont()
+    if (append_to_body)
+        document.body.appendChild(wrapper)
 }
 function hide_cont(e) {
     if (!e.screenX) // Vimium triggers mousedown
@@ -36,7 +51,8 @@ function hide_cont(e) {
     const el = e.target
     // if clicked inside: only hide if hide_on_click is true and the el we clicked on isn't an input
     if (shown && wrapper && (!wrapper.contains(el) || (hide_on_click && el.tagName !== 'INPUT')))
-        // Delay so that show runs first
-        setTimeout(() => shown = false, 120)
+        // Delay so that show runs first. Note: mousedown and click run in
+        // opposite order on mobile devices, so might not be needed by mobile
+        setTimeout(() => shown = false, e.target === show_el ? 200 : 80)
 }
 </script>

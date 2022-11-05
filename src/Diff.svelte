@@ -24,6 +24,7 @@ import {debounce, int_clamp} from 'components/src/util.js'
 export let a = ''
 export let b = ''
 export let changes_count = 0
+export let pause_diffing // if updating a or b independantly, we will want to pause diffing
 
 const dmp = new DiffMatchPatch
 dmp.Diff_Timeout = 30
@@ -36,7 +37,7 @@ let current_el = -1
 let diff_data = []
 let diff_data_all = []
 
-$: if (a && b) {
+$: if (a && b && !pause_diffing) {
     show_diff(a, b)
 }
 $: if (diff_data && diff_cont) {

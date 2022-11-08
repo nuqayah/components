@@ -16,6 +16,26 @@ export function debounce(fn, timeout) {
         timeout_id = setTimeout(() => fn(...args), timeout)
     }
 }
+export function throttle(fn, limit) {
+    let is_first = true
+    let timer
+
+    return (...args) => {
+        if (is_first) {
+            fn(...args)
+            is_first = false
+        }
+        else {
+            if (timer)
+                clearTimeout(timer)
+            timer = setTimeout(() => {
+                fn(...args)
+                timer = null
+                is_first = true
+            }, limit)
+        }
+    }
+}
 export function split(string, delimiter, n) {
     const parts = string.split(delimiter)
     return [...parts.slice(0, n - 1), parts.slice(n - 1).join(delimiter)]
@@ -190,13 +210,10 @@ export function separate_diff(diff) {
     return text
 }
 
-export async function eval_script(script_text) {
+export async function eval_script(script_text) { // eval pollutes scope
     const blob = new Blob([script_text], {type: 'application/javascript'})
     const url = URL.createObjectURL(blob)
-    const script_el = create_el('script', {type: 'module', src: url})
-    document.body.appendChild(script_el)
     const module = await import(/* @vite-ignore */ url)
-    script_el.remove()
     URL.revokeObjectURL(url)
     return module
 }
@@ -246,6 +263,7 @@ export function longest_consecutive_sequence(nums) {
 }
 export const get_items_by_keys = (keys, o) => Object.fromEntries(keys.filter(k => k in o).map(k => [k, o[k]]))
 export const to_id_map = data => Object.fromEntries(data.map(f => [f.id, f]))
+export const url_params = s => Object.fromEntries([...new URLSearchParams(s).entries()])
 
 export function set_title(t) {
     document.title = (t ? (t + ' | ') : '') + window.BASE_TITLE

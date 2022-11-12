@@ -1,3 +1,4 @@
+import escape_regex from 'escape-string-regexp'
 export {default as escape_regex} from 'escape-string-regexp'
 import {createFocusTrap} from 'focus-trap'
 

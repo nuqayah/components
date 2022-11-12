@@ -151,6 +151,11 @@ export function filterer(query, items, filter, should_prep_query = true) {
 
 export const harakat_prep = s => RegExp(s.replace(/[ء-يّ]/g, '$&[ً-ْ]*'), 'g')
 export const rand_id = () => Math.random().toString(16).slice(2, 8)
+export function for_next(el) {
+    const id = 'uid-' + rand_id()
+    el.nextElementSibling.id = id
+    el.htmlFor = id
+}
 
 export function copy_text(text) {
     if ('clipboard' in navigator)
@@ -229,6 +234,14 @@ export function resize_textarea(el) {
         el.removeEventListener('input', resize_debounced)
     }
 }
+export function on_key(el, props) {
+    el.addEventListener('keydown', e => {
+        if (e.key in props)
+            props[e.key](e)
+    })
+}
+// Filter out buttons
+export const form_to_json = form => Object.fromEntries([...form.elements].filter(el => el.matches('input,textarea,select')).map(el => [el.name, el.value]))
 
 export async function sha1(msg) {
     const msgUint8 = new TextEncoder().encode(msg)
@@ -277,4 +290,40 @@ export function focus_trap(node, options) {
             trap.deactivate()
         },
     }
+}
+export function in_view(node, params = {}) {
+    let observer
+
+    const handleIntersect = (e) => {
+        node.dispatchEvent(new CustomEvent(e[0].isIntersecting ? 'enter' : 'exit'))
+    }
+
+    function setObserver({ root, top, bottom }) {
+        const marginTop = top ? top * -1 : 0
+        const marginBottom = bottom ? bottom * -1 : 0
+        const rootMargin = `${marginTop}px 0px ${marginBottom}px 0px`
+        const options = { root, rootMargin }
+        observer?.disconnect()
+        observer = new IntersectionObserver(handleIntersect, options)
+        observer.observe(node)
+    }
+
+    setObserver(params)
+
+    return {
+        update: setObserver,
+        destroy() {
+            observer?.disconnect()
+        },
+    }
+}
+
+export function save_txt(data, file_name) {
+    const blob = new Blob([data], {type: 'text/plain'})
+    const url = URL.createObjectURL(blob)
+    const a = Object.assign(document.createElement('a'), {href: url, download: file_name, hidden: true})
+    document.body.appendChild(a)
+    a.click()
+    URL.revokeObjectURL(url)
+    document.body.removeChild(a)
 }

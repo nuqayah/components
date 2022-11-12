@@ -92,16 +92,17 @@ export function repeat_click(el, callback) {
 }
 
 export function set_top_offset(el, visible=true) {
-    function update(visible=true, offset=5) {
+    function update(visible=true) {
         if (el && visible)
             setTimeout(() => {
-                el.style.setProperty('--top-offset', `${el.getBoundingClientRect().top + offset + window._VH_OFFSET}px`)
+                el.style.setProperty('--top-offset', `${el.getBoundingClientRect().top + 5 + window._VH_OFFSET}px`)
             }, 0)
     }
     if (visible)
         update(visible)
     return {update}
 }
+
 export const unescape_str = s => s.replace(/(^|[^\\])\\(n|t|u[0-9a-f]{4})/g, (m, m1, m2) => JSON.parse(`"\\${m2}"`))
 export function add_zwj(str) {
     return window._useragent?.safari ? str.replace(/([ئبت-خس-غف-نهي])([^ء-ي ]*<[^>]+>[ً-ْٰۖۗۚۛۜ]*)(?=[آ-ي])/g, '$1&zwj;$2&zwj;') : str
@@ -187,15 +188,15 @@ export const el_index = el => [...el.parentElement.children].indexOf(el)
 export const insert_str_at = (str, i, sub, ln) => str.slice(0, i) + sub + str.slice(i + ln)
 export const apply_repls = (s, repls) => repls.reduce((a, b) => a[b[2] ? 'replaceAll' : 'replace'](b[0], b[1]), s)
 
-export function separate_diff(diff) {
+export function separate_diff(diff, OMITTED_TEXT_MARKER = '\n...\n') {
     const text = {old: '', new: ''}
     for (let line of diff.split('\n')) {
         if (/^(diff|index|--- a\/|\+\+\+ b\/)/.test(line))
             continue
         if (line.startsWith('@@')) {
             if (text.old || text.new) {
-                text.old += '\n...\n'
-                text.new += '\n...\n'
+                text.old += OMITTED_TEXT_MARKER
+                text.new += OMITTED_TEXT_MARKER
             }
             continue
         }
@@ -326,4 +327,23 @@ export function save_txt(data, file_name) {
     a.click()
     URL.revokeObjectURL(url)
     document.body.removeChild(a)
+}
+
+export function split_text(text, num_of_parts=4, split_by='\n\n\n') {
+    // used by collab before codemirror as each file was multiple tabs
+    const l = text.length
+    const part_l = Math.floor(l / num_of_parts)
+    const parts = []
+    const split_by_len = split_by.length
+    for (let i = 1; i < num_of_parts; i++) {
+        let offset = part_l
+        while (text.substr(offset, split_by_len) !== split_by && offset < l)
+            offset++
+        if (offset === l)
+            break
+        parts.push(text.slice(0, offset))
+        text = text.slice(offset + split_by_len)
+    }
+    parts.push(text)
+    return parts
 }

@@ -4,6 +4,8 @@ import {createFocusTrap} from 'focus-trap'
 export const round = n => Math.round(n * 10) / 10
 export const ar_nums = s => ('' + s).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'.substr(+d, 1))
 export const ar_nums_fmt = num => Intl.NumberFormat('ar-SA').format(num)
+export const fmt_num = n => document.documentElement.lang === 'ar' ? ar_nums(n) : n
+export const fmt_date = d => (new Date(d)).toLocaleString('en-UK')
 export const en_nums = s => s.replace(/[٠-٩]/g, d => d.charCodeAt(0) - 0x660)
 export const strip_harakat = s => ('' + s).replace(/[ً-ْۖ-ٰۜ]/g, '')
 export const now_hours = () => ms_to_hours(Date.now())

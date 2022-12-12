@@ -77,6 +77,7 @@ export function median(vals) {
 export function repeat_click(el, callback) {
     let repeat_interval
     function click_wrapper(e) {
+        cleanup()
         if (window._useragent.ios) // Prevent text selection
             e.preventDefault()
         callback()
@@ -330,6 +331,16 @@ export function save_txt(data, file_name) {
     a.click()
     URL.revokeObjectURL(url)
     document.body.removeChild(a)
+}
+export function read_file(file, read_as = 'Text') {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader
+        reader.onload = () => {
+            resolve(reader.result)
+        }
+        reader.onerror = reject
+        reader['readAs' + read_as](file) // ArrayBuffer | BinaryString | DataURL | Text
+    })
 }
 
 export function split_text(text, num_of_parts=4, split_by='\n\n\n') {

@@ -15,11 +15,11 @@ import {on, off} from 'components/src/util.js'
 export let hide_on_click = true
 export let append_to_body = false
 
-// iOS rarely fires window.mousedown, so we need to use document
-const mousedown = e => setTimeout(() => hide_cont(e), 5)
-on(document, 'mousedown', mousedown)
+// iOS rarely fires window.mouseup, so we need to use document
+const mouseup = e => setTimeout(() => hide_cont(e), 5)
+on(document, 'mouseup', mouseup)
 onDestroy(() => {
-    off(document, 'mousedown', mousedown)
+    off(document, 'mouseup', mouseup)
 })
 
 let wrapper
@@ -46,12 +46,12 @@ async function show(e) {
         document.body.appendChild(wrapper)
 }
 function hide_cont(e) {
-    if (!e.screenX) // Vimium triggers mousedown
+    if (!e.screenX) // Vimium triggers mouseup
         return
     const el = e.target
     // if clicked inside: only hide if hide_on_click is true and the el we clicked on isn't an input
     if (shown && wrapper && (!wrapper.contains(el) || (hide_on_click && el.tagName !== 'INPUT')))
-        // Delay so that show runs first. Note: mousedown and click run in
+        // Delay so that show runs first. Note: mouseup and click run in
         // opposite order on mobile devices, so might not be needed by mobile
         setTimeout(() => shown = false, e.target === show_el ? 200 : 80)
 }

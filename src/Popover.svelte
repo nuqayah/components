@@ -14,6 +14,7 @@ import {on, off} from 'components/src/util.js'
 
 export let hide_on_click = true
 export let append_to_body = false
+export let shown = false // rarely needed but useful for debugging
 
 // iOS rarely fires window.mouseup, so we need to use document
 const mouseup = e => setTimeout(() => hide_cont(e), 5)
@@ -23,7 +24,6 @@ onDestroy(() => {
 })
 
 let wrapper
-let shown = false
 let show_el = null
 
 function position_cont() {

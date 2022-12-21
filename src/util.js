@@ -343,6 +343,14 @@ export function read_file(file, read_as = 'Text') {
     })
 }
 
+export async function cache_first(url, cache_name = 'app-cache') {
+    const cache = await caches.open(cache_name)
+    return await cache.match(url) || await fetch(url).then(res => {
+        cache.put(url, res.clone())
+        return res
+    })
+}
+
 export function split_text(text, num_of_parts=4, split_by='\n\n\n') {
     // used by collab before codemirror as each file was multiple tabs
     const l = text.length

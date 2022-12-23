@@ -119,6 +119,9 @@ export function prep_ar_query(q) {
     return RegExp(q.replace(multi_match_re, m => `[${multi_match_map[m]}]`), 'g')
 }
 export function highlight(qry, str, prep_query, should_prep_query = true) {
+    // Note: if qry matches many chars it'll create many <mark> tags which can affect perf
+    if (!qry)
+        return str
     qry = qry instanceof RegExp || !should_prep_query ? qry : prep_ar_query(qry)
     return add_zwj(str.replace(qry, '<mark>$&</mark>'))
 }

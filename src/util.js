@@ -378,7 +378,7 @@ export function split_text(text, num_of_parts=4, split_by='\n\n\n') {
     return parts
 }
 
-function open_window(component, props, options={}) {
+export function open_window(component, props, options={}) {
     const popup = open('about:blank', '_blank', 'width=800,height=1200,resizable', false)
     popup.addEventListener('beforeunload', () => {
         popup._component?.$destroy()

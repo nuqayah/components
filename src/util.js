@@ -57,6 +57,11 @@ export function shuffle(ar) {
     return ar
 }
 
+export function get_image_xy(src) {
+    const img = new Image
+    img.src = src
+    return new Promise(resolve => img.onload = () => resolve({x: img.width, y: img.height}))
+}
 // For virtualListDynamic
 export function max_supported_height() {
     const div = Object.assign(document.createElement('div'), {
@@ -371,4 +376,22 @@ export function split_text(text, num_of_parts=4, split_by='\n\n\n') {
     }
     parts.push(text)
     return parts
+}
+
+function open_window(component, props, options={}) {
+    const popup = open('about:blank', '_blank', 'width=800,height=1200,resizable', false)
+    popup.addEventListener('beforeunload', () => {
+        popup._component?.$destroy()
+    })
+    if (options.append_css ?? true) {
+        ;[...document.querySelectorAll('link[rel="stylesheet"], style')].forEach(el => {
+            const attrs_names = {LINK: ['rel', 'href'], STYLE: ['id', 'innerHTML']}
+            const attrs = get_items_by_keys(attrs_names[el.tagName], el)
+            popup.document.head.appendChild(create_el(el.tagName, attrs))
+        })
+    }
+    const cont = popup.document.createElement('main')
+    popup._component = new component({props, target: cont})
+    popup.document.body.appendChild(cont)
+    return popup
 }

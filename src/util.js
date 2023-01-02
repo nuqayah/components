@@ -395,3 +395,22 @@ export function open_window(component, props, options={}) {
     popup.document.body.appendChild(cont)
     return popup
 }
+
+export async function archive_book_images(id, file) {
+    const {server, dir} = await fetch('https://archive.org/metadata/' + id).then(r => r.json())
+    const url_base = `https://${server}/BookReader/BookReader`
+    const params = {id, subPrefix: file, server, itemPath: dir, format: 'json'}
+    const img_metadata_url = url_base + `JSIA.php?` + new URLSearchParams(params)
+    const img_metadata = (await fetch(img_metadata_url).then(r => r.json())).data.brOptions.data.flat()
+
+    return {
+        get_img: (i, scale=1) => url_base + `Images.php?` + new URLSearchParams({
+            id,
+            zip: `${dir}/${file}_jp2.zip`,
+            file: `${file}_jp2/${file}_${i.toString().padStart(4, '0')}.jp2`,
+            scale,
+        }),
+        sizes: img_metadata.map(x => [x.width, x.height]),
+        count: img_metadata.length,
+    }
+}

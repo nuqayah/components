@@ -12,6 +12,7 @@ export const strip_harakat = s => ('' + s).replace(/[ً-ْۖ-ٰۜ]/g, '')
 export const now_hours = () => ms_to_hours(Date.now())
 export const clone_object = o => JSON.parse(JSON.stringify(o))
 export const int_clamp = (int, min, max) => Math.max(Math.min(int, max), min)
+export const int_clamp_loop = (int, min, max) => int < min ? max : int > max ? min : int
 export function debounce(fn, timeout) {
     let timeout_id
     return (...args) => {

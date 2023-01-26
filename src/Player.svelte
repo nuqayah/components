@@ -7,21 +7,21 @@
     on:input={seeker_input}
     on:click={window._useragent?.ios ? ios_seeker_click : () => {}}
     value={seeker_value}
-    style="--bg-size: {seeker_style}%"
+    style="--bg-size: {seeker_size}%"
   >
   <div class=now-playing>
     <span class=time-passed>{fmt_time(time_passed)}</span>
     <PlayButton on:click={toggle_playing} {playing} bind:button={play_btn}/>
     <span class=time-remaining>-{fmt_time(duration - time_passed)}</span>
   </div>
-  <div class=seek-btns use:init_seek_btns>
-    <button class="speed decrease"><icon id=slower></button>
-    <output class=play-speed><icon id=speed><span>{playback_rate.toFixed(2)}x</span></output>
-    <button class="speed increase"><icon id=faster></button>
-    <span class=sep />
-    <button class="skip decrease"><icon id=skip-back></button>
+  <div class=seek-btns>
+    <button use:repeat_click={() => audio.playbackRate = int_clamp(audio.playbackRate - 0.1, 0.4, 4)}><icon id=slower></button>
+    <output class=play-speed><icon id=speed><span>{audio.playbackRate.toFixed(2)}x</span></output>
+    <button use:repeat_click={() => audio.playbackRate = int_clamp(audio.playbackRate + 0.1, 0.4, 4)}><icon id=faster></button>
+    <span/>
+    <button use:repeat_click={() => { audio.currentTime += -5 }}><icon id=skip-back></button>
     <span> </span>
-    <button class="skip increase"><icon id=skip-forward></button>
+    <button use:repeat_click={() => { audio.currentTime += 5 }}><icon id=skip-forward></button>
   </div>
 </section>
 
@@ -29,23 +29,18 @@
 
 <script>
 import PlayButton from './PlayButton.svelte'
-
-const fmt_time = s => (new Date(s * 1000).toISOString().slice(10, 19)).replace(/T(00:)?/, '')
-const int_bound = (int, min, max) => Math.max(Math.min(int, max), min)
+import {int_clamp, repeat_click} from 'components/src/util.js'
 
 export let src
 export let kv = undefined
 export let duration = 0
 export let timeupdate = false
 
-
 let play_btn
-let playback_rate = 1
 let playing = false
 let time_passed = duration
 let seeker_value = 0
-let seeker_style = 0
-
+let seeker_size = 0
 
 // Audio
 export const audio = new Audio()
@@ -67,7 +62,7 @@ audio.addEventListener('timeupdate', () => {
         const cur = audio.currentTime
         time_passed = cur
         seeker_value = cur
-        seeker_style = int_bound((cur / (duration || 1)) * 100, 1, 100)
+        seeker_size = int_clamp((cur / (duration || 1)) * 100, 1, 100)
     })
     if (!(every_forth = (every_forth + 1) % 4)) {
         if (timeupdate)
@@ -76,7 +71,6 @@ audio.addEventListener('timeupdate', () => {
             kv.set(src, audio.currentTime)
     }
 })
-$: audio.playbackRate = playback_rate
 const toggle_playing = () => { audio[audio.paused ? 'play' : 'pause']() }
 
 export function set_time(time) {
@@ -109,34 +103,6 @@ function seeker_input(e) {
     audio.dispatchEvent(new CustomEvent('timeupdate'))
 }
 const ios_seeker_click = e => { audio.currentTime = (e.offsetX / e.target.offsetWidth) * duration }
-
-
-// Seek btns
-function init_seek_btns(cont) {
-    function val_change(e) {
-        const sign = e.target.classList.contains('decrease') ? -1 : 1
-        if (e.target.classList.contains('skip'))
-            audio.currentTime += 5 * sign
-        else {
-            playback_rate = int_bound(playback_rate + 0.1 * sign, 0.4, 4)
-        }
-        if (e.preventDefault)
-            e.preventDefault()
-    }
-
-    let repeat_interval
-    function val_change_wrapper(e) {
-        val_change(e)
-        clearInterval(repeat_interval)
-        repeat_interval = setInterval(() => val_change(e), 150)
-    }
-    const btns = cont.querySelectorAll('button')
-    ;[...btns].forEach(btn => btn.addEventListener('mousedown', val_change_wrapper))
-    ;[...btns].forEach(btn => btn.addEventListener('touchstart', val_change_wrapper))
-    document.documentElement.addEventListener('mouseup', () => clearInterval(repeat_interval))
-    ;[...btns].forEach(btn => btn.addEventListener('touchend', () => clearInterval(repeat_interval)))
-}
-
 
 // Misc
 function handle_keydown(e) {

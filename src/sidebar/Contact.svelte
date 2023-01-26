@@ -1,14 +1,11 @@
 <form method=post action=https://tafsir.app/msg.php on:submit|preventDefault={send_msg}>
   <input type=text name=name placeholder=الاسم autofocus>
   <input type=email name=email placeholder=email@example.com>
-  <textarea type=textarea name=msg placeholder=الرسالة rows=5 required></textarea>
-  <button type=submit name=submit>إرسال</button>
+  <textarea name=msg placeholder=الرسالة rows=5 required/>
+  <button class=btn type=submit>إرسال</button>
 </form>
 
-<button bind:this={closer} data-close hidden></button>
 <script>
-let closer
-
 function send_msg(e) {
     const form = e.target
     const data = {
@@ -24,7 +21,7 @@ function send_msg(e) {
         .catch(() => submit_btn.textContent = 'حصل خطأ')
         .then(() => {
             setTimeout(() => {
-                closer.click()
+                dispatch('close')
                 submit_btn.disabled = false
                 submit_btn.textContent = submit_msg
             }, 1500)

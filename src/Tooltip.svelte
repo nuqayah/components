@@ -12,13 +12,14 @@
 {/if}
 </div>
 
-<svelte:window on:resize={debounce(() => {$options = $options}, 12)} on:mousedown={hide_on_click}/>
+<svelte:window on:resize={debounce(() => {$options = $options}, 12)}/>
 
 <script context=module>
 import {writable, get} from 'svelte/store'
 export const options = writable({direction: 'top'})
 
 let tooltip_cont
+let hide_timeout
 function show(props, el) {
     function get_msg() {
         let msg = ''
@@ -40,6 +41,10 @@ function show(props, el) {
         props.msg = get_msg() // Get the message each time as it could update
         should_hide = false
         options.set({...defaults, ...props})
+        if (props.timeout) {
+            clearTimeout(hide_timeout)
+            hide_timeout = setTimeout(() => options.set({show: false}), props.timeout)
+        }
     }
 }
 function hide_on_click(e) {
@@ -92,7 +97,12 @@ export function click_action(el, props) {
 
 <script>
 import positioner from 'positioner'
-import {debounce} from 'components/src/util.js'
+import {debounce, on, off} from 'components/src/util.js'
+
+on(document, 'mousedown', hide_on_click)
+onDestroy(() => {
+    off(document, 'mousedown', hide_on_click)
+})
 
 function reposition(el) {
     async function update() {

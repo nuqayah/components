@@ -22,7 +22,7 @@
 
     <ul>
       <li>تطوير: <br><a href=https://nuqayah.com><img src=https://nuqayah.com/assets/nuqayah.svg id=nuqayah-logo alt="نقاية"></a></li>
-      <li>رعاية: <br><a href=https://ayatt.net><img src=https://nuqayah.com/assets/img/ayatt-logo.svg id=ayatt-logo alt="جمعية آيات الخيرية"></a></li>
+      <li>رعاية: <br><a href=https://ayatt.org.kw><img src=https://nuqayah.com/assets/img/ayatt-logo.svg id=ayatt-logo alt="جمعية آيات الخيرية"></a></li>
     </ul>
   </nav>
 {/if}

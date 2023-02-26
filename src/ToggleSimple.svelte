@@ -22,26 +22,25 @@ div {
   transition: background 0.4s ease;
   transform: scale(0.7);
 }
-div:after, div:before {
+div::after {
   position: relative;
   display: block;
   content: "";
   width: 50%;
   height: 100%;
-}
-div:after {
-  inset-inline-start: 0%;
+
+  left: 0%;
   border-radius: 50%;
   background: #fff;
-  transition: inset-inline-start 0.2s ease;
-}
-div:before {
-  display: none;
+  transition: left 0.2s ease;
 }
 input[type=checkbox]:checked + div {
   background: #009642;
 }
-input[type=checkbox]:checked + div:after {
-  inset-inline-start: 50%;
+input[type=checkbox]:checked + div::after {
+  left: 50%;
+}
+:global(html[dir=rtl]) input[type=checkbox]:checked + div::after {
+  left: -50%;
 }
 </style>

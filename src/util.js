@@ -171,8 +171,8 @@ export function for_next(el) {
     el.htmlFor = id
 }
 
-export function copy_text(text) {
-    if ('clipboard' in navigator)
+export function copy_text(text, avoid_clipboard) { // avoid_clipboard is for android webview
+    if ('clipboard' in navigator && !avoid_clipboard)
         return navigator.clipboard.writeText(text)
     else {
         const ta = document.createElement('textarea')

@@ -415,3 +415,9 @@ export async function archive_book_images(id, file) {
         count: img_metadata.length,
     }
 }
+
+export async function clear_sw_and_caches() {
+    for (const reg of await navigator.serviceWorker.getRegistrations())
+        await reg.unregister()
+    await Promise.all((await caches.keys()).map(k => caches.delete(k)))
+}

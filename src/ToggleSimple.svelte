@@ -5,9 +5,6 @@ export let value = false
 </script>
 
 <style>
-label {
-  cursor: pointer;
-}
 div {
   outline: 0;
   width: 2.8rem;

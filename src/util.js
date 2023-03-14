@@ -199,7 +199,7 @@ export const get_x_offset_percent = e => (e.currentTarget.offsetWidth - e.offset
 export const el_index = el => [...el.parentElement.children].indexOf(el)
 
 export const insert_str_at = (str, i, sub, ln) => str.slice(0, i) + sub + str.slice(i + ln)
-export const apply_repls = (s, repls) => repls.reduce((a, b) => a[b[2] ? 'replaceAll' : 'replace'](b[0], b[1]), s)
+export const apply_repls = (s, repls) => repls.reduce((str, repl) => str[repl[0] instanceof RegExp ? 'replace' : 'replaceAll'](repl[0], repl[1]), s)
 
 export function separate_diff(diff, OMITTED_TEXT_MARKER = '\n...\n') {
     const text = {old: '', new: ''}

@@ -112,6 +112,14 @@ export function set_top_offset(el, visible=true) {
         update(visible)
     return {update}
 }
+function append_to(el, cont) {
+    function update(cont) {
+        if (el.parentElement !== cont)
+            cont.appendChild(el)
+    }
+    update(cont)
+    return {update}
+}
 
 export const unescape_str = s => s.replace(/(^|[^\\])\\(n|t|u[0-9a-f]{4})/g, (m, m1, m2) => JSON.parse(`"\\${m2}"`))
 export function add_zwj(str) {

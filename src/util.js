@@ -112,7 +112,7 @@ export function set_top_offset(el, visible=true) {
         update(visible)
     return {update}
 }
-function append_to(el, cont) {
+export function append_to(el, cont) {
     function update(cont) {
         if (el.parentElement !== cont)
             cont.appendChild(el)

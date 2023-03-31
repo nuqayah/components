@@ -7,21 +7,15 @@
 {/if}
 
 <svelte:window on:resize={position_cont}/>
+<!-- iOS rarely fires window.mouseup, so we need to use document -->
+<svelte:document on:mouseup={e => setTimeout(() => hide_cont(e), 5)}/>
 
 <script>
 import positioner from 'positioner'
-import {on, off} from 'components/src/util.js'
 
 export let hide_on_click = true
 export let append_to_body = false
 export let shown = false // rarely needed but useful for debugging
-
-// iOS rarely fires window.mouseup, so we need to use document
-const mouseup = e => setTimeout(() => hide_cont(e), 5)
-on(document, 'mouseup', mouseup)
-onDestroy(() => {
-    off(document, 'mouseup', mouseup)
-})
 
 let wrapper
 let show_el = null

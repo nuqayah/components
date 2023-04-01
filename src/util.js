@@ -123,7 +123,7 @@ export function append_to(el, cont) {
 
 export const unescape_str = s => s.replace(/(^|[^\\])\\(n|t|u[0-9a-f]{4})/g, (m, m1, m2) => JSON.parse(`"\\${m2}"`))
 export function add_zwj(str) {
-    return window._useragent?.safari ? str.replace(/([ئبت-خس-غف-نهي])([^ء-ي ]*<[^>]+>[ً-ْٰۖۗۚۛۜ]*)(?=[آ-ي])/g, '$1&zwj;$2&zwj;') : str
+    return window._useragent?.safari ? str.replace(/([ئبت-خس-غف-نهيی])([^ء-يی\n ]*<[^>]+>[ً-ْٰۖۗۚۛۜ]*)(?=[آ-يی])/g, '$1&zwj;$2&zwj;') : str
 }
 export const multi_match_map = {ا: 'اأآإى', أ: 'أإءؤئ', ء: 'ءأإؤئ', ت: 'تة', ة: 'ةته', ه: 'هة', ى: 'ىاي', ي: 'يى'}
 export const multi_match_re = RegExp(`[${Object.keys(multi_match_map).join('')}]`, 'g')

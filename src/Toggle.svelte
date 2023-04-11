@@ -30,18 +30,28 @@ div::after {
   width: 50%;
   height: 100%;
 
-  left: 0%;
+  inset-inline-start: 0%;
+  transition: inset-inline-start 0.2s ease;
   border-radius: 50%;
   background: #fff;
-  transition: left 0.2s ease;
 }
 input[type=checkbox]:checked + div {
   background: #009642;
 }
 input[type=checkbox]:checked + div::after {
-  left: 50%;
+  inset-inline-start: 50%;
 }
-:global(html[dir=rtl]) input[type=checkbox]:checked + div::after {
-  left: -50%;
+@supports not (inset-inline-start: 0%) {
+  div::after {
+    transition: left 0.2s ease;
+    left: 0%;
+  }
+
+  input[type=checkbox]:checked + div::after {
+    left: 50%;
+  }
+  :global(html[dir=rtl]) input[type=checkbox]:checked + div::after {
+    left: -50%;
+  }
 }
 </style>

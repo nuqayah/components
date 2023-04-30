@@ -340,8 +340,10 @@ export function in_view(node, params = {}) {
     }
 }
 
-export function save_txt(data, file_name) {
-    const blob = new Blob([data], {type: 'text/plain'})
+export function download_blob(data, file_name, mime_type) {
+    if (!mime_type)
+        mime_type = ({txt: 'text/plain', json: 'application/json'})[file_name.split('.').pop().toLowerCase()]
+    const blob = new Blob([data], {type: mime_type})
     const url = URL.createObjectURL(blob)
     const a = Object.assign(document.createElement('a'), {href: url, download: file_name, hidden: true})
     document.body.appendChild(a)

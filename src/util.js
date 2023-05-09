@@ -132,6 +132,12 @@ export function prep_ar_query(q) {
     // 'g' isn't usually needed since we only .test, but if highlighting we need 'g'
     return RegExp(q.replace(multi_match_re, m => `[${multi_match_map[m]}]`), 'g')
 }
+export function prep_ar_query_gapped(q) {
+    q = q.replace(/[^\p{sc=Arabic}\p{N} ]/gu, '')
+    if (!q.trim())
+        return
+    return RegExp(q.replace(/\s+/g, '.*?').replace(multi_match_re, m => `[${multi_match_map[m]}]`))
+}
 export function highlight(qry, str, prep_query, should_prep_query = true) {
     // Note: if qry matches many chars it'll create many <mark> tags which can affect perf
     if (!qry)

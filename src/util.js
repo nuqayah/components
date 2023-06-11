@@ -134,8 +134,8 @@ export function prep_ar_query(q) {
 }
 
 export function prep_ar_query_gapped(q) {
-    q = q.replace(/[^\p{sc=Arabic}\p{N} ]/gu, '')
-    if (!q.trim())
+    q = q.replace(/[^\p{sc=Arabic}\p{N} ]/gu, '').trim()
+    if (!q)
         return
     return RegExp(q.replace(/\s+/g, '.*?').replace(multi_match_re, m => `[${multi_match_map[m]}]`))
 }
@@ -187,8 +187,14 @@ export function filterer(query, items, filter, should_prep_query = true) {
 export const harakat_prep = s => RegExp(s.replace(/[ء-يّ]/g, '$&[ً-ْ]*'), 'g')
 export const rand_id = () => Math.random().toString(16).slice(2, 8)
 export function for_next(el) {
-    const id = 'uid-' + rand_id()
-    el.nextElementSibling.id = id
+    const next_el = el.nextElementSibling
+    if (!['input', 'textarea', 'select'].includes(next_el.tagName.toLowerCase())) {
+        console.warn(next_el + ' is not a valid for element')
+        return
+    }
+
+    const id = next_el.id || 'uid-' + rand_id()
+    next_el.id = id
     el.htmlFor = id
 }
 

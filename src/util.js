@@ -140,8 +140,7 @@ export function prep_ar_query_gapped(q) {
     return RegExp(q.replace(/\s+/g, '.*?').replace(multi_match_re, m => `[${multi_match_map[m]}]`))
 }
 export function highlight_gapped(qry, str) {
-    // FIXME: assumes no regex flags were passed
-    const parts = qry instanceof RegExp ? qry.toString().slice(1, -1).split('.*?') : qry.split(' ')
+    const parts = qry instanceof RegExp ? qry.source.split('.*?') : qry.split(' ')
     // Avoid highlighting short strings globally, as it adds noise
     return parts.reduce((acc, s) => acc.replace(RegExp(s, 'i' + (s.length > 2 ? 'g' : '')), '<mark>$&</mark>'), str)
 }

@@ -142,7 +142,7 @@ export function prep_ar_query_gapped(q) {
 export function highlight_gapped(qry, str) {
     const parts = qry instanceof RegExp ? qry.source.split('.*?') : qry.split(' ')
     // Avoid highlighting short strings globally, as it adds noise
-    return parts.reduce((acc, s) => acc.replace(RegExp(s, 'i' + (s.length > 2 ? 'g' : '')), '<mark>$&</mark>'), str)
+    return add_zwj(parts.reduce((acc, s) => acc.replace(RegExp(s, 'i' + (s.length > 2 ? 'g' : '')), '<mark>$&</mark>'), str))
 }
 export function highlight(qry, str, prep_query, should_prep_query = true) {
     // Note: if qry matches many chars it'll create many <mark> tags which can affect perf

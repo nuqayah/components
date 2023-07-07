@@ -135,8 +135,6 @@ export function prep_ar_query(q) {
 
 export function prep_ar_query_gapped(q) {
     q = q.replace(/[^\p{sc=Arabic}\p{N} ]/gu, '').trim()
-    if (!q)
-        return
     return RegExp(q.replace(/\s+/g, '.*?').replace(multi_match_re, m => `[${multi_match_map[m]}]`))
 }
 export function highlight_gapped(qry, str) {

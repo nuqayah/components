@@ -29,7 +29,7 @@
 
 <script>
 import PlayButton from './PlayButton.svelte'
-import {int_clamp, repeat_click} from 'components/src/util.js'
+import {int_clamp, repeat_click, fmt_time} from 'components/src/util.js'
 
 export let src
 export let kv = undefined

@@ -34,7 +34,7 @@ import {int_clamp, repeat_click, fmt_time} from 'components/src/util.js'
 export let src
 export let kv = undefined
 export let duration = 0
-export let timeupdate = false
+export let timeupdate
 
 let play_btn
 let playing = false
@@ -64,12 +64,9 @@ audio.addEventListener('timeupdate', () => {
         seeker_value = cur
         seeker_size = int_clamp((cur / (duration || 1)) * 100, 1, 100)
     })
-    if (!(every_forth = (every_forth + 1) % 4)) {
-        if (timeupdate)
-            dispatch('timeupdate', audio.currentTime)
-        if (kv && audio.currentTime > 10)
-            kv.set(src, audio.currentTime)
-    }
+    timeupdate?.(audio.currentTime)
+    if (!(every_forth = (every_forth + 1) % 4) && kv && audio.currentTime > 10)
+        kv.set(src, audio.currentTime)
 })
 const toggle_playing = () => { audio[audio.paused ? 'play' : 'pause']() }
 

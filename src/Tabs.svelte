@@ -14,8 +14,8 @@ let tab_bar_cont
 let CHANGING_TAB = false
 
 function tab_bar_click(e) {
-    const btn = e.target.closest('button')
-    if (btn.classList.contains('active') || CHANGING_TAB)
+    const btn = e.target.closest('button.tab-btn')
+    if (!btn || btn.classList.contains('active') || CHANGING_TAB)
         return
     change_tab(btn)
 }
@@ -24,7 +24,7 @@ function change_tab(btn) {
     tab_bar_cont.querySelector('button.active').classList.remove('active')
     btn.classList.add('active')
 
-    const i = [...btn.parentElement.children].indexOf(btn)
+    const i = [...tab_bar_cont.querySelectorAll('.tab-btn')].indexOf(btn)
     const cur_tab = tabs_cont.querySelector('section.active')
     cur_tab.style.opacity = 0
     cur_tab.addEventListener('transitionend', () => {
@@ -50,8 +50,8 @@ export function set_tab(tab_num) {
 }
 
 onMount(() => {
-    tab_bar_cont.querySelector(`button:nth-child(${current_tab})`).classList.add('active')
-    tabs_cont.querySelector(`section:nth-child(${current_tab})`).classList.add('active')
+    tab_bar_cont.querySelector(`button.tab-btn:nth-child(${current_tab})`).classList.add('active')
+    tabs_cont.querySelector(`:scope > section:nth-child(${current_tab})`).classList.add('active')
 })
 </script>
 

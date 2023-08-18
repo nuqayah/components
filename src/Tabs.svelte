@@ -62,7 +62,6 @@ onMount(() => {
   display: flex;
 }
 .tabs-cont > :global(section) {
-  padding: 0.3rem;
   transition: opacity 0.3s;
   width: 100%;
 }

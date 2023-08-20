@@ -21,7 +21,7 @@ function tab_bar_click(e) {
 }
 function change_tab(btn) {
     CHANGING_TAB = true
-    tab_bar_cont.querySelector('button.active').classList.remove('active')
+    tab_bar_cont.querySelector('button.tab-btn.active')?.classList.remove('active')
     btn.classList.add('active')
 
     const i = [...tab_bar_cont.querySelectorAll('.tab-btn')].indexOf(btn)

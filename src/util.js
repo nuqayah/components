@@ -315,7 +315,7 @@ export function longest_consecutive_sequence(nums) {
 }
 export const get_items_by_keys = (keys, o) => Object.fromEntries(keys.filter(k => k in o).map(k => [k, o[k]]))
 export const to_id_map = data => Object.fromEntries(data.map(f => [f.id, f]))
-export const url_params = s => Object.fromEntries([...new URLSearchParams(s).entries()])
+export const url_params = s => Object.fromEntries(new URLSearchParams(s).entries())
 
 export function set_title(t) {
     document.title = (t ? (t + ' | ') : '') + window.BASE_TITLE

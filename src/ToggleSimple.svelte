@@ -6,12 +6,8 @@ export let value = false
 
 <style>
 div {
-  outline: 0;
   width: 2.8rem;
   height: 1.5rem;
-  position: relative;
-  cursor: pointer;
-  user-select: none;
 
   background: var(--border-color, #ddd);
   border-radius: 1.5rem;

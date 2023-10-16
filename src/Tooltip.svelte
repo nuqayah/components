@@ -38,7 +38,7 @@ function show(props, el) {
     }
     const defaults = {show: true, direction: 'top', attach_to: el, ok_btn: false}
     return () => {
-        props.msg = get_msg() // Get the message each time as it could update
+        props.msg = props?.get_msg() || get_msg() // Get the message each time as it could update
         should_hide = false
         options.set({...defaults, ...props})
         if (props.timeout) {

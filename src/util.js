@@ -202,7 +202,7 @@ export function copy_text(text, avoid_clipboard) { // avoid_clipboard is for and
         if (typeof text?.then === 'function') {
             if (window._useragent.safari)
                 return navigator.clipboard.write([
-                    new ClipboardItem({'text/plain': get_pages()}),
+                    new ClipboardItem({'text/plain': text}),
                 ])
             return text.then(t => navigator.clipboard.writeText(t))
         }

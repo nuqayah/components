@@ -198,8 +198,17 @@ export function for_next(el) {
 }
 
 export function copy_text(text, avoid_clipboard) { // avoid_clipboard is for android webview
-    if ('clipboard' in navigator && !avoid_clipboard)
-        return navigator.clipboard.writeText(text)
+    if ('clipboard' in navigator && !avoid_clipboard) {
+        if (typeof text?.then === 'function') {
+            if (window._useragent.safari)
+                return navigator.clipboard.write([
+                    new ClipboardItem({'text/plain': get_pages()}),
+                ])
+            return text.then(t => navigator.clipboard.writeText(t))
+        }
+        else
+            return navigator.clipboard.writeText(text)
+    }
     else {
         const ta = document.createElement('textarea')
         Object.assign(ta, {value: text, style: 'position: fixed; top: -9999em'})

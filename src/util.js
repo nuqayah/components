@@ -107,8 +107,7 @@ export function set_top_offset(el, visible=true) {
         if (el && visible)
             setTimeout(() => {
                 el.style.setProperty('--top-offset', `${el.getBoundingClientRect().top + 5 + window._VH_OFFSET}px`)
-            // On iOS, when expanding a PWA, the top offset is wrong
-            }, window._useragent?.safari ? 200 : 0)
+            }, 15)
     }
     if (visible)
         update(visible)

@@ -49,4 +49,9 @@ function hide_cont(e) {
         // opposite order on mobile devices, so might not be needed by mobile
         setTimeout(() => shown = false, e.target === show_el ? 200 : 80)
 }
+
+onDestroy(() => {
+    if (append_to_body)
+        wrapper.remove()
+})
 </script>

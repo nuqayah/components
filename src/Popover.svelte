@@ -52,6 +52,6 @@ function hide_cont(e) {
 
 onDestroy(() => {
     if (append_to_body)
-        wrapper.remove()
+        wrapper?.remove()
 })
 </script>

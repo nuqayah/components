@@ -102,6 +102,13 @@ export function repeat_click(el, callback) {
     }
 }
 
+export function get_vh_offset() {
+    const div = create_el('div', {style: 'position: absolute; height: 100vh'})
+    document.body.appendChild(div)
+    const {clientHeight} = div
+    div.remove()
+    return clientHeight - window.innerHeight
+}
 export function set_top_offset(el, visible=true) {
     function update(visible=true) {
         if (el && visible)

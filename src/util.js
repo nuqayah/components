@@ -384,6 +384,14 @@ export function download_blob(data, file_name, mime_type) {
     URL.revokeObjectURL(url)
     document.body.removeChild(a)
 }
+/**
+ * Reads a file and returns its content as a Promise.
+ *
+ * @param {File} file - The file to be read.
+ * @param {('Text'|'BinaryString'|'DataURL'|'ArrayBuffer')} [read_as='Text'] - The format to read the file as. (default: 'Text')
+ * @returns {Promise<string|ArrayBuffer>} A Promise that resolves with the file's content in the specified format.
+ * @throws Will throw an error if the reading process fails.
+ */
 export function read_file(file, read_as = 'Text') {
     return new Promise((resolve, reject) => {
         const reader = new FileReader
@@ -391,7 +399,7 @@ export function read_file(file, read_as = 'Text') {
             resolve(reader.result)
         }
         reader.onerror = reject
-        reader['readAs' + read_as](file) // ArrayBuffer | BinaryString | DataURL | Text
+        reader['readAs' + read_as](file)
     })
 }
 

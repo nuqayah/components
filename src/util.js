@@ -472,3 +472,23 @@ export async function clear_sw_and_caches() {
         await reg.unregister()
     await Promise.all((await caches.keys()).map(k => caches.delete(k)))
 }
+
+/**
+ * Prepares a proxy configuration object for vite from an array of [path, target] pairs.
+ *
+ * @param {Array<[string, string]>} proxies An array of [path, target] pairs.
+ * Each sub-array should contain two strings: the path to proxy and the target URL to proxy to.
+ *
+ * @returns {object} A proxy configuration object.
+ */
+export function prep_vite_proxy(proxies) {
+    return Object.fromEntries(proxies.map(([path, target]) => [
+        path,
+        {
+            target,
+            rewrite: p => p.replace(RegExp(`^${path}`), ''),
+            changeOrigin: true,
+            secure: false,
+        },
+    ]))
+}

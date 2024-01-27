@@ -30,11 +30,12 @@
 <script>
 import PlayButton from './PlayButton.svelte'
 import {int_clamp, repeat_click, fmt_time} from 'components/src/util.js'
+import {onDestroy} from 'svelte'
 
 export let src
 export let kv = undefined
 export let duration = 0
-export let timeupdate
+export let timeupdate = null
 
 let play_btn
 let playing = false

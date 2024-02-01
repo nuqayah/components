@@ -2,7 +2,7 @@
 
 <script>
 export let active
-export let color = '#d8eedb'
+export let color = '#e3f2fd'
 </script>
 
 <style>

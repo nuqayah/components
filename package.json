@@ -1,6 +1,6 @@
 {
   "name": "components",
-  "version": "1.0.138",
+  "version": "1.0.142",
   "svelte": "src/index.js",
   "repository": "github:mustafa0x/components",
   "type": "module",
@@ -11,6 +11,6 @@
     "positioner": "github:mustafa0x/positioner#v1.0.3"
   },
   "scripts": {
-    "publish": "VER=$(npm --no-git-tag-version version patch) && git add package.json && git commit --amend --no-edit && git tag $VER && git push && git push --tags"
+    "publish": "VER=$(npm --no-git-tag-version version patch) && git add package.json && git commit --amend --no-edit && git tag -f $VER && git push -f && git push --tags -f"
   }
 }

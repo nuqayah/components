@@ -492,3 +492,25 @@ export function prep_vite_proxy(proxies) {
         },
     ]))
 }
+
+/**
+ * Uses Intl.RelativeTimeFormat to format the relative time between two dates.
+ *
+ * @param {Intl.RelativeTimeFormat} rtf
+ * @param {Date} d1
+ * @param {Date} d2
+ */
+export default function relative_time(rtf, d1, d2=new Date) {
+    const units = [
+        ['year',   31536000],
+        ['month',  2628000],
+        ['day',    86400],
+        ['hour',   3600],
+        ['minute', 60],
+        ['second', 1],
+    ]
+    const elapsed = (d1 - d2) / 1e3
+    const elapsed_abs = Math.max(Math.abs(elapsed), 1000) // In case < 1 second
+    const [unit, value] = units.find(([, value]) => elapsed_abs >= value)
+    return rtf.format(Math.round(elapsed / value), unit)
+}

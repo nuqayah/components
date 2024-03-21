@@ -7,6 +7,7 @@
 </ul>
 
 <script>
+import {tick, onMount} from 'svelte'
 import {debounce} from 'components/src/util.js'
 
 export let items

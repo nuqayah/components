@@ -11,6 +11,8 @@
 <svelte:document on:mouseup={e => setTimeout(() => hide_cont(e), 5)}/>
 
 <script>
+import {onDestroy, tick} from 'svelte'
+import {fly} from 'svelte/transition'
 import positioner from 'positioner'
 
 export let hide_on_click = true

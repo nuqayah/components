@@ -8,6 +8,8 @@
 </simple-slider>
 
 <script>
+import {onDestroy} from 'svelte'
+
 const el_index = el => [...el.parentElement.children].indexOf(el)
 
 export let count

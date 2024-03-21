@@ -24,6 +24,7 @@ export function show(component, props) {
 }
 </script>
 <script>
+import {fade} from 'svelte/transition'
 import {focus_trap} from 'components/src/util.js'
 
 $: if (!$options.shown && Object.keys($options).length) update_modal($options)

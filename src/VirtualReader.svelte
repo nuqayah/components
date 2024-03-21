@@ -16,6 +16,7 @@
 </div>
 
 <script>
+import {onMount, tick} from 'svelte'
 import {debounce} from 'components/src/util.js'
 
 export let count

@@ -28,6 +28,8 @@
 {/if}
 
 <script>
+import {createEventDispatcher} from 'svelte'
+import {fly} from 'svelte/transition'
 import Share from './Share.svelte'
 import Contact from './Contact.svelte'
 import Projects from './Projects.svelte'

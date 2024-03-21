@@ -7,6 +7,7 @@
 <svelte:window on:popstate={popstate} on:keydown={e => { if (e.key === 'Escape') show = false }}/>
 
 <script>
+import {fade} from 'svelte/transition'
 import {focus_trap, append_to} from 'components/src/util.js'
 
 export let show

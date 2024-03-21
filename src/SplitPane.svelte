@@ -17,6 +17,7 @@
 {/if}
 
 <script>
+import {onMount} from 'svelte'
 import {on, off, int_clamp} from 'components/src/util.js'
 
 export let type

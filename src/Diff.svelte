@@ -18,6 +18,7 @@
 </section>
 
 <script>
+import {tick} from 'svelte'
 import DiffMatchPatch from 'diff-match-patch'
 import {debounce, int_clamp} from 'components/src/util.js'
 

@@ -7,6 +7,7 @@
 </section>
 
 <script>
+import {onMount} from 'svelte'
 export let current_tab = 1
 
 let tabs_cont

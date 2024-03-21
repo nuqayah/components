@@ -15,7 +15,10 @@
 <svelte:window on:resize={debounce(() => {$options = $options}, 12)}/>
 
 <script context=module>
+import {onMount, onDestroy, tick} from 'svelte'
 import {writable, get} from 'svelte/store'
+import {fade, slide} from 'svelte/transition'
+
 export const options = writable({direction: 'top'})
 
 let tooltip_cont

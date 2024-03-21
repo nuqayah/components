@@ -10,6 +10,8 @@
 </div>
 
 <script>
+import {onMount, tick} from 'svelte'
+import {slide} from 'svelte/transition'
 import {debounce, median} from 'components/src/util.js'
 
 export let get_component

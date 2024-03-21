@@ -13,6 +13,7 @@
 <svelte:window on:resize={debounce(handle_scroll, 100)}/>
 
 <script>
+import {onMount} from 'svelte'
 import {debounce} from 'components/src/util.js'
 
 export let count

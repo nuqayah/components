@@ -1,13 +1,13 @@
 {
   "name": "components",
-  "version": "1.0.147",
+  "version": "2.0.0",
   "svelte": "src/index.js",
   "repository": "github:mustafa0x/components",
   "type": "module",
   "dependencies": {
     "diff-match-patch": "^1.0.5",
     "escape-string-regexp": "^5.0.0",
-    "focus-trap": "^7.2.0",
+    "focus-trap": "^7.5.4",
     "positioner": "github:mustafa0x/positioner#v1.0.3"
   },
   "scripts": {

@@ -1,5 +1,13 @@
 {#if modal_options.show}
-<div class=modal-overlay tabindex=-1 data-close on:click={overlay_click} transition:fade={{duration: 180}} use:focus_trap>
+<div
+  class=modal-overlay
+  tabindex=-1
+  data-close
+  on:mousedown={e => click_start_element = e.target}
+  on:click={overlay_click}
+  transition:fade={{duration: 180}}
+  use:focus_trap
+>
   <div class=modal-container role=dialog aria-modal=true style="max-width: {modal_options.max_width}">
     <header>
       {#if title}<h2 class="text-lg font-bold">{title}</h2>{/if}
@@ -30,7 +38,7 @@ import {focus_trap} from 'components/src/util.js'
 $: if (!$options.shown && Object.keys($options).length) update_modal($options)
 
 function overlay_click(e) {
-    if ('close' in e.target.dataset)
+    if ('close' in e.target.dataset && e.target === click_start_element)
         update_modal({show: false})
 }
 
@@ -39,6 +47,7 @@ function set_body_scroll(shown) {
 }
 $: set_body_scroll(modal_options.show)
 
+let click_start_element = null
 let title
 let modal_options_tpl = {show: false, props: {}, component: null, max_width: '580px'}
 let modal_options = {...modal_options_tpl}

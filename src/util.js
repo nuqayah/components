@@ -164,7 +164,7 @@ export function basic_searcher(q, str) {
         return q.test(str)
     }
     else
-        return str.includes(q)
+        return str.toLowerCase().includes(q.toLowerCase())
 }
 export function filterer(query, items, filter, should_prep_query = true) {
     // filter can be a fn, an array of keys to search, or unset

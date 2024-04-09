@@ -278,6 +278,10 @@ export async function eval_script(script_text) { // eval pollutes scope
     return module
 }
 export function resize_textarea(el) {
+    if (CSS.supports('field-sizing: content')) {
+        el.style.setProperty('field-sizing', 'content')
+        return
+    }
     function resize(el) {
         el.style.height = ''
         el.style.height = 5 + el.scrollHeight + 'px'

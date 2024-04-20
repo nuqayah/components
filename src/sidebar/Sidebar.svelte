@@ -47,7 +47,7 @@ let sidebar
 $: dispatch('show', show)
 
 function open_modal(component) {
-    modal_options.set({component})
+    modal_options.set({component, show: true})
     show = false
 }
 function share() {

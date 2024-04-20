@@ -36,7 +36,7 @@ import Projects from './Projects.svelte'
 import InstallApp from './InstallApp.svelte'
 import Subscribe from './Subscribe.svelte'
 import Donate from './Donate.svelte'
-import {options as modal_options} from 'components/src/Modal.svelte'
+import {show as modal_show} from 'components/src/Modal.svelte'
 
 export let show = false
 export const show_projects = () => open_modal(Projects)
@@ -47,7 +47,7 @@ let sidebar
 $: dispatch('show', show)
 
 function open_modal(component) {
-    modal_options.set({component, show: true})
+    modal_show(component)
     show = false
 }
 function share() {
@@ -61,11 +61,6 @@ function clicked(e) {
     if (e.target.tagName === 'A')
         show = false
 }
-
-document.addEventListener('keydown', e => {
-    if (e.keyCode === 27)
-        modal_options.set({show: false})
-})
 </script>
 
 <style>

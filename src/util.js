@@ -146,6 +146,8 @@ export function prep_ar_query_gapped(q, strip_regex = /[^\p{sc=Arabic}\p{N} ]/gu
     return RegExp(q.replace(/\s+/g, '.*?').replace(multi_match_re, m => `[${multi_match_map[m]}]`))
 }
 export function highlight_gapped(qry, str) {
+    if (qry instanceof RegExp ? qry.source === '(?:)' : qry)
+        return str // An empty regex will match every char
     const parts = qry instanceof RegExp ? qry.source.split('.*?') : qry.split(' ')
     // Avoid highlighting short strings globally, as it adds noise
     return add_zwj(parts.reduce((acc, s) => acc.replace(RegExp(s, 'i' + (s.length > 2 ? 'g' : '')), '<mark>$&</mark>'), str))

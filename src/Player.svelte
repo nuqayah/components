@@ -88,7 +88,9 @@ async function set_audio(src) {
     audio.play().catch(() => {})
     audio.playbackRate = pbr
     audio.addEventListener('durationchange', () => {
-        duration = audio.duration
+        // I suspect this event sometimes fires incorrectly on iOS, giving us NaN
+        // TODO: if that is true, remove `once` and only remove cb if duration is valid
+        duration = audio.duration || 0
     }, {once: true})
     if (kv && await kv.get(src))
         set_time(await kv.get(src))

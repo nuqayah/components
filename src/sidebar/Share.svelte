@@ -20,9 +20,9 @@ const social = [
 export let url = location.origin
 export const title = 'شارك'
 
-function copy() {
-    const promise = copy_text(`${document.title}\n\n${url}`)
-    (promise || new Promise(r => r())).then(() => alert('نُسخ رابط التطبيق'))
+async function copy() {
+    await copy_text(`${document.title}\n\n${url}`)
+    alert('نُسخ رابط التطبيق')
 }
 </script>
 

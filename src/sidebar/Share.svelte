@@ -8,8 +8,6 @@
 </ul>
 
 <script>
-import {copy_text} from 'components/src/util.js'
-
 const social = [
     ['whatsapp', (url, title) => `https://api.whatsapp.com/send?text=${url}%0A${title}`],
     ['telegram', (url, title) => `https://telegram.me/share/url?url=${url}&text=${title}`],
@@ -18,12 +16,8 @@ const social = [
     ['mail', (url, title) => `mailto:?subject=${title}&body=${title}: ${url}`],
 ]
 export let url = location.origin
+export let copy
 export const title = 'شارك'
-
-async function copy() {
-    await copy_text(`${document.title}\n\n${url}`)
-    alert('نُسخ رابط التطبيق')
-}
 </script>
 
 <style>

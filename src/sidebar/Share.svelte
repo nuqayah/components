@@ -4,7 +4,7 @@
       <icon id={cls}>
     </a></li>
   {/each}
-  <li><button on:click={copy}><icon id=copy></button></li>
+  <li><button on:click={() => copy(url)}><icon id=copy></button></li>
 </ul>
 
 <script>

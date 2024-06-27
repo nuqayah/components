@@ -22,23 +22,14 @@ export function debounce(fn, timeout) {
     }
 }
 export function throttle(fn, limit) {
-    let is_first = true
-    let timer
-
-    return (...args) => {
-        if (is_first) {
+    let last_fn
+    let last_ran = Date.now() - (limit + 1)
+    return function(...args) {
+        clearTimeout(last_fn)
+        last_fn = setTimeout(() => {
             fn(...args)
-            is_first = false
-        }
-        else {
-            if (timer)
-                clearTimeout(timer)
-            timer = setTimeout(() => {
-                fn(...args)
-                timer = null
-                is_first = true
-            }, limit)
-        }
+            last_ran = Date.now()
+        }, limit - (Date.now() - last_ran))
     }
 }
 export function split(string, delimiter, n) {

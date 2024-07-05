@@ -119,6 +119,37 @@ export function append_to(el, cont) {
     update(cont)
     return {update}
 }
+export function init_useragent_info() {
+    const UA = navigator.userAgent
+    const doc_classes = document.documentElement.classList
+    window._useragent = {
+        ios: /iPad|iPhone|iPod/.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1),
+        safari: 'GestureEvent' in window,
+        pwa: window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone,
+        is_touch: 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0,
+    }
+    if (window._useragent.safari)
+        doc_classes.add('safari')
+
+    if (window._useragent.ios)
+        doc_classes.add('ios')
+
+    if (UA.includes('Firefox'))
+        doc_classes.add('firefox')
+
+    if (/Windows NT|Intel Mac OS X/.test(UA))
+        doc_classes.add('non-mobile')
+    else if (/Android.*Chrome\//.test(UA))
+        doc_classes.add('chrome-android')
+}
+export function add_tab_check() {
+    window.addEventListener('keydown', function check_tab(e) {
+        if (e.key === 'Tab') {
+            document.documentElement.classList.add('user-is-tabbing')
+            window.removeEventListener('keydown', check_tab)
+        }
+    })
+}
 
 export const unescape_str = s => s.replace(/(^|[^\\])\\(n|t|u[0-9a-f]{4})/g, (m, m1, m2) => JSON.parse(`"\\${m2}"`))
 export function add_zwj(str) {

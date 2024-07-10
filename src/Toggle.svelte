@@ -1,4 +1,4 @@
-<label class="inline-flex items-center">{text}{text ? ' ' : ''}<slot/><input type=checkbox hidden bind:checked={value} on:change><div/></label>
+<label class="inline-flex items-center">{text}{text ? ' ' : ''}<slot/><input type=checkbox hidden bind:checked={value} on:change><div></div></label>
 
 <script>
 export let value = false

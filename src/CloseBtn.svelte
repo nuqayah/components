@@ -1,4 +1,4 @@
-<button class=close-btn on:click class:active><span/><span/><span/></button>
+<button class=close-btn on:click class:active><span></span><span></span><span></span></button>
 
 <script>
 export let active = false

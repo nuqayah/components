@@ -18,7 +18,7 @@
     <button use:repeat_click={() => audio.playbackRate = int_clamp(audio.playbackRate - 0.1, 0.4, 4)}><icon id=slower></button>
     <output class=play-speed><icon id=speed><span>{audio.playbackRate.toFixed(2)}x</span></output>
     <button use:repeat_click={() => audio.playbackRate = int_clamp(audio.playbackRate + 0.1, 0.4, 4)}><icon id=faster></button>
-    <span/>
+    <span></span>
     <button use:repeat_click={() => { audio.currentTime += -5 }}><icon id=skip-back></button>
     <span> </span>
     <button use:repeat_click={() => { audio.currentTime += 5 }}><icon id=skip-forward></button>

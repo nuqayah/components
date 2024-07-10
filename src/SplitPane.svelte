@@ -13,7 +13,7 @@
 </div>
 
 {#if dragging}
-  <div class=mousecatcher />
+  <div class=mousecatcher></div>
 {/if}
 
 <script>

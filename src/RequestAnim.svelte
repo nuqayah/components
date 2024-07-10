@@ -1,4 +1,4 @@
-<div class="request-indicator" style="--bg: {color}" class:active />
+<div class="request-indicator" style="--bg: {color}" class:active></div>
 
 <script>
 export let active

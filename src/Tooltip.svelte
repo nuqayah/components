@@ -1,7 +1,7 @@
 <div on:mouseover={() => { should_hide = false }} on:focus={() => { should_hide = false }} on:mouseleave={hide_wrapped} bind:this={tooltip_cont}>
 {#if $options.show}
 <div out:fade={{duration: 200}} role=tooltip class="tooltip tooltip-{$options.direction} slide-up-fade-in" use:reposition={$options}>
-  <div class=tip-arrow />
+  <div class=tip-arrow></div>
   <div class=tooltip-inner>
     {@html $options.msg}
     {#if $options.ok_btn}

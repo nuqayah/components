@@ -1,4 +1,4 @@
-<input type=checkbox hidden bind:checked={value} on:change><div/>
+<input type=checkbox hidden bind:checked={value} on:change><div></div>
 
 <script>
 export let value = false

@@ -24,15 +24,15 @@ export let type
 export let pos = 50
 export let fixed = false
 export let buffer = 42
-export let min
-export let max
+export let min = 0
+export let max = 100
 export let dir
 export let hide_b = false
 
 let container
 let w
 let h
-$: size = type === 'vertical' ? h : w
+$: size = (type === 'vertical' ? h : w) || 0
 
 $: min = 100 * (buffer / size)
 $: max = 100 - min

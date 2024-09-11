@@ -3,39 +3,59 @@
   class=modal-overlay
   tabindex=-1
   data-close
-  on:mousedown={e => click_start_element = e.target}
-  on:click={overlay_click}
+  onmousedown={e => (click_start_element = e.target)}
+  onclick={overlay_click}
   transition:fade={{duration: 180}}
   use:focus_trap
 >
   <div class=modal-container role=dialog aria-modal=true style="max-width: {modal_options.max_width}">
     <header>
       {#if title}<h2 class="text-lg font-bold">{title}</h2>{/if}
-      <button data-close><icon id=close></button>
+      <button data-close><icon id="close" /></button>
     </header>
     <main>
-      <svelte:component this={modal_options.component} bind:title {...modal_options.props} on:close={e => update_modal({show: false})}/>
+      <modal_options.component
+        set_title={t => (title = t)}
+        {...modal_options.props}
+        onclose={() => update_modal({show: false})}
+      />
     </main>
   </div>
 </div>
 {/if}
 
-<svelte:window on:popstate={popstate} on:keydown={e => { if (e.keyCode === 27) update_modal({show: false}) }}/>
+<svelte:window
+  onpopstate={popstate}
+  onkeydown={e => {
+    if (e.keyCode === 27) update_modal({show: false})
+  }}
+/>
 
 <script context=module>
-import {writable} from 'svelte/store'
-
-export const options = writable({})
+let options = $state({})
 
 export function show(component, props) {
-    options.set({component, props})
+    options = {component, props}
 }
 </script>
+
 <script>
 import {fade} from 'svelte/transition'
 import {focus_trap} from 'components/src/util.js'
 
-$: if (!$options.shown && Object.keys($options).length) update_modal($options)
+let modal_options_tpl = $state({show: false, props: {}, component: null, max_width: '580px'})
+let modal_options = $state({...modal_options_tpl})
+let click_start_element = null
+let title = $state('')
+
+$effect(() => {
+    if (!options.shown && Object.keys(options).length) {
+        update_modal(options)
+    }
+})
+$effect(() => {
+    set_body_scroll(modal_options.show)
+})
 
 function overlay_click(e) {
     if ('close' in e.target.dataset && e.target === click_start_element)
@@ -45,12 +65,7 @@ function overlay_click(e) {
 function set_body_scroll(shown) {
     document.documentElement.classList.toggle('open-modal', shown)
 }
-$: set_body_scroll(modal_options.show)
 
-let click_start_element = null
-let title
-let modal_options_tpl = {show: false, props: {}, component: null, max_width: '580px'}
-let modal_options = {...modal_options_tpl}
 function update_modal(ops) {
     if ('component' in ops && !('show' in ops))
         ops.show = true // If the component is being set, with no `show`, set `show` to true
@@ -58,7 +73,7 @@ function update_modal(ops) {
 
     if (modal_options.show)
         history.pushState(null, null, '')
-    $options.shown = true
+    options.shown = true
 }
 function popstate() {
     if (modal_options.show)

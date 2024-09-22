@@ -35,7 +35,7 @@
 let options = $state({})
 
 export function show(component, props) {
-    options = {component, props}
+    options = component ? {component, props} : {}
 }
 </script>
 
@@ -49,9 +49,12 @@ let click_start_element = null
 let title = $state('')
 
 $effect(() => {
-    if (!options.shown && Object.keys(options).length) {
-        update_modal(options)
+    if (Object.keys(options).length) {
+        if (!options.shown)
+            update_modal(options)
     }
+    else
+      update_modal({show: false})
 })
 $effect(() => {
     set_body_scroll(modal_options.show)

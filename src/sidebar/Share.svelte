@@ -1,40 +1,39 @@
-<ul class=social-buttons>
+<ul class="social-buttons">
   {#each social as [cls, get_url]}
-    <li><a href={get_url(url, document.title)} class=social-{cls} rel=external target=_blank>
-      <icon id={cls}>
+    <li><a href={get_url(url, title)} class="social-{cls}" rel="external" target="_blank">
+      <icon id={cls} />
     </a></li>
   {/each}
-  <li><button on:click={() => copy(url)}><icon id=copy></button></li>
+  <li><button on:click={() => copy(url)}><icon id="copy" /></button></li>
 </ul>
 
 <script>
 const social = [
-    ['whatsapp', (url, title) => `https://api.whatsapp.com/send?text=${url}%0A${title}`],
-    ['telegram', (url, title) => `https://telegram.me/share/url?url=${url}&text=${title}`],
-    ['facebook', (url, title) => `https://www.facebook.com/sharer.php?u=${url}&t=${title}`],
-    ['twitter', (url, title) => `https://twitter.com/intent/tweet?text=${title}%0A${url}`],
-    ['mail', (url, title) => `mailto:?subject=${title}&body=${title}: ${url}`],
+  ['whatsapp', (url, title) => `https://api.whatsapp.com/send?text=${encodeURIComponent(`${title}\n${url}`)}`],
+  ['telegram', (url, title) => `https://telegram.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`],
+  ['facebook', (url, title) => `https://www.facebook.com/sharer.php?u=${encodeURIComponent(url)}&t=${encodeURIComponent(title)}`],
+  ['twitter', (url, title) => `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${title}\n${url}`)}`],
+  ['mail', (url, title) => `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${title}\n${url}`)}`],
 ]
-export let url = location.origin
-export let copy
-export const title = 'شارك'
+
+let { url, title = "شارك", copy } = $props()
 </script>
 
 <style>
 .social-buttons {
-  display: flex;
-  justify-content: center;
+display: flex;
+justify-content: center;
 }
 .social-buttons li {
-  list-style: none;
-  margin: 0 0.75rem;
+list-style: none;
+margin: 0 0.75rem;
 }
 .icon {
-  width: 1.2rem;
-  height: 1.2rem;
+width: 1.2rem;
+height: 1.2rem;
 }
 :global(html.ios) .icon {
-  pointer-events: initial;
+pointer-events: initial;
 }
 
 .social-whatsapp .icon {color: #25D366}

@@ -1,23 +1,44 @@
-<ul class=social-buttons>
+<ul class="social-buttons">
   {#each social as [cls, get_url]}
-    <li><a href={get_url(url, document.title)} class=social-{cls} rel=external target=_blank>
-      <icon id={cls}>
-    </a></li>
+      <li>
+          <a href={get_url(url, title)} class="social-{cls}" rel="external" target="_blank">
+              <svg class="icon icon-{cls}"><use href="/icons.svg#{cls}"/></svg>
+          </a>
+      </li>
   {/each}
-  <li><button on:click={() => copy(url)}><icon id=copy></button></li>
+  <li><button onclick={() => copy(url)}><svg class="icon icon-copy"><use href="/icons.svg#copy"/></svg></button></li>
 </ul>
 
 <script>
 const social = [
-    ['whatsapp', (url, title) => `https://api.whatsapp.com/send?text=${url}%0A${title}`],
-    ['telegram', (url, title) => `https://telegram.me/share/url?url=${url}&text=${title}`],
-    ['facebook', (url, title) => `https://www.facebook.com/sharer.php?u=${url}&t=${title}`],
-    ['twitter', (url, title) => `https://twitter.com/intent/tweet?text=${title}%0A${url}`],
-    ['mail', (url, title) => `mailto:?subject=${title}&body=${title}: ${url}`],
+  [
+      'whatsapp',
+      (url, title) =>
+          `https://api.whatsapp.com/send?text=${encodeURIComponent(`${title}\n${url}`)}`,
+  ],
+  [
+      'telegram',
+      (url, title) =>
+          `https://telegram.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+  ],
+  [
+      'facebook',
+      (url, title) =>
+          `https://www.facebook.com/sharer.php?u=${encodeURIComponent(url)}&t=${encodeURIComponent(title)}`,
+  ],
+  [
+      'twitter',
+      (url, title) =>
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${title}\n${url}`)}`,
+  ],
+  [
+      'mail',
+      (url, title) =>
+          `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${title}\n${url}`)}`,
+  ],
 ]
-export let url = location.origin
-export let copy
-export const title = 'شارك'
+
+let {url, title = 'شارك', copy} = $props()
 </script>
 
 <style>
@@ -37,9 +58,19 @@ export const title = 'شارك'
   pointer-events: initial;
 }
 
-.social-whatsapp .icon {color: #25D366}
-.social-telegram .icon {color: #2CA5E0}
-.social-facebook .icon {color: #3B5998}
-.social-twitter .icon {color: #1DA1F2}
-.social-mail .icon {color: #607D8B;}
+.social-whatsapp .icon {
+  color: #25d366;
+}
+.social-telegram .icon {
+  color: #2ca5e0;
+}
+.social-facebook .icon {
+  color: #3b5998;
+}
+.social-twitter .icon {
+  color: #1da1f2;
+}
+.social-mail .icon {
+  color: #607d8b;
+}
 </style>

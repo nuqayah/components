@@ -2,14 +2,14 @@
   <ul>
     {#each projects as project}
       <li>
-        <a target=_blank href=https://{project.url}>{project.name}<span>{project.desc}</span><img src=https://{project.url}/app.png alt></a>
+        <a target=_blank href="https://{project.url}">{project.name}<span>{project.desc}</span><img src="https://{project.url}/app.png" alt></a>
       </li>
     {/each}
   </ul>
 </section>
 
 <script>
-let projects = [
+let projects = $state([
     {url: 'tafsir.app', name: 'الباحث القرآني', desc: 'الأول في تفسير القرآن وعلومه'},
     {url: 'sunnah.one', name: 'الباحث الحديثي', desc: 'بحث سريع في السنة'},
     {url: 'muqri.com', name: 'المقرئ', desc: 'لحفظ القرآن'},
@@ -21,7 +21,7 @@ let projects = [
     {url: 'quizzer.one', name: 'منصة سؤال', desc: 'اختبارات تعليمية ماتعة'},
     {url: 'kalimah.app', name: 'كلمة', desc: 'اختبر نفسك في غريب القرآن'},
     {url: 'mutoon.one', name: 'مقرئ المتون', desc: 'لحفظ المتون'},
-]
+])
 fetch('https://nuqayah.com/projects.json').then(r => r.json()).then(json => {
     projects = json
 })

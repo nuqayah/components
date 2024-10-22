@@ -1,12 +1,11 @@
 <div class="flex justify-center">
   <button class="btn cancel" data-close>إلغاء</button>
-  <button class="btn confirm" on:click={callback} data-close>{confirm_msg}</button>
+  <button class="btn confirm" onclick={callback} data-close>{confirm_msg}</button>
 </div>
 
 <script>
-export let title = ''
-export let confirm_msg
-export let callback
+/** @type {{title?: string, confirm_msg: any, callback: any}} */
+let {title = '', confirm_msg, callback} = $props()
 </script>
 
 <style>

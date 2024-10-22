@@ -1,7 +1,7 @@
 <section id=page-donate>
   <p>يستفيد من مشاريعنا قُرابة ٧٥٬٠٠٠ مسلم <b>يوميًّا</b>، فاحرص على الأجر وساهم في تطوير مشاريعنا وإنشاء مشاريع جديدة. </p>
 
-  <a class="styled-btn text-center block" target=_blank href="https://www.paypal.com/donate/?hosted_button_id=KFN59QL6DJ2C8">بواسطة <icon id=paypal></a>
+  <a class="styled-btn text-center block" target=_blank href="https://www.paypal.com/donate/?hosted_button_id=KFN59QL6DJ2C8">بواسطة <icon id=paypal/></a>
   <hr>
   <h2>بواسطة DonorBox 🔒</h2>
   <iframe
@@ -13,7 +13,7 @@
     name=donorbox
     frameborder=0
     scrolling=no
-    allowpaymentrequest/>
+    allowpaymentrequest></iframe>
 </section>
 
 <svelte:head>

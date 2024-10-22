@@ -1,4 +1,4 @@
-<button {title} tabindex=0 bind:this={button} on:click>
+<button {title} tabindex=0 bind:this={button} onclick={bubble('click')}>
   <svg viewBox="8 10 16 16" fill="#555555" use:animate_play_btn={playing}>
     <path d="M11,10 L16.46,13.74 L16.46,22.28 L11,26 M16.46,13.74 L22.7,18 L22.7,18 L16.46,22.28">
       <animate begin=indefinite attributeName=d fill=freeze dur=0.1s
@@ -9,9 +9,11 @@
 </button>
 
 <script>
-export let playing = false
-export let title = 'Play or pause'
-export let button = undefined
+import {createBubbler} from 'svelte/legacy'
+
+const bubble = createBubbler()
+/** @type {{playing?: boolean, title?: string, button?: any}} */
+let {playing = false, title = 'Play or pause', button = $bindable(undefined)} = $props()
 
 function animate_play_btn(btn) {
     const el = btn.querySelector('animate')

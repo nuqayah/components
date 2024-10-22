@@ -5,7 +5,8 @@
 </svg>
 
 <script>
-export let playing = false
+/** @type {{playing?: boolean}} */
+let { playing = false } = $props()
 
 function animate(svg) {
     const el = svg.querySelector('animate')

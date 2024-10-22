@@ -31,7 +31,7 @@
   }}
 />
 
-<script context=module>
+<script module>
 let options = $state({})
 
 export function show(component, props) {

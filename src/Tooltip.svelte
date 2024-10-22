@@ -1,20 +1,20 @@
-<div on:mouseover={() => { should_hide = false }} on:focus={() => { should_hide = false }} on:mouseleave={hide_wrapped} bind:this={tooltip_cont}>
+<div onmouseover={() => { should_hide = false }} onfocus={() => { should_hide = false }} onmouseleave={hide_wrapped} bind:this={tooltip_cont}>
 {#if $options.show}
 <div out:fade={{duration: 200}} role=tooltip class="tooltip tooltip-{$options.direction} slide-up-fade-in" use:reposition={$options}>
   <div class=tip-arrow></div>
   <div class=tooltip-inner>
     {@html $options.msg}
     {#if $options.ok_btn}
-      <button class=ok on:click={() => $options.show = false}>✔</button>
+      <button class=ok onclick={() => $options.show = false}>✔</button>
     {/if}
   </div>
 </div>
 {/if}
 </div>
 
-<svelte:window on:resize={debounce(() => {$options = $options}, 12)}/>
+<svelte:window onresize={debounce(() => {$options = $options}, 12)}/>
 
-<script context=module>
+<script module>
 import {onMount, onDestroy, tick} from 'svelte'
 import {writable, get} from 'svelte/store'
 import {fade, slide} from 'svelte/transition'

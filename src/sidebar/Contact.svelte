@@ -1,11 +1,13 @@
-<form method=post action=https://tafsir.app/msg.php on:submit|preventDefault={send_msg}>
+<form method=post action=https://tafsir.app/msg.php onsubmit={preventDefault(send_msg)}>
   <input type=text name=name placeholder=الاسم autofocus>
   <input type=email name=email placeholder=email@example.com>
-  <textarea name=msg placeholder=الرسالة rows=5 required/>
+  <textarea name=msg placeholder=الرسالة rows=5 required></textarea>
   <button class=btn type=submit>إرسال</button>
 </form>
 
 <script>
+import {preventDefault} from 'svelte/legacy'
+
 function send_msg(e) {
     const form = e.target
     const data = {

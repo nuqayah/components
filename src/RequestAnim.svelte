@@ -1,8 +1,8 @@
 <div class="request-indicator" style="--bg: {color}" class:active></div>
 
 <script>
-export let active
-export let color = '#e3f2fd'
+/** @type {{active: any, color?: string}} */
+let {active, color = '#e3f2fd'} = $props()
 </script>
 
 <style>

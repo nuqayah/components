@@ -1,9 +1,11 @@
-<form method=post action=https://tafsir.app/subscribe.php on:submit|preventDefault={subscribe}>
+<form method=post action=https://tafsir.app/subscribe.php onsubmit={preventDefault(subscribe)}>
   <input type=email name=email placeholder=email@example.com requried autofocus>
   <button type=submit>اشترك</button>
 </form>
 
 <script>
+import {preventDefault} from 'svelte/legacy'
+
 export const title = 'اشترك لتصلك أخبارنا'
 
 function subscribe(e) {

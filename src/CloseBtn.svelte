@@ -1,7 +1,11 @@
-<button class=close-btn on:click class:active><span></span><span></span><span></span></button>
+<button class=close-btn onclick={bubble('click')} class:active><span></span><span></span><span></span></button>
 
 <script>
-export let active = false
+import {createBubbler} from 'svelte/legacy'
+
+const bubble = createBubbler()
+/** @type {{active?: boolean}} */
+let {active = false} = $props()
 </script>
 
 <style>

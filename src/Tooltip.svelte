@@ -99,7 +99,7 @@ export function click_action(el, props) {
 </script>
 
 <script>
-import positioner from 'positioner'
+import {autoUpdate, computePosition} from '@floating-ui/dom'
 import {debounce, on, off} from 'components/src/util.js'
 
 on(document, 'mousedown', hide_on_click)
@@ -108,14 +108,23 @@ onDestroy(() => {
 })
 
 function reposition(el) {
-    async function update() {
-        if (!$options.show)
-            return
-        await tick()
-        positioner(el, $options.attach_to.getBoundingClientRect(), $options.direction || 'top')
+    let cleanup
+    cleanup = autoUpdate($options.attach_to, el, () => {
+        if (!$options.show) return
+        computePosition($options.attach_to, el, {
+            placement: $options.direction || 'top',
+        }).then(({x, y}) => {
+            Object.assign(el.style, {
+                left: `${x}px`,
+                top: `${y}px`,
+            })
+        })
+    })
+    return {
+        destroy() {
+            cleanup?.()
+        },
     }
-    update()
-    return {update}
 }
 </script>
 

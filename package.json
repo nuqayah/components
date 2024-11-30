@@ -1,14 +1,14 @@
 {
   "name": "components",
-  "version": "2.0.30",
+  "version": "2.0.32",
   "svelte": "src/index.js",
   "repository": "github:mustafa0x/components",
   "type": "module",
   "dependencies": {
+    "@floating-ui/dom": "^1.6.12",
     "diff-match-patch": "^1.0.5",
     "escape-string-regexp": "^5.0.0",
-    "focus-trap": "^7.5.4",
-    "positioner": "github:mustafa0x/positioner#v1.0.3"
+    "focus-trap": "^7.5.4"
   },
   "scripts": {
     "publish-gh": "VER=$(npm --no-git-tag-version version patch) && git add package.json && git commit --amend --no-edit && git tag -f $VER && git push -f && git push --tags -f"

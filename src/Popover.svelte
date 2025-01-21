@@ -13,7 +13,7 @@
 <script>
 import {onDestroy, tick} from 'svelte'
 import {fly} from 'svelte/transition'
-import positioner from 'positioner'
+import {computePosition, offset, flip, shift} from '@floating-ui/dom'
 
 export let hide_on_click = true
 export let append_to_body = false
@@ -22,9 +22,23 @@ export let shown = false // rarely needed but useful for debugging
 let wrapper
 let show_el = null
 
-function position_cont() {
-   if (shown && wrapper)
-      positioner(wrapper, wrapper.previousElementSibling.getBoundingClientRect(), 'bottom')
+async function position_cont() {
+   if (shown && wrapper) {
+      const reference = wrapper.previousElementSibling;
+      const {x, y} = await computePosition(reference, wrapper, {
+         placement: 'bottom',
+         middleware: [
+            offset(10),
+            flip(),
+            shift()
+         ]
+      })
+      
+      Object.assign(wrapper.style, {
+         left: `${x}px`,
+         top: `${y}px`
+      })
+   }
 }
 async function show(e) {
     show_el = e.target

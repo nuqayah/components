@@ -528,7 +528,7 @@ export function prep_vite_proxy(proxies) {
  * @param {Date} d1
  * @param {Date} d2
  */
-export default function relative_time(rtf, d1, d2=new Date) {
+export function relative_time(rtf, d1, d2=new Date) {
     const units = [
         ['year',   31536000],
         ['month',  2628000],

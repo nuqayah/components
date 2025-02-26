@@ -1,12 +1,13 @@
 {
   "name": "components",
-  "version": "2.0.35",
+  "version": "2.0.37",
   "svelte": "src/index.js",
   "repository": "github:mustafa0x/components",
   "type": "module",
   "dependencies": {
     "@floating-ui/dom": "^1.6.12",
     "diff-match-patch": "^1.0.5",
+    "es-toolkit": "^1.32.0",
     "escape-string-regexp": "^5.0.0",
     "focus-trap": "^7.5.4"
   },

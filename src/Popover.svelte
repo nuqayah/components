@@ -33,7 +33,7 @@ async function position_cont() {
             shift()
          ]
       })
-      
+
       Object.assign(wrapper.style, {
          left: `${x}px`,
          top: `${y}px`

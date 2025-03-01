@@ -46,12 +46,12 @@ function handle_keydown(e) {
     e.preventDefault()
 
     const current = value ?? min
-    
+
     // If custom arrow navigation is provided, use it
     if (handle_arrow_navigation && handle_arrow_navigation(e.key, current)) {
         return
     }
-    
+
     // Otherwise use default arrow navigation
     const current_max = get_max_value()
     const delta = e.key === 'ArrowUp' ? 1 : -1
@@ -59,7 +59,7 @@ function handle_keydown(e) {
 
     // Call onpreinput before changing the value
     onpreinput(new_value)
-    
+
     value = new_value
     is_valid = true
     oninput(new_value)

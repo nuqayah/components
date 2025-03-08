@@ -1,6 +1,6 @@
 {
   "name": "components",
-  "version": "2.0.38",
+  "version": "2.0.39",
   "svelte": "src/index.js",
   "repository": "github:mustafa0x/components",
   "type": "module",
@@ -13,5 +13,10 @@
   },
   "scripts": {
     "publish-gh": "VER=$(npm --no-git-tag-version version patch) && git add package.json && git commit --amend --no-edit && git tag -f $VER && git push -f && git push --tags -f"
+  },
+  "exports": {
+    ".": {
+      "svelte": "./src/index.js"
+    }
   }
 }

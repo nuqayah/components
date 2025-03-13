@@ -66,11 +66,10 @@ export function max_supported_height() {
     div.remove()
     return height
 }
-export function median(vals) {
-    // TODO: shouldn't have side-effects
-    vals.sort((a, b) => a - b)
-    const mid = Math.floor(vals.length / 2)
-    return vals.length % 2 ? vals[mid] : (vals[mid - 1] + vals[mid]) / 2.0
+export function median(values) {
+    const array = [...values].sort((a, b) => a - b)
+    const middle = Math.floor(array.length / 2)
+    return array.length % 2 ? array[middle] : (array[middle - 1] + array[middle]) / 2.0
 }
 export function repeat_click(el, callback) {
     let repeat_interval

@@ -333,6 +333,7 @@ export async function sha1(msg) {
 }
 
 export function remove_props(obj, props) {
+    obj = {...obj}
     props.forEach(prop => {
         delete obj[prop]
     })

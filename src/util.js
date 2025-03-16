@@ -542,38 +542,3 @@ export function relative_time(rtf, d1, d2=new Date) {
     const [unit, value] = units.find(([, value]) => elapsed_abs >= value)
     return rtf.format(Math.round(elapsed / value), unit)
 }
-
-/**
- * `document.querySelector()` but better.
- * 
- * Uses MutationObserver to wait for the element if it doesn't exist yet.
- * 
- * @param {string} selector a valid css selector
- * @param {boolean} query_selector_all whether to use querySelectorAll or querySelector
- * @returns {Promise<Element |NodeList>}
- */
-export function wait_for_element(selector, query_selector_all = false) {
-    const query_method = query_selector_all ? 'querySelectorAll' : 'querySelector'
-    const check_exists = v => (query_selector_all ? !!v.length : !!v)
-    const query = () => document[query_method](selector)
-
-    return new Promise(resolve => {
-        let query_result = query(selector)
-        if (check_exists(query_result)) {
-            return resolve(query_result)
-        }
-
-        const observer = new MutationObserver(() => {
-            let query_result = query(selector)
-            if (check_exists(query_result)) {
-                observer.disconnect()
-                resolve(query_result)
-            }
-        })
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true,
-        })
-    })
-}

@@ -35,7 +35,7 @@ let {
     is_valid = $bindable(true),
     disabled = false,
     display_value = $bindable(''),
-    placeholder = "الاية",
+    placeholder = undefined,
     default_value = 1,
     get_max_value = () => max,
     handle_arrow_navigation = null,

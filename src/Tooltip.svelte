@@ -1,7 +1,9 @@
 <div onmouseover={() => { should_hide = false }} onfocus={() => { should_hide = false }} onmouseleave={hide_wrapped} bind:this={tooltip_cont}>
 {#if $options.show}
 <div out:fade={{duration: 200}} role=tooltip class="tooltip tooltip-{$options.direction} slide-up-fade-in" use:reposition={$options}>
-  <div class=tip-arrow></div>
+  {#if $options.show_arrow !== false}
+    <div class=tip-arrow></div>
+  {/if}
   <div class=tooltip-inner>
     {@html $options.msg}
     {#if $options.ok_btn}
@@ -39,7 +41,7 @@ function show(props, el) {
             msg = el.nextElementSibling.innerHTML
         return msg
     }
-    const defaults = {show: true, direction: 'top', attach_to: el, ok_btn: false}
+    const defaults = {show: true, direction: 'top', attach_to: el, ok_btn: false, show_arrow: true}
     return () => {
         props.msg = props.get_msg?.() || get_msg() // Get the message each time as it could update
         should_hide = false
@@ -99,7 +101,7 @@ export function click_action(el, props) {
 </script>
 
 <script>
-import {autoUpdate, computePosition} from '@floating-ui/dom'
+import {autoUpdate, computePosition, shift} from '@floating-ui/dom'
 import {debounce, on, off} from 'components/src/util.js'
 
 on(document, 'mousedown', hide_on_click)
@@ -113,6 +115,7 @@ function reposition(el) {
         if (!$options.show) return
         computePosition($options.attach_to, el, {
             placement: $options.direction || 'top',
+            middleware: [shift({padding: 5})]
         }).then(({x, y}) => {
             Object.assign(el.style, {
                 left: `${x}px`,

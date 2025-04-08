@@ -34,7 +34,7 @@ $: if (count && viewport) {
     setTimeout(handle_scroll, 15)
 }
 $: if (!hidden)
-    setTimeout(handle_scroll, 15)
+    setTimeout(handle_scroll, 20)
 
 function handle_scroll() {
     if (!viewport)

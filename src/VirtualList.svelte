@@ -29,9 +29,13 @@ let top = 0
 let bottom = 0
 
 $: visible = Array(end - start).fill().map((_, i) => i + start)
-$: if (count && viewport) {
-    viewport.scrollTop = 0
-    setTimeout(handle_scroll, 15)
+$: if (viewport) {
+    if (count) {
+        viewport.scrollTop = 0
+        setTimeout(handle_scroll, 15)
+    } else {
+        handle_scroll()
+    }
 }
 $: if (!hidden)
     setTimeout(handle_scroll, 20)

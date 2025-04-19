@@ -1,48 +1,63 @@
-<div class=viewport style="--item-height: {item_height}px" bind:this={viewport} on:scroll={handle_scroll}>
-  <div style="padding-top: {top}px; padding-bottom: {bottom}px;">
-    {#each visible as row_index (row_index)}
-      <div class=row><slot index={row_index}/></div>
-    {:else}
-      {#if show_no_results}
-        <div class=no-results>لا نتائج</div>
-      {/if}
-    {/each}
-  </div>
+<div
+    class="viewport"
+    style="--item-height: {item_height}px"
+    bind:this={viewport}
+    onscroll={handle_scroll}
+>
+    <div style="padding-top: {top}px; padding-bottom: {bottom}px;">
+        {#each visible as row_index (row_index)}
+            <div class="row"><slot index={row_index} /></div>
+        {:else}
+            {#if show_no_results}
+                <div class="no-results">لا نتائج</div>
+            {/if}
+        {/each}
+    </div>
 </div>
 
-<svelte:window on:resize={debounce(handle_scroll, 100)}/>
+<svelte:window on:resize={debounce(handle_scroll, 100)} />
 
 <script>
 import {onMount} from 'svelte'
 import {debounce} from 'components/src/util.js'
 
-export let count
-export let item_height
-export let on_first_changed = undefined
-export let hidden = false
-export let show_no_results = true
+let {
+    count,
+    item_height,
+    on_first_changed = undefined,
+    hidden = false,
+    show_no_results = true,
+} = $props()
 
 let viewport
-let start = 0
-let end = 0
-let top = 0
-let bottom = 0
+let start = $state(0)
+let end = $state(0)
+let top = $state(0)
+let bottom = $state(0)
 
-$: visible = Array(end - start).fill().map((_, i) => i + start)
-$: if (viewport) {
-    if (count) {
-        viewport.scrollTop = 0
-        setTimeout(handle_scroll, 15)
-    } else {
-        handle_scroll()
+let visible = $derived(
+    Array(end - start)
+        .fill(null)
+        .map((_, i) => i + start),
+)
+
+$effect(() => {
+    if (viewport) {
+        if (count) {
+            viewport.scrollTop = 0
+            setTimeout(handle_scroll, 15)
+        } else {
+            handle_scroll()
+        }
     }
-}
-$: if (!hidden)
-    setTimeout(handle_scroll, 20)
+})
+
+$effect(() => {
+    if (!hidden) setTimeout(handle_scroll, 20)
+})
 
 function handle_scroll() {
-    if (!viewport)
-        return
+    if (!viewport) return
     const {scrollTop, offsetHeight} = viewport
 
     let item = 0
@@ -53,8 +68,7 @@ function handle_scroll() {
         accl_height += item_height
         item++
     }
-    if (on_first_changed && start !== item)
-        on_first_changed(start)
+    if (on_first_changed && start !== item) on_first_changed(item)
     start = item
     top = accl_height
 
@@ -72,23 +86,23 @@ onMount(handle_scroll)
 
 <style>
 .viewport {
-  height: 100%;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 .row {
-  height: var(--item-height);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    height: var(--item-height);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .row:not(:last-child) {
-  border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 }
 .no-results {
-  text-align: center;
-  font-size: 2rem;
-  color: #999;
-  margin: 2rem;
+    text-align: center;
+    font-size: 2rem;
+    color: #999;
+    margin: 2rem;
 }
 </style>

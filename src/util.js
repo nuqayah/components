@@ -1,6 +1,8 @@
 import escape_regex from 'escape-string-regexp'
 export {default as escape_regex} from 'escape-string-regexp'
 import {createFocusTrap} from 'focus-trap'
+import {clsx} from 'clsx'
+import {twMerge} from 'tailwind-merge'
 
 export const round = n => Math.round(n * 10) / 10
 export const ar_nums = s => ('' + s).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'.substr(+d, 1))
@@ -544,4 +546,13 @@ export function relative_time(rtf, d1, d2=new Date) {
     const elapsed_abs = Math.max(Math.abs(elapsed), 1000) // In case < 1 second
     const [unit, value] = units.find(([, value]) => elapsed_abs >= value)
     return rtf.format(Math.round(elapsed / value), unit)
+}
+
+/**
+ * Merge class names
+ * @param {...string} inputs - The class names to merge
+ * @returns {string} The merged class names
+ */
+export function cn(...inputs) {
+    return twMerge(clsx(inputs))
 }

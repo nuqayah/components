@@ -6,10 +6,12 @@
   "type": "module",
   "dependencies": {
     "@floating-ui/dom": "^1.6.12",
+    "clsx": "^2.1.1",
     "diff-match-patch": "^1.0.5",
     "es-toolkit": "^1.32.0",
     "escape-string-regexp": "^5.0.0",
-    "focus-trap": "^7.5.4"
+    "focus-trap": "^7.5.4",
+    "tailwind-merge": "^3.3.0"
   },
   "scripts": {
     "publish-gh": "VER=$(npm --no-git-tag-version version patch) && git add package.json && git commit --amend --no-edit && git tag -f $VER && git push -f && git push --tags -f"

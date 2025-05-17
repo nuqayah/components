@@ -16,6 +16,7 @@
             : 'border-red-500 bg-red-50 text-red-900 placeholder-red-700 focus:border-red-500 focus:ring-red-500',
         class_name,
     ]}
+    {...rest}
 />
 
 <script>
@@ -39,6 +40,7 @@ let {
     default_value = 1,
     get_max_value = () => max,
     handle_arrow_navigation = null,
+    ...rest
 } = $props()
 
 function handle_keydown(e) {

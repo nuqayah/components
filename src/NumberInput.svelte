@@ -9,18 +9,18 @@
     onkeydown={handle_keydown}
     {placeholder}
     {disabled}
-    class={[
+    class={cn(
         'rounded border px-2.5 py-2 text-base transition-all duration-150 ease-in-out focus:outline-none disabled:bg-gray-100',
         is_valid
             ? 'border-gray-300 bg-white text-gray-700'
             : 'border-red-500 bg-red-50 text-red-900 placeholder-red-700 focus:border-red-500 focus:ring-red-500',
         class_name,
-    ]}
+    )}
     {...rest}
 />
 
 <script>
-import {ar_nums, en_nums} from 'components/src/util'
+import {ar_nums, en_nums, cn} from 'components/src/util'
 import {clamp} from 'es-toolkit'
 
 let {

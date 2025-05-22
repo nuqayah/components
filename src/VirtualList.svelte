@@ -9,7 +9,7 @@
             <div class="row"><slot index={row_index} /></div>
         {:else}
             {#if show_no_results}
-                <div class="no-results">لا نتائج</div>
+                <div class="no-results">{results_message}</div>
             {/if}
         {/each}
     </div>
@@ -27,6 +27,7 @@ let {
     on_first_changed = undefined,
     hidden = false,
     show_no_results = true,
+    results_message = 'لا نتائج',
 } = $props()
 
 let viewport

@@ -406,16 +406,20 @@ export function in_view(node, params = {}) {
     }
 }
 
+export function click_link(url, attrs={}) {
+    const a = Object.assign(document.createElement('a'), {href: url, hidden: true, ...attrs})
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+}
+
 export function download_blob(data, file_name, mime_type) {
     if (!mime_type)
         mime_type = ({txt: 'text/plain', json: 'application/json'})[file_name.split('.').pop().toLowerCase()]
     const blob = new Blob([data], {type: mime_type})
     const url = URL.createObjectURL(blob)
-    const a = Object.assign(document.createElement('a'), {href: url, download: file_name, hidden: true})
-    document.body.appendChild(a)
-    a.click()
+    click_link(url, {download: file_name})
     URL.revokeObjectURL(url)
-    document.body.removeChild(a)
 }
 /**
  * Reads a file and returns its content as a Promise.

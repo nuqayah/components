@@ -43,6 +43,8 @@ let {
     ...rest
 } = $props()
 
+display_value = ar_nums(value)
+
 function handle_keydown(e) {
     if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return
     e.preventDefault()
@@ -83,7 +85,7 @@ function handle_change(e) {
     const input_value = en_nums(raw_input)
     const parsed_value = parseInt(input_value, 10)
 
-    if (isNaN(parsed_value)) {
+    if (isNaN(input_value)) {
         onpreinput(default_value)
         value = default_value
         is_valid = false

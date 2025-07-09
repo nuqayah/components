@@ -43,7 +43,9 @@ let {
     ...rest
 } = $props()
 
-display_value = ar_nums(value)
+$effect(() => {
+  display_value = ar_nums(value)
+})
 
 function handle_keydown(e) {
     if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return
@@ -67,7 +69,6 @@ function handle_keydown(e) {
     value = new_value
     is_valid = true
     oninput(new_value)
-    display_value = ar_nums(new_value.toString())
 }
 
 function handle_change(e) {
@@ -106,6 +107,5 @@ function handle_change(e) {
     is_valid = true
     value = parsed_value
     oninput(parsed_value)
-    display_value = ar_nums(parsed_value.toString())
 }
 </script>

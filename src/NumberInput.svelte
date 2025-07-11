@@ -7,6 +7,7 @@
     value={display_value}
     oninput={handle_change}
     onkeydown={handle_keydown}
+    onwheel={handle_wheel}
     {placeholder}
     {disabled}
     class={cn(
@@ -64,6 +65,21 @@ function handle_keydown(e) {
     const new_value = clamp(current + delta, min, current_max)
 
     // Call onpreinput before changing the value
+    onpreinput(new_value)
+
+    value = new_value
+    is_valid = true
+    oninput(new_value)
+}
+
+function handle_wheel(e) {
+    e.preventDefault()
+
+    const current = value ?? min
+    const current_max = get_max_value()
+    const delta = e.deltaY > 0 ? -1 : 1
+    const new_value = clamp(current + delta, min, current_max)
+
     onpreinput(new_value)
 
     value = new_value

@@ -111,11 +111,18 @@ function handle_change(e) {
     }
 
     const current_max = get_max_value()
-    if (parsed_value < min || parsed_value > current_max) {
-        onpreinput(default_value)
-        value = default_value
+    if (parsed_value < min) {
+        onpreinput(min)
+        value = min
         is_valid = false
-        oninput(default_value)
+        oninput(min)
+        return
+    }
+    if (parsed_value > current_max) {
+        onpreinput(current_max)
+        value = current_max
+        is_valid = false
+        oninput(current_max)
         return
     }
 

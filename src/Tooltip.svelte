@@ -21,7 +21,7 @@ import {onMount, onDestroy, tick} from 'svelte'
 import {writable, get} from 'svelte/store'
 import {fade, slide} from 'svelte/transition'
 
-export const options = writable({direction: 'top'})
+export const options = writable({direction: 'top', show: false})
 
 let tooltip_cont
 let hide_timeout
@@ -100,18 +100,14 @@ export function click_action(el, props) {
 }
 </script>
 
+<svelte:document onmousedown={hide_on_click} />
+
 <script>
 import {autoUpdate, computePosition, shift} from '@floating-ui/dom'
-import {debounce, on, off} from 'components/src/util.js'
-
-on(document, 'mousedown', hide_on_click)
-onDestroy(() => {
-    off(document, 'mousedown', hide_on_click)
-})
+import {debounce} from 'components/src/util.js'
 
 function reposition(el) {
-    let cleanup
-    cleanup = autoUpdate($options.attach_to, el, () => {
+    const cleanup = autoUpdate($options.attach_to, el, () => {
         if (!$options.show) return
         computePosition($options.attach_to, el, {
             placement: $options.direction || 'top',

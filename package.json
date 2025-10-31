@@ -1,9 +1,16 @@
 {
   "name": "components",
   "version": "2.0.54",
-  "svelte": "src/index.js",
-  "repository": "github:mustafa0x/components",
   "type": "module",
+  "scripts": {
+    "publish-gh": "VER=$(npm --no-git-tag-version version patch) && git add package.json && git commit --amend --no-edit && git tag -f $VER && git push -f && git push --tags -f"
+  },
+  "exports": {
+    ".": {
+      "svelte": "./src/index.js"
+    }
+  },
+  "svelte": "./src/index.js",
   "dependencies": {
     "@floating-ui/dom": "^1.6.12",
     "clsx": "^2.1.1",
@@ -13,7 +20,5 @@
     "focus-trap": "^7.5.4",
     "tailwind-merge": "^3.3.0"
   },
-  "scripts": {
-    "publish-gh": "VER=$(npm --no-git-tag-version version patch) && git add package.json && git commit --amend --no-edit && git tag -f $VER && git push -f && git push --tags -f"
-  }
+  "repository": "github:mustafa0x/components"
 }

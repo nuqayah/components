@@ -1,12 +1,17 @@
-<div class=viewport bind:this={viewport} on:scroll={handle_scroll} style="--font-size: {font_size}; --min-height: {min_height}px">
-  <div bind:this={contents} style="padding-top: {top}px; padding-bottom: {bottom}px;">
-    {#each visible as index (index)}
-      {@const cmp = get_component(index)}
-      <div class=page in:slide>
-        <svelte:component this={cmp.component} {...cmp.props}/>
-      </div>
-    {/each}
-  </div>
+<div
+    class="viewport"
+    bind:this={viewport}
+    on:scroll={handle_scroll}
+    style="--font-size: {font_size}; --min-height: {min_height}px"
+>
+    <div bind:this={contents} style="padding-top: {top}px; padding-bottom: {bottom}px;">
+        {#each visible as index (index)}
+            {@const cmp = get_component(index)}
+            <div class="page" in:slide>
+                <svelte:component this={cmp.component} {...cmp.props} />
+            </div>
+        {/each}
+    </div>
 </div>
 
 <script>
@@ -43,19 +48,19 @@ const recalc_min_height = debounce(async () => {
 }, 100)
 
 export function go_to_page(page_no) {
-    if (go_to_page_first === -1)
-        go_to_page_first = page_no - 1
+    if (go_to_page_first === -1) go_to_page_first = page_no - 1
     // This makes going to a page a bit more robust, especially on first load.
     setTimeout(() => {
-        if (!viewport) // Likely destroyed
+        if (!viewport)
+            // Likely destroyed
             return
-        if (viewport.scrollTop === 0 && page_no === 1) // viewport.scrollTop will be 0, so fire manually
+        if (viewport.scrollTop === 0 && page_no === 1)
+            // viewport.scrollTop will be 0, so fire manually
             handle_scroll()
         else {
             viewport.scrollTop = min_height * (page_no - 1)
             setTimeout(async () => {
-                if (!viewport)
-                    return
+                if (!viewport) return
                 viewport.scrollTop = min_height * (page_no - 1)
                 await tick()
                 get_page_el(page_no - 1)?.classList?.add('color-bg')
@@ -73,11 +78,12 @@ export async function refresh_pages() {
     visible = visible
 }
 function get_page_el(i) {
-    if (i >= start && i <= end)
-        return contents.children[i - start]
+    if (i >= start && i <= end) return contents.children[i - start]
 }
 
-$: visible = Array(end - start).fill().map((_, i) => i + start)
+$: visible = Array(end - start)
+    .fill()
+    .map((_, i) => i + start)
 
 function handle_scroll() {
     if (!viewport) return
@@ -96,8 +102,7 @@ function handle_scroll() {
          */
         const page_el = get_page_el(item)
         const height = page_el ? page_el.offsetHeight : min_height
-        if (acclHeight + height > scrollTop)
-            break
+        if (acclHeight + height > scrollTop) break
         acclHeight += height
         item++
     }
@@ -107,8 +112,7 @@ function handle_scroll() {
              * We're going up, and adding an item to the top. Reduce top
              * padding so that the height difference doesn't cause a jump.
              */
-        }
-        else {
+        } else {
             /*
              * We're removing an item from the top. Reduce the scroll and the padding
              * so that we don't jump up when removing the item, due to its
@@ -149,20 +153,20 @@ onMount(handle_scroll)
 
 <style>
 .viewport {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
 }
 .viewport::-webkit-scrollbar {
-  width: 0;
+    width: 0;
 }
 .page {
-  min-height: calc(var(--min-height) - 1px);
-  font-size: calc(0.0525rem * var(--font-size));
-  border-bottom: 1px solid #aaa;
-  overflow-x: auto;
+    min-height: calc(var(--min-height) - 1px);
+    font-size: calc(0.0525rem * var(--font-size));
+    border-bottom: 1px solid #aaa;
+    overflow-x: auto;
 }
 .viewport :global(.color-bg) {
-  background: #fffef6;
+    background: #fffef6;
 }
 </style>

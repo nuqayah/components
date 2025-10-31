@@ -1,6 +1,6 @@
-<form method=post action=https://tafsir.app/subscribe.php onsubmit={preventDefault(subscribe)}>
-  <input type=email name=email placeholder=email@example.com requried autofocus>
-  <button type=submit>اشترك</button>
+<form method="post" action="https://tafsir.app/subscribe.php" onsubmit={preventDefault(subscribe)}>
+    <input type="email" name="email" placeholder="email@example.com" requried autofocus />
+    <button type="submit">اشترك</button>
 </form>
 
 <script>
@@ -19,7 +19,7 @@ function subscribe(e) {
             localStorage.setItem('subscribed', true)
             dispatch('close')
         })
-        .catch(() => btn.innerHTML = 'حصل خطأ')
+        .catch(() => (btn.innerHTML = 'حصل خطأ'))
         .then(() => reset_btn(btn, send_msg))
 }
 function reset_btn(btn, msg) {

@@ -1,6 +1,6 @@
 <div class="flex justify-center">
-  <button class="btn cancel" data-close>إلغاء</button>
-  <button class="btn confirm" onclick={callback} data-close>{confirm_msg}</button>
+    <button class="btn cancel" data-close>إلغاء</button>
+    <button class="btn confirm" onclick={callback} data-close>{confirm_msg}</button>
 </div>
 
 <script>
@@ -10,9 +10,9 @@ let {title = '', confirm_msg, callback} = $props()
 
 <style>
 button {
-  margin: 0 5px;
+    margin: 0 5px;
 }
 .confirm {
-  color: red;
+    color: red;
 }
 </style>

@@ -11,15 +11,15 @@
 {/if}
 
 <script>
-    import { ChevronUp } from 'lucide-svelte'
-    import {fade} from 'svelte/transition'
+import {ChevronUp} from 'lucide-svelte'
+import {fade} from 'svelte/transition'
 
-    let show_at_pixel = 500
-    let scroll_height = $state(0)
-    let last_scroll_height = 0
-    let show_goto_top = $derived.by(() => {
-       const c = scroll_height < last_scroll_height && scroll_height > show_at_pixel
-       last_scroll_height = scroll_height
-       return c
-    })
+let show_at_pixel = 500
+let scroll_height = $state(0)
+let last_scroll_height = 0
+let show_goto_top = $derived.by(() => {
+    const c = scroll_height < last_scroll_height && scroll_height > show_at_pixel
+    last_scroll_height = scroll_height
+    return c
+})
 </script>

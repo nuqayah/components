@@ -1,12 +1,12 @@
-<div class=viewport style="--font-size: {font_size}">
-  <div bind:this={contents}>
-    {#each Array(count) as _, index (index)}
-      {@const cmp = get_component(index)}
-      <div class=page>
-        <svelte:component this={cmp.component} {...cmp.props}/>
-      </div>
-    {/each}
-  </div>
+<div class="viewport" style="--font-size: {font_size}">
+    <div bind:this={contents}>
+        {#each Array(count) as _, index (index)}
+            {@const cmp = get_component(index)}
+            <div class="page">
+                <svelte:component this={cmp.component} {...cmp.props} />
+            </div>
+        {/each}
+    </div>
 </div>
 
 <script>
@@ -38,7 +38,9 @@ function handle_intersection(entries) {
     })
 }
 function observe(el) {
-    [...el.children].forEach(el => { observer.observe(el) })
+    ;[...el.children].forEach(el => {
+        observer.observe(el)
+    })
 }
 
 $: if (count && contents) observe(contents)
@@ -46,16 +48,16 @@ $: if (count && contents) observe(contents)
 
 <style>
 .viewport {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
 }
 .viewport::-webkit-scrollbar {
-  width: 0;
+    width: 0;
 }
 .page {
-  font-size: calc(0.0525rem * var(--font-size));
-  border-bottom: 1px solid #aaa;
-  overflow-x: auto;
+    font-size: calc(0.0525rem * var(--font-size));
+    border-bottom: 1px solid #aaa;
+    overflow-x: auto;
 }
 </style>

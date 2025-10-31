@@ -15,13 +15,11 @@ export default function combobox(el, props) {
     function handle_keydown(e) {
         if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
             e.preventDefault()
-            if (e.key === 'ArrowUp')
-                selected_i = (selected_i || props.listbox.children.length) - 1
+            if (e.key === 'ArrowUp') selected_i = (selected_i || props.listbox.children.length) - 1
             else if (e.key === 'ArrowDown')
                 selected_i = (selected_i + 1) % props.listbox.children.length
             set_kbd_selected(selected_i)
-        }
-        else if (/Page(Up|Down)/.test(e.key)) {
+        } else if (/Page(Up|Down)/.test(e.key)) {
             e.preventDefault()
             const {children} = props.listbox
             let h = props.listbox.offsetHeight
@@ -32,24 +30,20 @@ export default function combobox(el, props) {
                     h -= children[i].offsetHeight
                     i++
                 }
-            }
-            else {
+            } else {
                 while (i > 0 && h > 0) {
                     h -= children[i].offsetHeight
                     i--
                 }
             }
             set_kbd_selected(i)
-        }
-        else if (e.key === 'Home') {
+        } else if (e.key === 'Home') {
             e.preventDefault()
             set_kbd_selected(0)
-        }
-        else if (e.key === 'End') {
+        } else if (e.key === 'End') {
             e.preventDefault()
             set_kbd_selected(props.listbox.children.length - 1)
-        }
-        else if (e.key === 'Enter') {
+        } else if (e.key === 'Enter') {
             e.preventDefault()
             props.on_select(selected_i)
         }

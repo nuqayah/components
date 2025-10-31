@@ -1,20 +1,40 @@
-<div onmouseover={() => { should_hide = false }} onfocus={() => { should_hide = false }} onmouseleave={hide_wrapped} bind:this={tooltip_cont}>
-{#if $options.show}
-<div out:fade={{duration: 200}} role=tooltip class="tooltip tooltip-{$options.direction} slide-up-fade-in" use:reposition={$options}>
-  {#if $options.show_arrow !== false}
-    <div class=tip-arrow></div>
-  {/if}
-  <div class=tooltip-inner>
-    {@html $options.msg}
-    {#if $options.ok_btn}
-      <button class=ok onclick={() => $options.show = false}>✔</button>
+<div
+    onmouseover={() => {
+        should_hide = false
+    }}
+    onfocus={() => {
+        should_hide = false
+    }}
+    onmouseleave={hide_wrapped}
+    bind:this={tooltip_cont}
+>
+    {#if $options.show}
+        <div
+            out:fade={{duration: 200}}
+            role="tooltip"
+            class="tooltip tooltip-{$options.direction} slide-up-fade-in"
+            use:reposition={$options}
+        >
+            {#if $options.show_arrow !== false}
+                <div class="tip-arrow"></div>
+            {/if}
+            <div class="tooltip-inner">
+                {@html $options.msg}
+                {#if $options.ok_btn}
+                    <button class="ok" onclick={() => ($options.show = false)}>✔</button>
+                {/if}
+            </div>
+        </div>
     {/if}
-  </div>
-</div>
-{/if}
 </div>
 
-<svelte:window onresize={debounce(() => {$options = $options}, 12)}/>
+<svelte:window
+    onresize={debounce(() => {
+        $options = $options
+    }, 12)}
+/>
+
+<svelte:document onmousedown={hide_on_click} />
 
 <script module>
 import {onMount, onDestroy, tick} from 'svelte'
@@ -36,8 +56,7 @@ function show(props, el) {
             msg = el.getAttribute('title') || el.dataset.title
             el.removeAttribute('title')
             el.dataset.title = msg
-        }
-        else if (el.nextElementSibling?.tagName === 'TEMPLATE')
+        } else if (el.nextElementSibling?.tagName === 'TEMPLATE')
             msg = el.nextElementSibling.innerHTML
         return msg
     }
@@ -54,12 +73,10 @@ function show(props, el) {
 }
 function hide_on_click(e) {
     // Make sure we aren't clicking within the tooltip
-    if (!tooltip_cont.contains(e.target))
-        options.set({show: false})
+    if (!tooltip_cont.contains(e.target)) options.set({show: false})
 }
 const hide = debounce(() => {
-    if (should_hide)
-        options.set({show: false})
+    if (should_hide) options.set({show: false})
 }, 100)
 let should_hide = true
 // Wrap `hide` so that we don't hide when mouseleaving to tooltip
@@ -74,8 +91,7 @@ export function hover_action(el, props) {
         options.set({type: 'hover'})
         should_hide = false
         setTimeout(() => {
-            if (!should_hide)
-                show({...props, type: 'hover'}, el)()
+            if (!should_hide) show({...props, type: 'hover'}, el)()
         }, 450)
     }
     el.addEventListener('mouseover', cb)
@@ -100,8 +116,6 @@ export function click_action(el, props) {
 }
 </script>
 
-<svelte:document onmousedown={hide_on_click} />
-
 <script>
 import {autoUpdate, computePosition, shift} from '@floating-ui/dom'
 import {debounce} from 'components/src/util.js'
@@ -111,7 +125,7 @@ function reposition(el) {
         if (!$options.show) return
         computePosition($options.attach_to, el, {
             placement: $options.direction || 'top',
-            middleware: [shift({padding: 5})]
+            middleware: [shift({padding: 5})],
         }).then(({x, y}) => {
             Object.assign(el.style, {
                 left: `${x}px`,
@@ -129,105 +143,115 @@ function reposition(el) {
 
 <style>
 .slide-up-fade-in {
-  animation: slide-up-fade-in ease 150ms forwards;
+    animation: slide-up-fade-in ease 150ms forwards;
 }
 @keyframes slide-up-fade-in {
-  0% { opacity: 0; transform: translate(0, 1rem); }
-  100% { opacity: 1; transform: translate(0, 0); }
+    0% {
+        opacity: 0;
+        transform: translate(0, 1rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
 }
 .tooltip {
-  --tip-color: #fbfbfb;
-  position: absolute;
-  z-index: 2;
-  word-wrap: break-word;
-  margin: 0;
-  padding-bottom: 5px;
-  transition: opacity .2s;
+    --tip-color: #fbfbfb;
+    position: absolute;
+    z-index: 2;
+    word-wrap: break-word;
+    margin: 0;
+    padding-bottom: 5px;
+    transition: opacity 0.2s;
 }
 .tooltip .tip-arrow {
-  position: absolute;
+    position: absolute;
 }
 .tooltip .tip-arrow::before {
-  position: absolute;
-  content: '';
-  border-color: transparent;
-  border-style: solid;
+    position: absolute;
+    content: '';
+    border-color: transparent;
+    border-style: solid;
 }
 .tooltip-inner {
-  max-width: 300px;
-  padding: .25rem .5rem;
-  background-color: #000;
-  box-shadow: 0 0 15px #c6c6c6;
-  border-radius: .25rem;
-  max-height: 200px;
-  overflow: auto;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: white;
+    max-width: 300px;
+    padding: 0.25rem 0.5rem;
+    background-color: #000;
+    box-shadow: 0 0 15px #c6c6c6;
+    border-radius: 0.25rem;
+    max-height: 200px;
+    overflow: auto;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: white;
 }
 
 /* Placement */
 /* Top & Bottom */
-.tooltip-top, .tooltip-bottom {
-  padding: 0.4rem 0;
+.tooltip-top,
+.tooltip-bottom {
+    padding: 0.4rem 0;
 }
-.tooltip-top .tip-arrow, .tooltip-bottom .tip-arrow {
-  width: 0.8rem;
-  height: 0.4rem;
+.tooltip-top .tip-arrow,
+.tooltip-bottom .tip-arrow {
+    width: 0.8rem;
+    height: 0.4rem;
 }
 .tooltip-top .tip-arrow {
-  bottom: 0;
+    bottom: 0;
 }
 .tooltip-top .tip-arrow::before {
-  top: 0;
-  border-width: 0.4rem 0.4rem 0;
-  border-top-color: var(--tip-color);
+    top: 0;
+    border-width: 0.4rem 0.4rem 0;
+    border-top-color: var(--tip-color);
 }
 .tooltip-bottom .tip-arrow {
-  top: 0;
+    top: 0;
 }
 .tooltip-bottom .tip-arrow::before {
-  bottom: 0;
-  border-width: 0 0.4rem 0.4rem;
-  border-bottom-color: var(--tip-color);
+    bottom: 0;
+    border-width: 0 0.4rem 0.4rem;
+    border-bottom-color: var(--tip-color);
 }
 /* Right & left */
-.tooltip-right, .tooltip-left {
-  padding: 0 0.4rem;
+.tooltip-right,
+.tooltip-left {
+    padding: 0 0.4rem;
 }
-.tooltip-right .tip-arrow, .tooltip-left .tip-arrow {
-  width: 0.4rem;
-  height: 0.8rem;
+.tooltip-right .tip-arrow,
+.tooltip-left .tip-arrow {
+    width: 0.4rem;
+    height: 0.8rem;
 }
 .tooltip-right .tip-arrow {
-  left: 0;
+    left: 0;
 }
 .tooltip-right .tip-arrow::before {
-  right: 0;
-  border-width: 0.4rem 0.4rem 0.4rem 0;
-  border-right-color: var(--tip-color);
+    right: 0;
+    border-width: 0.4rem 0.4rem 0.4rem 0;
+    border-right-color: var(--tip-color);
 }
 .tooltip-left .tip-arrow {
-  right: 0;
+    right: 0;
 }
 .tooltip-left .tip-arrow::before {
-  left: 0;
-  border-width: 0.4rem 0 0.4rem 0.4rem;
-  border-left-color: var(--tip-color);
+    left: 0;
+    border-width: 0.4rem 0 0.4rem 0.4rem;
+    border-left-color: var(--tip-color);
 }
 .tooltip-inner {
-  color: #444;
-  background: var(--tip-color);
-  box-shadow: 0 0 10px #ccc;
+    color: #444;
+    background: var(--tip-color);
+    box-shadow: 0 0 10px #ccc;
 }
 button.ok {
-  display: block;
-  margin-left: auto;
-  padding: 0.75rem 0.5rem 0.5rem;
-  box-shadow: 0 0 2px #aaa;
-  border-radius: 1rem;
-  background: #fff3db;
-  border: 1px solid peachpuff;
-  line-height: 1;
+    display: block;
+    margin-left: auto;
+    padding: 0.75rem 0.5rem 0.5rem;
+    box-shadow: 0 0 2px #aaa;
+    border-radius: 1rem;
+    background: #fff3db;
+    border: 1px solid peachpuff;
+    line-height: 1;
 }
 </style>

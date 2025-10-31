@@ -6,7 +6,10 @@ export default function lazy_load(el, props) {
     let PER_PAGE = 25
     let visible = []
     function add_results() {
-        if (visible.length < props.items.length && Math.ceil(el.scrollTop + el.offsetHeight + OFFSET) > el.scrollHeight) {
+        if (
+            visible.length < props.items.length &&
+            Math.ceil(el.scrollTop + el.offsetHeight + OFFSET) > el.scrollHeight
+        ) {
             visible = visible.concat(props.items.slice(visible.length, visible.length + PER_PAGE))
             props.set_items(visible)
         }
@@ -17,8 +20,7 @@ export default function lazy_load(el, props) {
         props.set_items([])
         await tick()
         // If the current props.items don't overflow then add until they do
-        if (!el.clientHeight)
-            return
+        if (!el.clientHeight) return
         while (visible.length < props.items.length && el.scrollHeight <= el.clientHeight + 100) {
             await tick()
             visible = visible.concat(props.items.slice(visible.length, visible.length + 3))

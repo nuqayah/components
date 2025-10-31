@@ -1,19 +1,30 @@
-<div class=split-container style="--dir: {dir === 'rtl' ? 'right' : 'left'}" bind:this={container} bind:clientWidth={w} bind:clientHeight={h}>
-  <div class=pane style="{dimension}: {pos}%">
-    <slot name=a />
-  </div>
+<div
+    class="split-container"
+    style="--dir: {dir === 'rtl' ? 'right' : 'left'}"
+    bind:this={container}
+    bind:clientWidth={w}
+    bind:clientHeight={h}
+>
+    <div class="pane" style="{dimension}: {pos}%">
+        <slot name="a" />
+    </div>
 
-  <div class=pane style="{dimension}: {100 - (pos)}%">
-    <slot name=b />
-  </div>
+    <div class="pane" style="{dimension}: {100 - pos}%">
+        <slot name="b" />
+    </div>
 
-  {#if !fixed && !hide_b}
-    <div class="{type} divider" style="{side}: calc({pos}% - 8px)" use:drag={setPos} use:touchDrag={setTouchPos}></div>
-  {/if}
+    {#if !fixed && !hide_b}
+        <div
+            class="{type} divider"
+            style="{side}: calc({pos}% - 8px)"
+            use:drag={setPos}
+            use:touchDrag={setTouchPos}
+        ></div>
+    {/if}
 </div>
 
 {#if dragging}
-  <div class=mousecatcher></div>
+    <div class="mousecatcher"></div>
 {/if}
 
 <script>
@@ -38,34 +49,33 @@ $: min = 100 * (buffer / size)
 $: max = 100 - min
 $: pos = hide_b ? 100 : int_clamp(pos, min, max)
 onMount(() => {
-    if (!hide_b && w < 1000)
-        pos = 65
+    if (!hide_b && w < 1000) pos = 65
 })
 
 let dragging = false
 let rtl = document.dir == 'rtl'
 
 function setPos(event) {
-    const { top, left, right } = container.getBoundingClientRect()
+    const {top, left, right} = container.getBoundingClientRect()
 
-    const px = type === 'vertical'
-        ? (event.clientY - top)
-        : rtl
-            ? right - event.clientX
-            : event.clientX - left
+    const px =
+        type === 'vertical'
+            ? event.clientY - top
+            : rtl
+              ? right - event.clientX
+              : event.clientX - left
 
-    pos = 100 * px / size
+    pos = (100 * px) / size
     dispatch('change')
 }
 
 function setTouchPos(event) {
-    const { top, left } = container.getBoundingClientRect()
+    const {top, left} = container.getBoundingClientRect()
 
-    const px = type === 'vertical'
-        ? (event.touches[0].clientY - top)
-        : (event.touches[0].clientX - left)
+    const px =
+        type === 'vertical' ? event.touches[0].clientY - top : event.touches[0].clientX - left
 
-    pos = 100 * px / size
+    pos = (100 * px) / size
     dispatch('change')
 }
 
@@ -93,7 +103,7 @@ function drag(node, callback) {
     return {
         destroy() {
             off(node, 'mousedown', mousedown)
-        }
+        },
     }
 }
 
@@ -131,70 +141,78 @@ $: dimension = type === 'horizontal' ? 'width' : 'height'
 
 <style>
 .split-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 .pane {
-  position: relative;
-  float: var(--dir);
-  width: 100%;
-  height: 100%;
-  overflow: auto;
+    position: relative;
+    float: var(--dir);
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 .mousecatcher {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255,255,255,.01);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.01);
 }
 .divider {
-  position: absolute;
-  z-index: 1;
-  display: none;
+    position: absolute;
+    z-index: 1;
+    display: none;
 }
 .divider::after {
-  content: '';
-  position: absolute;
-  background-color: #777;
+    content: '';
+    position: absolute;
+    background-color: #777;
 }
 .horizontal {
-  padding: 0 8px;
-  width: 0;
-  height: 100%;
-  cursor: ew-resize;
+    padding: 0 8px;
+    width: 0;
+    height: 100%;
+    cursor: ew-resize;
 }
 .horizontal::after {
-  left: 8px;
-  top: 0;
-  width: 1px;
-  height: 100%;
+    left: 8px;
+    top: 0;
+    width: 1px;
+    height: 100%;
 }
 .vertical {
-  padding: 8px 0;
-  width: 100%;
-  height: 0;
-  cursor: ns-resize;
+    padding: 8px 0;
+    width: 100%;
+    height: 0;
+    cursor: ns-resize;
 }
 .vertical::after {
-  top: 8px;
-  left: 0;
-  width: 100%;
-  height: 1px;
+    top: 8px;
+    left: 0;
+    width: 100%;
+    height: 1px;
 }
-.left, .right, .divider {
-  display: block;
+.left,
+.right,
+.divider {
+    display: block;
 }
-.left, .right {
-  height: 100%;
-  float: left;
+.left,
+.right {
+    height: 100%;
+    float: left;
 }
-.top, .bottom {
-  position: absolute;
-  width: 100%;
+.top,
+.bottom {
+    position: absolute;
+    width: 100%;
 }
-.top { top: 0; }
-.bottom { bottom: 0; }
+.top {
+    top: 0;
+}
+.bottom {
+    bottom: 0;
+}
 </style>

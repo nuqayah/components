@@ -1,34 +1,39 @@
 {#if modal_options.show}
-<div
-  class=modal-overlay
-  tabindex=-1
-  data-close
-  onmousedown={e => (click_start_element = e.target)}
-  onclick={overlay_click}
-  transition:fade={{duration: 180}}
-  use:focus_trap
->
-  <div class=modal-container role=dialog aria-modal=true style="max-width: {modal_options.max_width}">
-    <header>
-      {#if title}<h2 class="text-lg font-bold">{title}</h2>{/if}
-      <button data-close><icon id="close" /></button>
-    </header>
-    <main>
-      <modal_options.component
-        set_title={t => (title = t)}
-        {...modal_options.props}
-        onclose={() => update_modal({show: false})}
-      />
-    </main>
-  </div>
-</div>
+    <div
+        class="modal-overlay"
+        tabindex="-1"
+        data-close
+        onmousedown={e => (click_start_element = e.target)}
+        onclick={overlay_click}
+        transition:fade={{duration: 180}}
+        use:focus_trap
+    >
+        <div
+            class="modal-container"
+            role="dialog"
+            aria-modal="true"
+            style="max-width: {modal_options.max_width}"
+        >
+            <header>
+                {#if title}<h2 class="text-lg font-bold">{title}</h2>{/if}
+                <button data-close><icon id="close" /></button>
+            </header>
+            <main>
+                <modal_options.component
+                    set_title={t => (title = t)}
+                    {...modal_options.props}
+                    onclose={() => update_modal({show: false})}
+                />
+            </main>
+        </div>
+    </div>
 {/if}
 
 <svelte:window
-  onpopstate={popstate}
-  onkeydown={e => {
-    if (e.keyCode === 27) update_modal({show: false})
-  }}
+    onpopstate={popstate}
+    onkeydown={e => {
+        if (e.keyCode === 27) update_modal({show: false})
+    }}
 />
 
 <script module>
@@ -50,19 +55,15 @@ let title = $state('')
 
 $effect(() => {
     if (Object.keys(options).length) {
-        if (!options.shown)
-            update_modal(options)
-    }
-    else
-      update_modal({show: false})
+        if (!options.shown) update_modal(options)
+    } else update_modal({show: false})
 })
 $effect(() => {
     set_body_scroll(modal_options.show)
 })
 
 function overlay_click(e) {
-    if ('close' in e.target.dataset && e.target === click_start_element)
-        update_modal({show: false})
+    if ('close' in e.target.dataset && e.target === click_start_element) update_modal({show: false})
 }
 
 function set_body_scroll(shown) {
@@ -70,82 +71,79 @@ function set_body_scroll(shown) {
 }
 
 function update_modal(ops) {
-    if ('component' in ops && !('show' in ops))
-        ops.show = true // If the component is being set, with no `show`, set `show` to true
+    if ('component' in ops && !('show' in ops)) ops.show = true // If the component is being set, with no `show`, set `show` to true
     modal_options = {...modal_options_tpl, ...ops}
 
-    if (modal_options.show)
-        history.pushState(null, null, '')
+    if (modal_options.show) history.pushState(null, null, '')
     options.shown = true
 }
 function popstate() {
-    if (modal_options.show)
-        update_modal({show: false})
+    if (modal_options.show) update_modal({show: false})
 }
 </script>
 
 <style>
 /* Non-iOS */
 :global(html.open-modal body) {
-  touch-action: none;
-  overflow: hidden;
-  height: 100vh;
+    touch-action: none;
+    overflow: hidden;
+    height: 100vh;
 }
 /* iOS */
 :global(html.open-modal) .modal-overlay {
-  touch-action: none;
+    touch-action: none;
 }
 
 .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .modal-container {
-  width: min(90vw, 580px);
-  margin: 1rem auto 0.2rem;
-  box-shadow: 0 3px 10px #555;
-  background-color: var(--bg-color, #fff);
+    width: min(90vw, 580px);
+    margin: 1rem auto 0.2rem;
+    box-shadow: 0 3px 10px #555;
+    background-color: var(--bg-color, #fff);
 }
 header {
-  position: relative;
-  background-color: var(--bg-color);
-  border-radius: 3px 3px 0 0;
+    position: relative;
+    background-color: var(--bg-color);
+    border-radius: 3px 3px 0 0;
 }
 h2 {
-  margin: 0;
-  text-align: center;
+    margin: 0;
+    text-align: center;
 }
 main {
-  padding: 0.5rem;
-  background-color: var(--bg-color);
-  max-height: 76vh;
-  overflow-y: auto;
-  border-radius: 0 0 3px 3px;
+    padding: 0.5rem;
+    background-color: var(--bg-color);
+    max-height: 76vh;
+    overflow-y: auto;
+    border-radius: 0 0 3px 3px;
 }
 button[data-close] {
-  position: absolute;
-  top: -18px;
-  right: -15px;
-  z-index: 1;
-  background: var(--bg-color, #fff);
-  border-radius: 50%;
-  border: 4px solid #666;
-  padding: 0.25rem;
-  line-height: 1;
+    position: absolute;
+    top: -18px;
+    right: -15px;
+    z-index: 1;
+    background: var(--bg-color, #fff);
+    border-radius: 50%;
+    border: 4px solid #666;
+    padding: 0.25rem;
+    line-height: 1;
 }
 .icon-close {
-  width: 1.25rem;
-  height: 1.25rem;
-  vertical-align: sub;
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: sub;
 }
 </style>

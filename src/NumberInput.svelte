@@ -32,8 +32,8 @@ let {
     class: class_name = '',
     inputmode = 'numeric',
     pattern = '[\\d٠-٩]+',
-    oninput = (val) => {},
-    onpreinput = (val) => true,
+    oninput = val => {},
+    onpreinput = val => true,
     is_valid = $bindable(true),
     disabled = false,
     display_value = $bindable(''),
@@ -45,7 +45,7 @@ let {
 } = $props()
 
 $effect(() => {
-  display_value = ar_nums(value)
+    display_value = ar_nums(value)
 })
 
 function handle_keydown(e) {

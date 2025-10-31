@@ -1,94 +1,328 @@
 lockfileVersion: '9.0'
 
 settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
+    autoInstallPeers: true
+    excludeLinksFromLockfile: false
 
 importers:
-
-  .:
-    dependencies:
-      '@floating-ui/dom':
-        specifier: ^1.6.12
-        version: 1.7.4
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      diff-match-patch:
-        specifier: ^1.0.5
-        version: 1.0.5
-      es-toolkit:
-        specifier: ^1.32.0
-        version: 1.41.0
-      escape-string-regexp:
-        specifier: ^5.0.0
-        version: 5.0.0
-      focus-trap:
-        specifier: ^7.5.4
-        version: 7.6.6
-      tailwind-merge:
-        specifier: ^3.3.0
-        version: 3.3.1
+    .:
+        dependencies:
+            '@floating-ui/dom':
+                specifier: ^1.6.12
+                version: 1.7.4
+            clsx:
+                specifier: ^2.1.1
+                version: 2.1.1
+            diff-match-patch:
+                specifier: ^1.0.5
+                version: 1.0.5
+            es-toolkit:
+                specifier: ^1.32.0
+                version: 1.41.0
+            escape-string-regexp:
+                specifier: ^5.0.0
+                version: 5.0.0
+            focus-trap:
+                specifier: ^7.5.4
+                version: 7.6.6
+            tailwind-merge:
+                specifier: ^3.3.0
+                version: 3.3.1
+        devDependencies:
+            prettier:
+                specifier: ^3.6.2
+                version: 3.6.2
+            prettier-plugin-svelte:
+                specifier: ^3.4.0
+                version: 3.4.0(prettier@3.6.2)(svelte@5.43.2)
 
 packages:
+    '@floating-ui/core@1.7.3':
+        resolution:
+            {
+                integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==,
+            }
 
-  '@floating-ui/core@1.7.3':
-    resolution: {integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==}
+    '@floating-ui/dom@1.7.4':
+        resolution:
+            {
+                integrity: sha512-OOchDgh4F2CchOX94cRVqhvy7b3AFb+/rQXyswmzmGakRfkMgoWVjfnLWkRirfLEfuD4ysVW16eXzwt3jHIzKA==,
+            }
 
-  '@floating-ui/dom@1.7.4':
-    resolution: {integrity: sha512-OOchDgh4F2CchOX94cRVqhvy7b3AFb+/rQXyswmzmGakRfkMgoWVjfnLWkRirfLEfuD4ysVW16eXzwt3jHIzKA==}
+    '@floating-ui/utils@0.2.10':
+        resolution:
+            {
+                integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==,
+            }
 
-  '@floating-ui/utils@0.2.10':
-    resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+    '@jridgewell/gen-mapping@0.3.13':
+        resolution:
+            {
+                integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==,
+            }
 
-  clsx@2.1.1:
-    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
-    engines: {node: '>=6'}
+    '@jridgewell/remapping@2.3.5':
+        resolution:
+            {
+                integrity: sha512-LI9u/+laYG4Ds1TDKSJW2YPrIlcVYOwi2fUC6xB43lueCjgxV4lffOCZCtYFiH6TNOX+tQKXx97T4IKHbhyHEQ==,
+            }
 
-  diff-match-patch@1.0.5:
-    resolution: {integrity: sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==}
+    '@jridgewell/resolve-uri@3.1.2':
+        resolution:
+            {
+                integrity: sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==,
+            }
+        engines: {node: '>=6.0.0'}
 
-  es-toolkit@1.41.0:
-    resolution: {integrity: sha512-bDd3oRmbVgqZCJS6WmeQieOrzpl3URcWBUVDXxOELlUW2FuW+0glPOz1n0KnRie+PdyvUZcXz2sOn00c6pPRIA==}
+    '@jridgewell/sourcemap-codec@1.5.5':
+        resolution:
+            {
+                integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==,
+            }
 
-  escape-string-regexp@5.0.0:
-    resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
-    engines: {node: '>=12'}
+    '@jridgewell/trace-mapping@0.3.31':
+        resolution:
+            {
+                integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==,
+            }
 
-  focus-trap@7.6.6:
-    resolution: {integrity: sha512-v/Z8bvMCajtx4mEXmOo7QEsIzlIOqRXTIwgUfsFOF9gEsespdbD0AkPIka1bSXZ8Y8oZ+2IVDQZePkTfEHZl7Q==}
+    '@sveltejs/acorn-typescript@1.0.6':
+        resolution:
+            {
+                integrity: sha512-4awhxtMh4cx9blePWl10HRHj8Iivtqj+2QdDCSMDzxG+XKa9+VCNupQuCuvzEhYPzZSrX+0gC+0lHA/0fFKKQQ==,
+            }
+        peerDependencies:
+            acorn: ^8.9.0
 
-  tabbable@6.3.0:
-    resolution: {integrity: sha512-EIHvdY5bPLuWForiR/AN2Bxngzpuwn1is4asboytXtpTgsArc+WmSJKVLlhdh71u7jFcryDqB2A8lQvj78MkyQ==}
+    '@types/estree@1.0.8':
+        resolution:
+            {
+                integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==,
+            }
 
-  tailwind-merge@3.3.1:
-    resolution: {integrity: sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==}
+    acorn@8.15.0:
+        resolution:
+            {
+                integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==,
+            }
+        engines: {node: '>=0.4.0'}
+        hasBin: true
+
+    aria-query@5.3.2:
+        resolution:
+            {
+                integrity: sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==,
+            }
+        engines: {node: '>= 0.4'}
+
+    axobject-query@4.1.0:
+        resolution:
+            {
+                integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==,
+            }
+        engines: {node: '>= 0.4'}
+
+    clsx@2.1.1:
+        resolution:
+            {
+                integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==,
+            }
+        engines: {node: '>=6'}
+
+    diff-match-patch@1.0.5:
+        resolution:
+            {
+                integrity: sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==,
+            }
+
+    es-toolkit@1.41.0:
+        resolution:
+            {
+                integrity: sha512-bDd3oRmbVgqZCJS6WmeQieOrzpl3URcWBUVDXxOELlUW2FuW+0glPOz1n0KnRie+PdyvUZcXz2sOn00c6pPRIA==,
+            }
+
+    escape-string-regexp@5.0.0:
+        resolution:
+            {
+                integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==,
+            }
+        engines: {node: '>=12'}
+
+    esm-env@1.2.2:
+        resolution:
+            {
+                integrity: sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==,
+            }
+
+    esrap@2.1.2:
+        resolution:
+            {
+                integrity: sha512-DgvlIQeowRNyvLPWW4PT7Gu13WznY288Du086E751mwwbsgr29ytBiYeLzAGIo0qk3Ujob0SDk8TiSaM5WQzNg==,
+            }
+
+    focus-trap@7.6.6:
+        resolution:
+            {
+                integrity: sha512-v/Z8bvMCajtx4mEXmOo7QEsIzlIOqRXTIwgUfsFOF9gEsespdbD0AkPIka1bSXZ8Y8oZ+2IVDQZePkTfEHZl7Q==,
+            }
+
+    is-reference@3.0.3:
+        resolution:
+            {
+                integrity: sha512-ixkJoqQvAP88E6wLydLGGqCJsrFUnqoH6HnaczB8XmDH1oaWU+xxdptvikTgaEhtZ53Ky6YXiBuUI2WXLMCwjw==,
+            }
+
+    locate-character@3.0.0:
+        resolution:
+            {
+                integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==,
+            }
+
+    magic-string@0.30.21:
+        resolution:
+            {
+                integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==,
+            }
+
+    prettier-plugin-svelte@3.4.0:
+        resolution:
+            {
+                integrity: sha512-pn1ra/0mPObzqoIQn/vUTR3ZZI6UuZ0sHqMK5x2jMLGrs53h0sXhkVuDcrlssHwIMk7FYrMjHBPoUSyyEEDlBQ==,
+            }
+        peerDependencies:
+            prettier: ^3.0.0
+            svelte: ^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0
+
+    prettier@3.6.2:
+        resolution:
+            {
+                integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==,
+            }
+        engines: {node: '>=14'}
+        hasBin: true
+
+    svelte@5.43.2:
+        resolution:
+            {
+                integrity: sha512-ro1umEzX8rT5JpCmlf0PPv7ncD8MdVob9e18bhwqTKNoLjS8kDvhVpaoYVPc+qMwDAOfcwJtyY7ZFSDbOaNPgA==,
+            }
+        engines: {node: '>=18'}
+
+    tabbable@6.3.0:
+        resolution:
+            {
+                integrity: sha512-EIHvdY5bPLuWForiR/AN2Bxngzpuwn1is4asboytXtpTgsArc+WmSJKVLlhdh71u7jFcryDqB2A8lQvj78MkyQ==,
+            }
+
+    tailwind-merge@3.3.1:
+        resolution:
+            {
+                integrity: sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==,
+            }
+
+    zimmerframe@1.1.4:
+        resolution:
+            {
+                integrity: sha512-B58NGBEoc8Y9MWWCQGl/gq9xBCe4IiKM0a2x7GZdQKOW5Exr8S1W24J6OgM1njK8xCRGvAJIL/MxXHf6SkmQKQ==,
+            }
 
 snapshots:
+    '@floating-ui/core@1.7.3':
+        dependencies:
+            '@floating-ui/utils': 0.2.10
 
-  '@floating-ui/core@1.7.3':
-    dependencies:
-      '@floating-ui/utils': 0.2.10
+    '@floating-ui/dom@1.7.4':
+        dependencies:
+            '@floating-ui/core': 1.7.3
+            '@floating-ui/utils': 0.2.10
 
-  '@floating-ui/dom@1.7.4':
-    dependencies:
-      '@floating-ui/core': 1.7.3
-      '@floating-ui/utils': 0.2.10
+    '@floating-ui/utils@0.2.10': {}
 
-  '@floating-ui/utils@0.2.10': {}
+    '@jridgewell/gen-mapping@0.3.13':
+        dependencies:
+            '@jridgewell/sourcemap-codec': 1.5.5
+            '@jridgewell/trace-mapping': 0.3.31
 
-  clsx@2.1.1: {}
+    '@jridgewell/remapping@2.3.5':
+        dependencies:
+            '@jridgewell/gen-mapping': 0.3.13
+            '@jridgewell/trace-mapping': 0.3.31
 
-  diff-match-patch@1.0.5: {}
+    '@jridgewell/resolve-uri@3.1.2': {}
 
-  es-toolkit@1.41.0: {}
+    '@jridgewell/sourcemap-codec@1.5.5': {}
 
-  escape-string-regexp@5.0.0: {}
+    '@jridgewell/trace-mapping@0.3.31':
+        dependencies:
+            '@jridgewell/resolve-uri': 3.1.2
+            '@jridgewell/sourcemap-codec': 1.5.5
 
-  focus-trap@7.6.6:
-    dependencies:
-      tabbable: 6.3.0
+    '@sveltejs/acorn-typescript@1.0.6(acorn@8.15.0)':
+        dependencies:
+            acorn: 8.15.0
 
-  tabbable@6.3.0: {}
+    '@types/estree@1.0.8': {}
 
-  tailwind-merge@3.3.1: {}
+    acorn@8.15.0: {}
+
+    aria-query@5.3.2: {}
+
+    axobject-query@4.1.0: {}
+
+    clsx@2.1.1: {}
+
+    diff-match-patch@1.0.5: {}
+
+    es-toolkit@1.41.0: {}
+
+    escape-string-regexp@5.0.0: {}
+
+    esm-env@1.2.2: {}
+
+    esrap@2.1.2:
+        dependencies:
+            '@jridgewell/sourcemap-codec': 1.5.5
+
+    focus-trap@7.6.6:
+        dependencies:
+            tabbable: 6.3.0
+
+    is-reference@3.0.3:
+        dependencies:
+            '@types/estree': 1.0.8
+
+    locate-character@3.0.0: {}
+
+    magic-string@0.30.21:
+        dependencies:
+            '@jridgewell/sourcemap-codec': 1.5.5
+
+    prettier-plugin-svelte@3.4.0(prettier@3.6.2)(svelte@5.43.2):
+        dependencies:
+            prettier: 3.6.2
+            svelte: 5.43.2
+
+    prettier@3.6.2: {}
+
+    svelte@5.43.2:
+        dependencies:
+            '@jridgewell/remapping': 2.3.5
+            '@jridgewell/sourcemap-codec': 1.5.5
+            '@sveltejs/acorn-typescript': 1.0.6(acorn@8.15.0)
+            '@types/estree': 1.0.8
+            acorn: 8.15.0
+            aria-query: 5.3.2
+            axobject-query: 4.1.0
+            clsx: 2.1.1
+            esm-env: 1.2.2
+            esrap: 2.1.2
+            is-reference: 3.0.3
+            locate-character: 3.0.0
+            magic-string: 0.30.21
+            zimmerframe: 1.1.4
+
+    tabbable@6.3.0: {}
+
+    tailwind-merge@3.3.1: {}
+
+    zimmerframe@1.1.4: {}

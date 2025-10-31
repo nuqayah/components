@@ -1,8 +1,8 @@
-<form method=post action=https://tafsir.app/msg.php onsubmit={preventDefault(send_msg)}>
-  <input type=text name=name placeholder=الاسم autofocus>
-  <input type=email name=email placeholder=email@example.com>
-  <textarea name=msg placeholder=الرسالة rows=5 required></textarea>
-  <button class=btn type=submit>إرسال</button>
+<form method="post" action="https://tafsir.app/msg.php" onsubmit={preventDefault(send_msg)}>
+    <input type="text" name="name" placeholder="الاسم" autofocus />
+    <input type="email" name="email" placeholder="email@example.com" />
+    <textarea name="msg" placeholder="الرسالة" rows="5" required></textarea>
+    <button class="btn" type="submit">إرسال</button>
 </form>
 
 <script>
@@ -19,8 +19,8 @@ function send_msg(e) {
     const submit_msg = submit_btn.textContent
     submit_btn.disabled = true
     fetch(form.action, {method: 'post', mode: 'no-cors', body: JSON.stringify(data)})
-        .then(() => submit_btn.textContent = 'أرسلت رسالتك')
-        .catch(() => submit_btn.textContent = 'حصل خطأ')
+        .then(() => (submit_btn.textContent = 'أرسلت رسالتك'))
+        .catch(() => (submit_btn.textContent = 'حصل خطأ'))
         .then(() => {
             setTimeout(() => {
                 dispatch('close')

@@ -1,18 +1,18 @@
 <div
-  class=viewport
-  {hidden}
-  on:scroll={use_compat ? debounce(handle_scroll, 35) : handle_scroll}
-  bind:this={viewport}
-  on:touchstart={window._useragent.ios ? () => touch_down = true : () => {}}
-  on:touchend={window._useragent.ios ? () => touch_down = false : () => {}}
+    class="viewport"
+    {hidden}
+    on:scroll={use_compat ? debounce(handle_scroll, 35) : handle_scroll}
+    bind:this={viewport}
+    on:touchstart={window._useragent.ios ? () => (touch_down = true) : () => {}}
+    on:touchend={window._useragent.ios ? () => (touch_down = false) : () => {}}
 >
-  {#each current_pgs as pg (pg.num)}
-    {#if pg.contents}
-      <div class="page" id=pg-{pg.num}>
-        <div>{@html pg.contents}</div>
-      </div>
-    {/if}
-  {/each}
+    {#each current_pgs as pg (pg.num)}
+        {#if pg.contents}
+            <div class="page" id="pg-{pg.num}">
+                <div>{@html pg.contents}</div>
+            </div>
+        {/if}
+    {/each}
 </div>
 
 <script>
@@ -27,7 +27,7 @@ export let start = 1
 const use_compat = !CSS.supports('overflow-anchor: none')
 let touch_down = false // Loading pages while touch_down causes too much jumping as pages load from above
 
-const page_heights_map = new WeakMap
+const page_heights_map = new WeakMap()
 let current_pgs = []
 let last_scroll = 0
 let viewport
@@ -36,15 +36,15 @@ let loading_pages = 0
 async function set_page_contents(pg) {
     loading_pages++
     const contents = await get_page_contents(pg.num)
-    if (!viewport) // destroyed
+    if (!viewport)
+        // destroyed
         return
 
     // If we're at the very top and we want to add results before, scroll down first
     // to avoid jump, as overflow-anchor only works if not at top.
     // use_compat doesn't need this since as no overflow-anchor, so we compensate below
     // Theoretically, we could be going down, not up, but that's unlikely, and even so no harm
-    if (!use_compat && viewport.scrollTop === 0)
-        viewport.scrollTop += 5
+    if (!use_compat && viewport.scrollTop === 0) viewport.scrollTop += 5
 
     pg.contents = contents
     current_pgs = current_pgs
@@ -63,20 +63,22 @@ async function set_page_contents(pg) {
 
 function add_results(el, going_down) {
     const ln = current_pgs.length
-    if (!ln || loading_pages > 30)  // !ln is during go_to_page; `loading_pages > 30` is a safety measure
+    if (!ln || loading_pages > 30)
+        // !ln is during go_to_page; `loading_pages > 30` is a safety measure
         return
     if (going_down) {
         const last_num = current_pgs.at(-1).num
-        if (last_num < count && Math.ceil(el.scrollTop + el.offsetHeight + 1500) > el.scrollHeight) {
+        if (
+            last_num < count &&
+            Math.ceil(el.scrollTop + el.offsetHeight + 1500) > el.scrollHeight
+        ) {
             current_pgs = [...current_pgs, {num: last_num + 1}]
             set_page_contents(current_pgs.at(-1))
         }
-    }
-    else {
-        if (use_compat && loading_pages)
-            return
+    } else {
+        if (use_compat && loading_pages) return
         // `el.scrollTop < 1500` can be false if the current page is very tall
-        if (current_pgs[0].num > 1 && (el.scrollTop < 1500 || (start - current_pgs[0].num) < 2)) {
+        if (current_pgs[0].num > 1 && (el.scrollTop < 1500 || start - current_pgs[0].num < 2)) {
             current_pgs = [{num: current_pgs[0].num - 1}, ...current_pgs]
             set_page_contents(current_pgs[0])
         }
@@ -87,7 +89,7 @@ function add_results(el, going_down) {
 }
 
 export async function go_to_page(page_no) {
-    const length = page_no + 5 > count ? (count + 1) - page_no : 5
+    const length = page_no + 5 > count ? count + 1 - page_no : 5
     current_pgs = []
     /*
      * The add_results() below shifts the scrollbar in a way that affects *future* go_to_page
@@ -104,8 +106,7 @@ export async function go_to_page(page_no) {
         viewport.scrollTop += 2
         await new Promise(r => setTimeout(r, 100))
         add_results(viewport, false)
-        if (use_compat && viewport)
-            pg_el.scrollIntoView()
+        if (use_compat && viewport) pg_el.scrollIntoView()
     }, 500)
 }
 export function refresh_pages() {
@@ -136,7 +137,7 @@ function handle_scroll() {
     }
     // offset + # of pages. `- 1` to not count first page twice.
     // 0 is rare, but when at start of book, and not one px of first page is scrolled over
-    start = (current_pgs[0].num + i - 1) || 1
+    start = current_pgs[0].num + i - 1 || 1
 }
 onMount(() => {
     go_to_page(start)
@@ -145,8 +146,8 @@ onMount(() => {
 
 <style>
 .viewport {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  height: calc(100vh - var(--top-offset));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    height: calc(100vh - var(--top-offset));
 }
 </style>

@@ -3,14 +3,19 @@
     "version": "2.0.54",
     "type": "module",
     "scripts": {
-        "publish-gh": "VER=$(npm --no-git-tag-version version patch) && git add package.json && git commit --amend --no-edit && git tag -f $VER && git push -f && git push --tags -f",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "typecheck": "tsc --noEmit",
+        "typegen": "tsc && pnpm format",
+        "prepublish-gh": "pnpm typegen",
+        "publish-gh": "VER=$(npm --no-git-tag-version version patch) && git add package.json && git commit --amend --no-edit && git tag -f $VER && git push -f && git push --tags -f"
     },
     "exports": {
         ".": {
+            "types": "./types/index.d.ts",
             "svelte": "./src/index.js"
         }
     },
+    "types": "./types/index.d.ts",
     "svelte": "./src/index.js",
     "dependencies": {
         "@floating-ui/dom": "^1.6.12",
@@ -21,9 +26,13 @@
         "focus-trap": "^7.5.4",
         "tailwind-merge": "^3.3.0"
     },
+    "peerDependencies": {
+        "svelte": "^5.0.0"
+    },
     "devDependencies": {
         "prettier": "^3.6.2",
-        "prettier-plugin-svelte": "^3.4.0"
+        "prettier-plugin-svelte": "^3.4.0",
+        "typescript": "^5.9.3"
     },
     "repository": "github:mustafa0x/components"
 }

@@ -1,10 +1,23 @@
 import {tick} from 'svelte'
-import {debounce} from 'components/src/util.js'
+import {debounce} from './util.js'
 
+/**
+ * @template T
+ * @typedef {Object} LazyLoadProps
+ * @property {T[]} items
+ * @property {(items: T[]) => void} set_items
+ */
+
+/**
+ * @template T
+ * @param {HTMLElement} el
+ * @param {LazyLoadProps<T>} props
+ */
 export default function lazy_load(el, props) {
     let OFFSET = 200
     let PER_PAGE = 25
     let visible = []
+
     function add_results() {
         if (
             visible.length < props.items.length &&
@@ -14,6 +27,8 @@ export default function lazy_load(el, props) {
             props.set_items(visible)
         }
     }
+
+    /** @param {LazyLoadProps<T>} props_updated */
     async function pad_results(props_updated) {
         props = props_updated
         visible = []
@@ -27,6 +42,7 @@ export default function lazy_load(el, props) {
             props.set_items(visible)
         }
     }
+
     const add_results_debounced = debounce(add_results, 5)
     window.addEventListener('resize', add_results_debounced)
     el.addEventListener('scroll', add_results_debounced)

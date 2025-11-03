@@ -1,17 +1,35 @@
-import {debounce, on, off} from 'components/src/util.js'
+import {debounce, on, off} from './util.js'
 
+/**
+ * @typedef {Object} ComboboxProps
+ * @property {HTMLElement | null} listbox
+ * @property {(value: string) => void} filterer
+ * @property {(i: number) => void} on_kbd_selected
+ * @property {(i: number) => void} on_select
+ */
+
+/**
+ * @param {HTMLInputElement} el
+ * @param {ComboboxProps} props
+ */
 export default function combobox(el, props) {
     let selected_i = 0
+
+    /** @param {Event} e */
     function handle_input(e) {
-        props.filterer(e?.target?.value || '')
+        props.filterer(/** @type {HTMLInputElement} */ (e.target).value)
         selected_i = 0
         set_kbd_selected(selected_i)
     }
+
+    /** @param {number} i */
     function set_kbd_selected(i) {
         selected_i = i
         props.listbox.children[i]?.scrollIntoView({block: 'nearest'})
         props.on_kbd_selected(i)
     }
+
+    /** @param {KeyboardEvent} e */
     function handle_keydown(e) {
         if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
             e.preventDefault()
@@ -27,12 +45,12 @@ export default function combobox(el, props) {
             if (e.key.endsWith('Down')) {
                 const ln = children.length
                 while (i < ln - 1 && h > 0) {
-                    h -= children[i].offsetHeight
+                    h -= /** @type {HTMLElement} */ (children[i]).offsetHeight
                     i++
                 }
             } else {
                 while (i > 0 && h > 0) {
-                    h -= children[i].offsetHeight
+                    h -= /** @type {HTMLElement} */ (children[i]).offsetHeight
                     i--
                 }
             }
@@ -57,6 +75,7 @@ export default function combobox(el, props) {
             off(el, 'input', handle_input_debounced)
             off(el, 'keydown', handle_keydown)
         },
+        /** @param {ComboboxProps} props_ */
         update(props_) {
             props = props_ // required for listbox
         },

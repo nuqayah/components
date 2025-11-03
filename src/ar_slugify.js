@@ -1,4 +1,10 @@
+/**
+ * @param {[string, string][]} map
+ * @param {string} val
+ */
 const translate = (map, val) => map.reduce((v, p) => v.replaceAll(p[0], p[1]), val)
+
+/** @type {[RegExp, string][]} */
 const preprocess_repls = [
     // Replace shaddah with letter preceding it
     [/([ء-ي])ّ/g, '$1$1'],
@@ -17,6 +23,8 @@ const preprocess_repls = [
     // Remove alif after tanween fath
     [/ًا/g, 'ً'],
 ]
+
+/** @type {[string, string][]} */
 const map = [
     ['ً', ''],
     ['ٌ', ''],
@@ -68,6 +76,7 @@ const map = [
     ['ي', 'y'],
 ]
 
+/** @param {string} val */
 export default function slugify(val) {
     val = translate(map, val)
     preprocess_repls.forEach(r => (val = val.replace(r[0], r[1])))

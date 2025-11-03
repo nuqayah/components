@@ -1,328 +1,257 @@
 lockfileVersion: '9.0'
 
 settings:
-    autoInstallPeers: true
-    excludeLinksFromLockfile: false
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 importers:
-    .:
-        dependencies:
-            '@floating-ui/dom':
-                specifier: ^1.6.12
-                version: 1.7.4
-            clsx:
-                specifier: ^2.1.1
-                version: 2.1.1
-            diff-match-patch:
-                specifier: ^1.0.5
-                version: 1.0.5
-            es-toolkit:
-                specifier: ^1.32.0
-                version: 1.41.0
-            escape-string-regexp:
-                specifier: ^5.0.0
-                version: 5.0.0
-            focus-trap:
-                specifier: ^7.5.4
-                version: 7.6.6
-            tailwind-merge:
-                specifier: ^3.3.0
-                version: 3.3.1
-        devDependencies:
-            prettier:
-                specifier: ^3.6.2
-                version: 3.6.2
-            prettier-plugin-svelte:
-                specifier: ^3.4.0
-                version: 3.4.0(prettier@3.6.2)(svelte@5.43.2)
+
+  .:
+    dependencies:
+      '@floating-ui/dom':
+        specifier: ^1.6.12
+        version: 1.7.4
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      diff-match-patch:
+        specifier: ^1.0.5
+        version: 1.0.5
+      es-toolkit:
+        specifier: ^1.32.0
+        version: 1.41.0
+      escape-string-regexp:
+        specifier: ^5.0.0
+        version: 5.0.0
+      focus-trap:
+        specifier: ^7.5.4
+        version: 7.6.6
+      svelte:
+        specifier: ^5.0.0
+        version: 5.43.2
+      tailwind-merge:
+        specifier: ^3.3.0
+        version: 3.3.1
+    devDependencies:
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
+      prettier-plugin-svelte:
+        specifier: ^3.4.0
+        version: 3.4.0(prettier@3.6.2)(svelte@5.43.2)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
 
 packages:
-    '@floating-ui/core@1.7.3':
-        resolution:
-            {
-                integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==,
-            }
 
-    '@floating-ui/dom@1.7.4':
-        resolution:
-            {
-                integrity: sha512-OOchDgh4F2CchOX94cRVqhvy7b3AFb+/rQXyswmzmGakRfkMgoWVjfnLWkRirfLEfuD4ysVW16eXzwt3jHIzKA==,
-            }
+  '@floating-ui/core@1.7.3':
+    resolution: {integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==}
 
-    '@floating-ui/utils@0.2.10':
-        resolution:
-            {
-                integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==,
-            }
+  '@floating-ui/dom@1.7.4':
+    resolution: {integrity: sha512-OOchDgh4F2CchOX94cRVqhvy7b3AFb+/rQXyswmzmGakRfkMgoWVjfnLWkRirfLEfuD4ysVW16eXzwt3jHIzKA==}
 
-    '@jridgewell/gen-mapping@0.3.13':
-        resolution:
-            {
-                integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==,
-            }
+  '@floating-ui/utils@0.2.10':
+    resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
-    '@jridgewell/remapping@2.3.5':
-        resolution:
-            {
-                integrity: sha512-LI9u/+laYG4Ds1TDKSJW2YPrIlcVYOwi2fUC6xB43lueCjgxV4lffOCZCtYFiH6TNOX+tQKXx97T4IKHbhyHEQ==,
-            }
+  '@jridgewell/gen-mapping@0.3.13':
+    resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
 
-    '@jridgewell/resolve-uri@3.1.2':
-        resolution:
-            {
-                integrity: sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==,
-            }
-        engines: {node: '>=6.0.0'}
+  '@jridgewell/remapping@2.3.5':
+    resolution: {integrity: sha512-LI9u/+laYG4Ds1TDKSJW2YPrIlcVYOwi2fUC6xB43lueCjgxV4lffOCZCtYFiH6TNOX+tQKXx97T4IKHbhyHEQ==}
 
-    '@jridgewell/sourcemap-codec@1.5.5':
-        resolution:
-            {
-                integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==,
-            }
+  '@jridgewell/resolve-uri@3.1.2':
+    resolution: {integrity: sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==}
+    engines: {node: '>=6.0.0'}
 
-    '@jridgewell/trace-mapping@0.3.31':
-        resolution:
-            {
-                integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==,
-            }
+  '@jridgewell/sourcemap-codec@1.5.5':
+    resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
 
-    '@sveltejs/acorn-typescript@1.0.6':
-        resolution:
-            {
-                integrity: sha512-4awhxtMh4cx9blePWl10HRHj8Iivtqj+2QdDCSMDzxG+XKa9+VCNupQuCuvzEhYPzZSrX+0gC+0lHA/0fFKKQQ==,
-            }
-        peerDependencies:
-            acorn: ^8.9.0
+  '@jridgewell/trace-mapping@0.3.31':
+    resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-    '@types/estree@1.0.8':
-        resolution:
-            {
-                integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==,
-            }
+  '@sveltejs/acorn-typescript@1.0.6':
+    resolution: {integrity: sha512-4awhxtMh4cx9blePWl10HRHj8Iivtqj+2QdDCSMDzxG+XKa9+VCNupQuCuvzEhYPzZSrX+0gC+0lHA/0fFKKQQ==}
+    peerDependencies:
+      acorn: ^8.9.0
 
-    acorn@8.15.0:
-        resolution:
-            {
-                integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==,
-            }
-        engines: {node: '>=0.4.0'}
-        hasBin: true
+  '@types/estree@1.0.8':
+    resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
-    aria-query@5.3.2:
-        resolution:
-            {
-                integrity: sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==,
-            }
-        engines: {node: '>= 0.4'}
+  acorn@8.15.0:
+    resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
 
-    axobject-query@4.1.0:
-        resolution:
-            {
-                integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==,
-            }
-        engines: {node: '>= 0.4'}
+  aria-query@5.3.2:
+    resolution: {integrity: sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==}
+    engines: {node: '>= 0.4'}
 
-    clsx@2.1.1:
-        resolution:
-            {
-                integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==,
-            }
-        engines: {node: '>=6'}
+  axobject-query@4.1.0:
+    resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
+    engines: {node: '>= 0.4'}
 
-    diff-match-patch@1.0.5:
-        resolution:
-            {
-                integrity: sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==,
-            }
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
-    es-toolkit@1.41.0:
-        resolution:
-            {
-                integrity: sha512-bDd3oRmbVgqZCJS6WmeQieOrzpl3URcWBUVDXxOELlUW2FuW+0glPOz1n0KnRie+PdyvUZcXz2sOn00c6pPRIA==,
-            }
+  diff-match-patch@1.0.5:
+    resolution: {integrity: sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==}
 
-    escape-string-regexp@5.0.0:
-        resolution:
-            {
-                integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==,
-            }
-        engines: {node: '>=12'}
+  es-toolkit@1.41.0:
+    resolution: {integrity: sha512-bDd3oRmbVgqZCJS6WmeQieOrzpl3URcWBUVDXxOELlUW2FuW+0glPOz1n0KnRie+PdyvUZcXz2sOn00c6pPRIA==}
 
-    esm-env@1.2.2:
-        resolution:
-            {
-                integrity: sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==,
-            }
+  escape-string-regexp@5.0.0:
+    resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
+    engines: {node: '>=12'}
 
-    esrap@2.1.2:
-        resolution:
-            {
-                integrity: sha512-DgvlIQeowRNyvLPWW4PT7Gu13WznY288Du086E751mwwbsgr29ytBiYeLzAGIo0qk3Ujob0SDk8TiSaM5WQzNg==,
-            }
+  esm-env@1.2.2:
+    resolution: {integrity: sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==}
 
-    focus-trap@7.6.6:
-        resolution:
-            {
-                integrity: sha512-v/Z8bvMCajtx4mEXmOo7QEsIzlIOqRXTIwgUfsFOF9gEsespdbD0AkPIka1bSXZ8Y8oZ+2IVDQZePkTfEHZl7Q==,
-            }
+  esrap@2.1.2:
+    resolution: {integrity: sha512-DgvlIQeowRNyvLPWW4PT7Gu13WznY288Du086E751mwwbsgr29ytBiYeLzAGIo0qk3Ujob0SDk8TiSaM5WQzNg==}
 
-    is-reference@3.0.3:
-        resolution:
-            {
-                integrity: sha512-ixkJoqQvAP88E6wLydLGGqCJsrFUnqoH6HnaczB8XmDH1oaWU+xxdptvikTgaEhtZ53Ky6YXiBuUI2WXLMCwjw==,
-            }
+  focus-trap@7.6.6:
+    resolution: {integrity: sha512-v/Z8bvMCajtx4mEXmOo7QEsIzlIOqRXTIwgUfsFOF9gEsespdbD0AkPIka1bSXZ8Y8oZ+2IVDQZePkTfEHZl7Q==}
 
-    locate-character@3.0.0:
-        resolution:
-            {
-                integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==,
-            }
+  is-reference@3.0.3:
+    resolution: {integrity: sha512-ixkJoqQvAP88E6wLydLGGqCJsrFUnqoH6HnaczB8XmDH1oaWU+xxdptvikTgaEhtZ53Ky6YXiBuUI2WXLMCwjw==}
 
-    magic-string@0.30.21:
-        resolution:
-            {
-                integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==,
-            }
+  locate-character@3.0.0:
+    resolution: {integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==}
 
-    prettier-plugin-svelte@3.4.0:
-        resolution:
-            {
-                integrity: sha512-pn1ra/0mPObzqoIQn/vUTR3ZZI6UuZ0sHqMK5x2jMLGrs53h0sXhkVuDcrlssHwIMk7FYrMjHBPoUSyyEEDlBQ==,
-            }
-        peerDependencies:
-            prettier: ^3.0.0
-            svelte: ^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0
+  magic-string@0.30.21:
+    resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
-    prettier@3.6.2:
-        resolution:
-            {
-                integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==,
-            }
-        engines: {node: '>=14'}
-        hasBin: true
+  prettier-plugin-svelte@3.4.0:
+    resolution: {integrity: sha512-pn1ra/0mPObzqoIQn/vUTR3ZZI6UuZ0sHqMK5x2jMLGrs53h0sXhkVuDcrlssHwIMk7FYrMjHBPoUSyyEEDlBQ==}
+    peerDependencies:
+      prettier: ^3.0.0
+      svelte: ^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0
 
-    svelte@5.43.2:
-        resolution:
-            {
-                integrity: sha512-ro1umEzX8rT5JpCmlf0PPv7ncD8MdVob9e18bhwqTKNoLjS8kDvhVpaoYVPc+qMwDAOfcwJtyY7ZFSDbOaNPgA==,
-            }
-        engines: {node: '>=18'}
+  prettier@3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+    engines: {node: '>=14'}
+    hasBin: true
 
-    tabbable@6.3.0:
-        resolution:
-            {
-                integrity: sha512-EIHvdY5bPLuWForiR/AN2Bxngzpuwn1is4asboytXtpTgsArc+WmSJKVLlhdh71u7jFcryDqB2A8lQvj78MkyQ==,
-            }
+  svelte@5.43.2:
+    resolution: {integrity: sha512-ro1umEzX8rT5JpCmlf0PPv7ncD8MdVob9e18bhwqTKNoLjS8kDvhVpaoYVPc+qMwDAOfcwJtyY7ZFSDbOaNPgA==}
+    engines: {node: '>=18'}
 
-    tailwind-merge@3.3.1:
-        resolution:
-            {
-                integrity: sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==,
-            }
+  tabbable@6.3.0:
+    resolution: {integrity: sha512-EIHvdY5bPLuWForiR/AN2Bxngzpuwn1is4asboytXtpTgsArc+WmSJKVLlhdh71u7jFcryDqB2A8lQvj78MkyQ==}
 
-    zimmerframe@1.1.4:
-        resolution:
-            {
-                integrity: sha512-B58NGBEoc8Y9MWWCQGl/gq9xBCe4IiKM0a2x7GZdQKOW5Exr8S1W24J6OgM1njK8xCRGvAJIL/MxXHf6SkmQKQ==,
-            }
+  tailwind-merge@3.3.1:
+    resolution: {integrity: sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==}
+
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  zimmerframe@1.1.4:
+    resolution: {integrity: sha512-B58NGBEoc8Y9MWWCQGl/gq9xBCe4IiKM0a2x7GZdQKOW5Exr8S1W24J6OgM1njK8xCRGvAJIL/MxXHf6SkmQKQ==}
 
 snapshots:
-    '@floating-ui/core@1.7.3':
-        dependencies:
-            '@floating-ui/utils': 0.2.10
 
-    '@floating-ui/dom@1.7.4':
-        dependencies:
-            '@floating-ui/core': 1.7.3
-            '@floating-ui/utils': 0.2.10
+  '@floating-ui/core@1.7.3':
+    dependencies:
+      '@floating-ui/utils': 0.2.10
 
-    '@floating-ui/utils@0.2.10': {}
+  '@floating-ui/dom@1.7.4':
+    dependencies:
+      '@floating-ui/core': 1.7.3
+      '@floating-ui/utils': 0.2.10
 
-    '@jridgewell/gen-mapping@0.3.13':
-        dependencies:
-            '@jridgewell/sourcemap-codec': 1.5.5
-            '@jridgewell/trace-mapping': 0.3.31
+  '@floating-ui/utils@0.2.10': {}
 
-    '@jridgewell/remapping@2.3.5':
-        dependencies:
-            '@jridgewell/gen-mapping': 0.3.13
-            '@jridgewell/trace-mapping': 0.3.31
+  '@jridgewell/gen-mapping@0.3.13':
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.5
+      '@jridgewell/trace-mapping': 0.3.31
 
-    '@jridgewell/resolve-uri@3.1.2': {}
+  '@jridgewell/remapping@2.3.5':
+    dependencies:
+      '@jridgewell/gen-mapping': 0.3.13
+      '@jridgewell/trace-mapping': 0.3.31
 
-    '@jridgewell/sourcemap-codec@1.5.5': {}
+  '@jridgewell/resolve-uri@3.1.2': {}
 
-    '@jridgewell/trace-mapping@0.3.31':
-        dependencies:
-            '@jridgewell/resolve-uri': 3.1.2
-            '@jridgewell/sourcemap-codec': 1.5.5
+  '@jridgewell/sourcemap-codec@1.5.5': {}
 
-    '@sveltejs/acorn-typescript@1.0.6(acorn@8.15.0)':
-        dependencies:
-            acorn: 8.15.0
+  '@jridgewell/trace-mapping@0.3.31':
+    dependencies:
+      '@jridgewell/resolve-uri': 3.1.2
+      '@jridgewell/sourcemap-codec': 1.5.5
 
-    '@types/estree@1.0.8': {}
+  '@sveltejs/acorn-typescript@1.0.6(acorn@8.15.0)':
+    dependencies:
+      acorn: 8.15.0
 
-    acorn@8.15.0: {}
+  '@types/estree@1.0.8': {}
 
-    aria-query@5.3.2: {}
+  acorn@8.15.0: {}
 
-    axobject-query@4.1.0: {}
+  aria-query@5.3.2: {}
 
-    clsx@2.1.1: {}
+  axobject-query@4.1.0: {}
 
-    diff-match-patch@1.0.5: {}
+  clsx@2.1.1: {}
 
-    es-toolkit@1.41.0: {}
+  diff-match-patch@1.0.5: {}
 
-    escape-string-regexp@5.0.0: {}
+  es-toolkit@1.41.0: {}
 
-    esm-env@1.2.2: {}
+  escape-string-regexp@5.0.0: {}
 
-    esrap@2.1.2:
-        dependencies:
-            '@jridgewell/sourcemap-codec': 1.5.5
+  esm-env@1.2.2: {}
 
-    focus-trap@7.6.6:
-        dependencies:
-            tabbable: 6.3.0
+  esrap@2.1.2:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.5
 
-    is-reference@3.0.3:
-        dependencies:
-            '@types/estree': 1.0.8
+  focus-trap@7.6.6:
+    dependencies:
+      tabbable: 6.3.0
 
-    locate-character@3.0.0: {}
+  is-reference@3.0.3:
+    dependencies:
+      '@types/estree': 1.0.8
 
-    magic-string@0.30.21:
-        dependencies:
-            '@jridgewell/sourcemap-codec': 1.5.5
+  locate-character@3.0.0: {}
 
-    prettier-plugin-svelte@3.4.0(prettier@3.6.2)(svelte@5.43.2):
-        dependencies:
-            prettier: 3.6.2
-            svelte: 5.43.2
+  magic-string@0.30.21:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.5
 
-    prettier@3.6.2: {}
+  prettier-plugin-svelte@3.4.0(prettier@3.6.2)(svelte@5.43.2):
+    dependencies:
+      prettier: 3.6.2
+      svelte: 5.43.2
 
-    svelte@5.43.2:
-        dependencies:
-            '@jridgewell/remapping': 2.3.5
-            '@jridgewell/sourcemap-codec': 1.5.5
-            '@sveltejs/acorn-typescript': 1.0.6(acorn@8.15.0)
-            '@types/estree': 1.0.8
-            acorn: 8.15.0
-            aria-query: 5.3.2
-            axobject-query: 4.1.0
-            clsx: 2.1.1
-            esm-env: 1.2.2
-            esrap: 2.1.2
-            is-reference: 3.0.3
-            locate-character: 3.0.0
-            magic-string: 0.30.21
-            zimmerframe: 1.1.4
+  prettier@3.6.2: {}
 
-    tabbable@6.3.0: {}
+  svelte@5.43.2:
+    dependencies:
+      '@jridgewell/remapping': 2.3.5
+      '@jridgewell/sourcemap-codec': 1.5.5
+      '@sveltejs/acorn-typescript': 1.0.6(acorn@8.15.0)
+      '@types/estree': 1.0.8
+      acorn: 8.15.0
+      aria-query: 5.3.2
+      axobject-query: 4.1.0
+      clsx: 2.1.1
+      esm-env: 1.2.2
+      esrap: 2.1.2
+      is-reference: 3.0.3
+      locate-character: 3.0.0
+      magic-string: 0.30.21
+      zimmerframe: 1.1.4
 
-    tailwind-merge@3.3.1: {}
+  tabbable@6.3.0: {}
 
-    zimmerframe@1.1.4: {}
+  tailwind-merge@3.3.1: {}
+
+  typescript@5.9.3: {}
+
+  zimmerframe@1.1.4: {}

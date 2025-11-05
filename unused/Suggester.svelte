@@ -33,7 +33,7 @@
 
 <script>
 import {blur} from 'svelte/transition'
-import {debounce} from 'components/src/util.js'
+import {debounce} from './util.js'
 import escape_regex from 'escape-string-regexp'
 
 export let items = []

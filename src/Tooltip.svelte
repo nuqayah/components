@@ -118,7 +118,7 @@ export function click_action(el, props) {
 
 <script>
 import {autoUpdate, computePosition, shift} from '@floating-ui/dom'
-import {debounce} from 'components/src/util.js'
+import {debounce} from './util.js'
 
 function reposition(el) {
     const cleanup = autoUpdate($options.attach_to, el, () => {

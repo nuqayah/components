@@ -21,7 +21,7 @@
 />
 
 <script>
-import {ar_nums, en_nums, cn} from 'components/src/util'
+import {ar_nums, en_nums, cn} from './util.js'
 import {clamp} from 'es-toolkit'
 
 let {

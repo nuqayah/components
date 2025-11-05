@@ -17,7 +17,7 @@
 
 <script>
 import {onMount, tick} from 'svelte'
-import {debounce} from 'components/src/util.js'
+import {debounce} from './util.js'
 
 export let count
 export let get_page_contents

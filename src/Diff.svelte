@@ -22,7 +22,7 @@
 <script>
 import {tick} from 'svelte'
 import DiffMatchPatch from 'diff-match-patch'
-import {debounce, int_clamp} from 'components/src/util.js'
+import {debounce, int_clamp} from './util.js'
 
 export let a = ''
 export let b = ''

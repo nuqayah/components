@@ -1,12 +1,12 @@
 {
     "name": "components",
-    "version": "2.0.55",
+    "version": "2.0.56",
     "type": "module",
     "scripts": {
+        "build": "svelte-package --input src --output types && find ./types -type f ! -name '*.d.ts' -delete && prettier --write types",
+        "check": "svelte-check",
         "format": "prettier --write .",
-        "typecheck": "tsc --noEmit",
-        "typegen": "tsc && pnpm format",
-        "prepublish-gh": "pnpm typegen",
+        "prepublish-gh": "pnpm build",
         "publish-gh": "VER=$(npm --no-git-tag-version version patch) && git add package.json && git commit --amend --no-edit && git tag -f $VER && git push -f && git push --tags -f"
     },
     "exports": {
@@ -24,14 +24,17 @@
         "es-toolkit": "^1.32.0",
         "escape-string-regexp": "^5.0.0",
         "focus-trap": "^7.5.4",
+        "lucide-svelte": "^0.552.0",
         "tailwind-merge": "^3.3.0"
     },
     "peerDependencies": {
         "svelte": "^5.0.0"
     },
     "devDependencies": {
+        "@sveltejs/package": "^2.5.4",
         "prettier": "^3.6.2",
         "prettier-plugin-svelte": "^3.4.0",
+        "svelte-check": "^4.3.3",
         "typescript": "^5.9.3"
     },
     "repository": "github:nuqayah/components"

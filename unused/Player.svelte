@@ -47,7 +47,7 @@
 
 <script>
 import PlayButton from './PlayButton.svelte'
-import {int_clamp, repeat_click, fmt_time} from 'components/src/util.js'
+import {int_clamp, repeat_click, fmt_time} from './util.js'
 import {onDestroy, createEventDispatcher} from 'svelte'
 
 export let src

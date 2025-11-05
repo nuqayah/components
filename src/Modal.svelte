@@ -46,7 +46,7 @@ export function show(component, props) {
 
 <script>
 import {fade} from 'svelte/transition'
-import {focus_trap} from 'components/src/util.js'
+import {focus_trap} from './util.js'
 
 let modal_options_tpl = $state({show: false, props: {}, component: null, max_width: '580px'})
 let modal_options = $state({...modal_options_tpl})

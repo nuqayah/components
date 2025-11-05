@@ -19,7 +19,7 @@
 
 <script>
 import {onMount} from 'svelte'
-import {debounce} from 'components/src/util.js'
+import {debounce} from './util.js'
 
 let {
     count,

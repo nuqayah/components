@@ -21,7 +21,7 @@
 
 <script>
 import {fade} from 'svelte/transition'
-import {focus_trap, append_to} from 'components/src/util.js'
+import {focus_trap, append_to} from './util.js'
 
 export let show
 

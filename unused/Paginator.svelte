@@ -29,7 +29,7 @@
 </ul>
 
 <script>
-import {ar_nums} from 'components/src/util.js'
+import {ar_nums} from './util.js'
 
 export let per_page = 10
 export let cur_page

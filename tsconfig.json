@@ -5,9 +5,7 @@
         "allowJs": true,
         "checkJs": true,
         "skipLibCheck": true,
-        "declaration": true,
-        "emitDeclarationOnly": true,
-        "outDir": "types"
+        "noEmit": true
     },
-    "include": ["./src"]
+    "include": ["src"]
 }

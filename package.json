@@ -1,6 +1,6 @@
 {
     "name": "components",
-    "version": "2.0.57",
+    "version": "2.0.58",
     "type": "module",
     "scripts": {
         "build": "svelte-package --input src --output types && find ./types -type f ! -name '*.d.ts' -delete && prettier --write types",
@@ -11,12 +11,22 @@
     },
     "exports": {
         ".": {
-            "default": "./src/index.js",
             "types": "./types/index.d.ts",
+            "default": "./src/index.js",
             "svelte": "./src/index.js"
+        },
+        "./*.svelte": {
+            "types": "./types/*.svelte.d.ts",
+            "svelte": "./src/*.svelte"
+        },
+        "./*": {
+            "types": "./types/*.d.ts",
+            "default": "./src/*.js",
+            "svelte": "./src/*.js"
         }
     },
     "types": "./types/index.d.ts",
+    "main": "./src/index.js",
     "svelte": "./src/index.js",
     "dependencies": {
         "@floating-ui/dom": "^1.6.12",

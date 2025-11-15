@@ -4,6 +4,17 @@ import {createFocusTrap} from 'focus-trap'
 import {mount, unmount} from 'svelte'
 import {twMerge} from 'tailwind-merge'
 
+export {default as ar_slugify} from './ar_slugify.js'
+export {default as combobox} from './combobox.js'
+export {default as lazy_load} from './lazy_load.js'
+
+/** @typedef {import('./combobox.js').ComboboxProps} ComboboxProps */
+
+/**
+ * @template T
+ * @typedef {import('./lazy_load.js').LazyLoadProps<T>} LazyLoadProps
+ */
+
 export {escape_regex}
 
 /** @param {number} n */

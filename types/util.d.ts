@@ -268,6 +268,9 @@ export function relative_time(rtf: Intl.RelativeTimeFormat, d1: Date, d2?: Date)
  * @returns The merged class names
  */
 export function cn(...inputs: string[]): string
+export {default as ar_slugify} from './ar_slugify.js'
+export {default as combobox} from './combobox.js'
+export {default as lazy_load} from './lazy_load.js'
 export {escape_regex}
 export function round(n: number): number
 export function ar_nums(s: unknown): string
@@ -335,4 +338,6 @@ export type InViewParams = {
     top?: number
     bottom?: number
 }
+export type ComboboxProps = import('./combobox.js').ComboboxProps
+export type LazyLoadProps<T> = import('./lazy_load.js').LazyLoadProps<T>
 import escape_regex from 'escape-string-regexp'

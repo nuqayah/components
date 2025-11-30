@@ -1,5 +1,5 @@
-export default Popover;
-type Popover = SvelteComponent<$$__sveltets_2_PropsWithChildren<{
+export default PopoverTmp;
+type PopoverTmp = SvelteComponent<$$__sveltets_2_PropsWithChildren<{
     shown?: boolean;
     hide_on_click?: boolean;
     append_to_body?: boolean;
@@ -18,7 +18,7 @@ type Popover = SvelteComponent<$$__sveltets_2_PropsWithChildren<{
 }> & {
     $$bindings?: string;
 };
-declare const Popover: $$__sveltets_2_IsomorphicComponent<$$__sveltets_2_PropsWithChildren<{
+declare const PopoverTmp: $$__sveltets_2_IsomorphicComponent<$$__sveltets_2_PropsWithChildren<{
     shown?: boolean;
     hide_on_click?: boolean;
     append_to_body?: boolean;
@@ -53,4 +53,4 @@ interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> =
     };
     z_$$bindings?: Bindings;
 }
-//# sourceMappingURL=Popover.svelte.d.ts.map
+//# sourceMappingURL=Popover-tmp.svelte.d.ts.map

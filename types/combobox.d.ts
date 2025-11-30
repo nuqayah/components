@@ -9,17 +9,15 @@
  * @param {HTMLInputElement} el
  * @param {ComboboxProps} props
  */
-export default function combobox(
-    el: HTMLInputElement,
-    props: ComboboxProps,
-): {
-    destroy(): void
+export default function combobox(el: HTMLInputElement, props: ComboboxProps): {
+    destroy(): void;
     /** @param {ComboboxProps} props_ */
-    update(props_: ComboboxProps): void
-}
+    update(props_: ComboboxProps): void;
+};
 export type ComboboxProps = {
-    listbox: HTMLElement | null
-    filterer: (value: string) => void
-    on_kbd_selected: (i: number) => void
-    on_select: (i: number) => void
-}
+    listbox: HTMLElement | null;
+    filterer: (value: string) => void;
+    on_kbd_selected: (i: number) => void;
+    on_select: (i: number) => void;
+};
+//# sourceMappingURL=combobox.d.ts.map

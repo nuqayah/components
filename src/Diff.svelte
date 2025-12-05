@@ -21,7 +21,7 @@
 
 <script>
 import {tick} from 'svelte'
-import DiffMatchPatch from 'diff-match-patch'
+import DiffMatchPatch from 'diff-match-patch-es'
 import {debounce, int_clamp} from './util.js'
 
 export let a = ''

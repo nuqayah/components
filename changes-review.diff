@@ -1,0 +1,177 @@
+diff --git a/src/Paginator.svelte b/src/Paginator.svelte
+index 2311b57..d96000f 100644
+--- a/src/Paginator.svelte
++++ b/src/Paginator.svelte
+@@ -46,7 +46,7 @@ function paginate(cur_pg, last_pg, delta = 2) {
+ 
+     return rangeWithDots
+ }
+-export function go_to_page(pg) {
++export function go_to_page(pg) { // is this needed? why not just sent cur_page directly?
+     if (pg < 0)
+         pg += total_pages + 1 // Add one since pages are 1-indexed
+     else if (pg === 0)
+
+
+
+
+
+
+diff --git a/src/SplitPane.svelte b/src/SplitPane.svelte
+index 203b7b3..ed5ff4a 100644
+--- a/src/SplitPane.svelte
++++ b/src/SplitPane.svelte
+@@ -158,6 +158,7 @@ $: dimension = type === 'horizontal' ? 'width' : 'height'
+   content: '';
+   position: absolute;
+   background-color: #777;
++  /*background-color: var(--second);*/
+ }
+ .horizontal {
+   padding: 0 8px;
+
+
+
+
+
+
+diff --git a/src/Suggester.svelte b/src/Suggester.svelte
+index 7fe41d2..86747fe 100644
+--- a/src/Suggester.svelte
++++ b/src/Suggester.svelte
+@@ -38,6 +38,8 @@ export let placeholder = 'search'
+ export let no_results_msg = 'no results'
+ export const default_status = min_query_ln > 0 ? `Type ${min_query_ln} or more characters for results.` : 'Begin typing for results.'
+ export let filterer = default_filterer
++// import inRange from 'lodash-es/inRange'
++// if (!inRange(selected_i, matches.length))
+ 
+ let matches = []
+ let selected_i = -1
+
+
+
+
+
+
+diff --git a/src/Tabs.svelte b/src/Tabs.svelte
+index 7b3776b..a6fb777 100644
+--- a/src/Tabs.svelte
++++ b/src/Tabs.svelte
+@@ -1,4 +1,4 @@
+-<nav class="flex" on:click={tab_bar_click} bind:this={tab_bar_cont}>
++<nav class="flex" on:click={tab_bar_click} bind:this={tab_bar_cont}><!--  use:set_child_active={active_item}> -->
+   <slot name=buttons/>
+ </nav>
+ 
+@@ -13,6 +13,15 @@ let tabs_cont
+ let tab_bar_cont
+ let CHANGING_TAB = false
+ 
++export function set_child_active(el, active_item) {
++    function update(active_item) {
++        el.querySelector('.active').classList.remove('active')
++        el.children[active_item - 1].classList.add('active')
++    }
++    update(active_item)
++    return {update}
++}
++
+ function tab_bar_click(e) {
+     const btn = e.target.closest('button')
+     if (btn.classList.contains('active') || CHANGING_TAB)
+
+
+
+
+
+
+diff --git a/src/combobox.js b/src/combobox.js
+index 3ad6b7a..8c5f238 100644
+--- a/src/combobox.js
++++ b/src/combobox.js
+@@ -26,6 +26,7 @@ export default function combobox(el, props) {
+             const {children} = props.listbox
+             let h = props.listbox.offsetHeight
+             let i = selected_i
++            // TODO: i should go one less than a full page down
+             if (e.key.endsWith('Down')) {
+                 const ln = children.length
+                 while (i < ln - 1 && h > 0) {
+
+
+
+
+
+
+diff --git a/src/util.js b/src/util.js
+index 2b750f6..a6c73b4 100644
+--- a/src/util.js
++++ b/src/util.js
+@@ -7,10 +7,11 @@ export const ar_nums = s => ('' + s).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨
+ export const ar_nums_fmt = num => Intl.NumberFormat('ar-SA').format(num)
+ export const fmt_num = n => document.documentElement.lang === 'ar' ? ar_nums(n) : n
+ export const fmt_date = d => (new Date(d)).toLocaleString('en-UK')
++export const fmt_time = s => (new Date(s * 1000).toISOString().slice(10, 19)).replace(/T(00:)?/, '')
+ export const en_nums = s => s.replace(/[٠-٩]/g, d => d.charCodeAt(0) - 0x660)
+ export const strip_harakat = s => ('' + s).replace(/[ً-ْۖ-ٰۜ]/g, '')
+ export const now_hours = () => ms_to_hours(Date.now())
+-export const clone_object = o => JSON.parse(JSON.stringify(o))
++// export const clone_object = o => JSON.parse(JSON.stringify(o))
+ export const int_clamp = (int, min, max) => Math.max(Math.min(int, max), min)
+ export const int_clamp_loop = (int, min, max) => int < min ? max : int > max ? min : int
+ export function debounce(fn, timeout) {
+@@ -229,6 +230,11 @@ export function separate_diff(diff, OMITTED_TEXT_MARKER = '\n...\n') {
+     return text
+ }
+ 
++
++export function eval_script(script_text) {
++    const blob = new Blob([script_text], {type: 'application/javascript'})
++    return import(URL.createObjectURL(blob))
++}
+ export async function eval_script(script_text) { // eval pollutes scope
+     const blob = new Blob([script_text], {type: 'application/javascript'})
+     const url = URL.createObjectURL(blob)
+@@ -415,3 +421,41 @@ export async function archive_book_images(id, file) {
+         count: img_metadata.length,
+     }
+ }
++
++const time_units = [
++    ['year',   31536e6],
++    ['month',  2628e6],
++    ['day',    864e5],
++    ['hour',   36e5],
++    ['minute', 6e4],
++    ['second', 1e3],
++]
++const rtf = new Intl.RelativeTimeFormat('ar', {numeric: 'auto'})
++export function relative_time(d1, d2=new Date) {
++    const elapsed = (d1 - d2)
++    const elapsed_abs = Math.max(Math.abs(elapsed), 1e3) // In case < 1 second
++    const [unit, value] = time_units.find(([unit, value]) => elapsed_abs >= value)
++    return ar_nums(rtf.format(Math.round(elapsed / value), unit))
++}
++
++// 
++// 
++
++export function longest_consecutive_sequence(nums) {
++    if (!nums.length)
++        return 0
++
++    nums = [...nums].sort((a, b) => a - b)
++    let curr_length = 1
++    let seq_length = 1
++    for (let i = 1; i < nums.length; i++) {
++        if (nums[i] - nums[i - 1] === 1)
++            curr_length++
++        else if (nums[i] - nums[i - 1] > 1) {
++            seq_length = Math.max(curr_length, seq_length)
++            curr_length = 1
++        }
++    }
++
++    return seq_length
++}

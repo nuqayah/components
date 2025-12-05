@@ -14,9 +14,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
-      diff-match-patch:
-        specifier: ^1.0.5
-        version: 1.0.5
+      diff-match-patch-es:
+        specifier: ^1.0.1
+        version: 1.0.1
       es-toolkit:
         specifier: ^1.32.0
         version: 1.41.0
@@ -118,8 +118,8 @@ packages:
   dedent-js@1.0.1:
     resolution: {integrity: sha512-OUepMozQULMLUmhxS95Vudo0jb0UchLimi3+pQ2plj61Fcy8axbP9hbiD4Sz6DPqn6XG3kfmziVfQ1rSys5AJQ==}
 
-  diff-match-patch@1.0.5:
-    resolution: {integrity: sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==}
+  diff-match-patch-es@1.0.1:
+    resolution: {integrity: sha512-KhSofrZDERg/NE6Nd+TK53knp2qz0o2Ix8rhkXd3Chfm7Wlo58Eq/juNmkyS6bS+3xS26L3Pstz3BdY/q+e9UQ==}
 
   es-toolkit@1.41.0:
     resolution: {integrity: sha512-bDd3oRmbVgqZCJS6WmeQieOrzpl3URcWBUVDXxOELlUW2FuW+0glPOz1n0KnRie+PdyvUZcXz2sOn00c6pPRIA==}
@@ -293,7 +293,7 @@ snapshots:
 
   dedent-js@1.0.1: {}
 
-  diff-match-patch@1.0.5: {}
+  diff-match-patch-es@1.0.1: {}
 
   es-toolkit@1.41.0: {}
 

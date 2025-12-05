@@ -1,0 +1,38 @@
+@font-face {
+  font-family: Kitab;
+  src: url(https://fonts.nuqayah.com/kitab-base.woff2?v3);
+  unicode-range: U+200?, U+618-61B, U+61F, U+621-63A, U+640-655, U+65C, U+660-66C, U+670-671, U+6CC, U+6D4, U+6D6-6ED, U+8F0-8F3;
+}
+@font-face {
+  font-family: Kitab;
+  src: url(https://fonts.nuqayah.com/kitab-base-b.woff2?v3);
+  font-weight: 700;
+  unicode-range: U+200?, U+618-61B, U+61F, U+621-63A, U+640-655, U+65C, U+660-66C, U+670-671, U+6CC, U+6D4, U+6D6-6ED, U+8F0-8F3;
+}
+@font-face {
+  font-family: Kitab;
+  src: url(https://fonts.nuqayah.com/kitab-phrases.woff2?v3);
+  unicode-range:  U+E100-E103, U+FD3E-FD45, U+FD47-FD4F, U+FDF2, U+FDFA-FDFB, U+FDFD-FDFF;
+}
+@font-face {
+  font-family: Kitab;
+  src: url(https://fonts.nuqayah.com/kitab-phrases.woff2?v3);
+  font-weight: 700;
+  unicode-range:  U+E100-E103, U+FD3E-FD45, U+FD47-FD4F, U+FDF2, U+FDFA-FDFB, U+FDFD-FDFF;
+}
+
+html {font-size: 20px; line-height: 1.55;}
+
+body {
+  max-width: 750px;
+  margin: 0 auto;
+}
+body, pre {
+  font-family: system-ui, Kitab;
+}
+span {
+  display: inline-block;
+}
+
+:global(del) {color: gray !important;text-decoration: line-through;color: gray; background: none !important;}
+:global(ins) {font-weight: bold;color: green !important; color: #217fc1 !important;background: none !important; text-decoration: none !important;}

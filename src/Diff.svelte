@@ -1,10 +1,10 @@
 <section class="diff-cont" dir="auto" bind:this={diff_cont} on:scroll={debounce(add_diffs, 5)}>
     {#each diff_data as [op, text], i (i)}
-        {#if op == DiffMatchPatch.DIFF_INSERT}
+        {#if op == DIFF_INSERT}
             <ins>{text}</ins>
-        {:else if op == DiffMatchPatch.DIFF_DELETE}
+        {:else if op == DIFF_DELETE}
             <del>{text}</del>
-        {:else if op == DiffMatchPatch.DIFF_EQUAL}
+        {:else if op == DIFF_EQUAL}
             {@const [is_summarized, text_start, text_end] = summarize(text)}
             {#if is_summarized}
                 <span>{text_start}</span>
@@ -21,17 +21,13 @@
 
 <script>
 import {tick} from 'svelte'
-import DiffMatchPatch from 'diff-match-patch-es'
+import {DIFF_DELETE, DIFF_EQUAL, DIFF_INSERT, diff, diffCleanupSemantic} from 'diff-match-patch-es'
 import {debounce, int_clamp} from './util.js'
 
 export let a = ''
 export let b = ''
 export let changes_count = 0
 export let pause_diffing // if updating a or b independantly, we will want to pause diffing
-
-const dmp = new DiffMatchPatch()
-dmp.Diff_Timeout = 30
-dmp.Diff_EditCost = 4
 
 const DIFF_CHUNKS_COUNT = 250
 let diff_cont
@@ -51,10 +47,10 @@ $: if (diff_data && diff_cont) {
 }
 
 export async function show_diff(a, b) {
-    diff_data_all = dmp.diff_main(a, b)
-    dmp.diff_cleanupSemantic(diff_data_all)
+    diff_data_all = diff(a, b, {diffTimeout: 30, diffEditCost: 4})
+    diffCleanupSemantic(diff_data_all)
     changes_count = diff_data_all.reduce(
-        (acc, [op]) => acc + (op === DiffMatchPatch.DIFF_EQUAL ? 0 : 1),
+        (acc, [op]) => acc + (op === DIFF_EQUAL ? 0 : 1),
         0,
     )
     if (diff_data_all.length > 1e3 || Math.max(a.length, b.length) > 2e5) {

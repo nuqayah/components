@@ -17,6 +17,7 @@ export default function lazy_load(el, props) {
     let OFFSET = 200
     let PER_PAGE = 25
     let visible = []
+    let prev_items_length = 0
 
     function add_results() {
         if (
@@ -28,9 +29,7 @@ export default function lazy_load(el, props) {
         }
     }
 
-    /** @param {LazyLoadProps<T>} props_updated */
-    async function pad_results(props_updated) {
-        props = props_updated
+    async function pad_results() {
         visible = []
         props.set_items([])
         await tick()
@@ -43,12 +42,26 @@ export default function lazy_load(el, props) {
         }
     }
 
+    function update(props_updated) {
+        const old_length = prev_items_length
+        props = props_updated
+        prev_items_length = props.items.length
+
+        // If items were appended (length grew and visible already has items), just add more
+        if (old_length > 0 && props.items.length > old_length && visible.length > 0) {
+            add_results()
+        } else {
+            // Fresh data, reset everything
+            pad_results()
+        }
+    }
+
     const add_results_debounced = debounce(add_results, 5)
     window.addEventListener('resize', add_results_debounced)
     el.addEventListener('scroll', add_results_debounced)
-    setTimeout(() => pad_results(props), 50)
+    setTimeout(() => pad_results(), 50)
     return {
-        update: pad_results,
+        update,
         destroy() {
             window.removeEventListener('resize', add_results_debounced)
         },

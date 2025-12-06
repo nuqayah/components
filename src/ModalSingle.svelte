@@ -3,17 +3,17 @@
         class="modal-overlay"
         tabindex="-1"
         data-close
-        on:click={overlay_click}
+        onclick={overlay_click}
         transition:fade={{duration: 180}}
         use:focus_trap
     >
-        <div class="modal-container" role="dialog" aria-modal="true"><slot /></div>
+        <div class="modal-container" role="dialog" aria-modal="true">{@render children?.()}</div>
     </div>
 {/if}
 
 <svelte:window
-    on:popstate={popstate}
-    on:keydown={e => {
+    onpopstate={popstate}
+    onkeydown={e => {
         if (e.key === 'Escape') show = false
     }}
 />
@@ -22,10 +22,7 @@
 import {fade} from 'svelte/transition'
 import {focus_trap} from './util.js'
 
-export let show
-
-$: set_body_scroll(show)
-$: if (show) history.pushState(null, null, '')
+let { show = $bindable(), children } = $props()
 
 function popstate() {
     if (show) show = false
@@ -36,6 +33,12 @@ function overlay_click(e) {
 function set_body_scroll(shown) {
     document.documentElement.classList.toggle('open-modal', shown)
 }
+$effect(() => {
+    set_body_scroll(show)
+})
+$effect(() => {
+    if (show) history.pushState(null, null, '')
+})
 </script>
 
 <style>

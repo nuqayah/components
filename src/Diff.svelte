@@ -1,4 +1,4 @@
-<section class="diff-cont" dir="auto" bind:this={diff_cont} on:scroll={debounce(add_diffs, 5)}>
+<section class="diff-cont" dir="auto" bind:this={diff_cont} onscroll={debounce(add_diffs, 5)}>
     {#each diff_data as [op, text], i (i)}
         {#if op == DIFF_INSERT}
             <ins>{text}</ins>
@@ -8,7 +8,7 @@
             {@const [is_summarized, text_start, text_end] = summarize(text)}
             {#if is_summarized}
                 <span>{text_start}</span>
-                <button class="more-btn" on:click={e => show_block(e.target, text)}
+                <button class="more-btn" onclick={e => show_block(e.target, text)}
                     >... المزيد ...</button
                 >
                 <span>{text_end}</span>
@@ -24,27 +24,29 @@ import {tick} from 'svelte'
 import {DIFF_DELETE, DIFF_EQUAL, DIFF_INSERT, diff, diffCleanupSemantic} from 'diff-match-patch-es'
 import {debounce, int_clamp} from './util.js'
 
-export let a = ''
-export let b = ''
-export let changes_count = 0
-export let pause_diffing // if updating a or b independantly, we will want to pause diffing
+/**
+ * @typedef {Object} DiffProps
+ * @property {string} [a]
+ * @property {string} [b]
+ * @property {number} [changes_count]
+ * @property {*} pause_diffing - if updating a or b independently, we will want to pause diffing
+ */
+
+/** @type {DiffProps} */
+let {
+    a = '',
+    b = '',
+    changes_count = $bindable(0),
+    pause_diffing
+} = $props()
 
 const DIFF_CHUNKS_COUNT = 250
-let diff_cont
-let els = []
-let current_el = -1
-let diff_data = []
+let diff_cont = $state()
+let els = $state([])
+let current_el = $state(-1)
+let diff_data = $state([])
 let diff_data_all = []
 
-$: if (a && b && !pause_diffing) {
-    show_diff(a, b)
-}
-$: if (diff_data && diff_cont) {
-    current_el = -1
-    tick().then(() => {
-        els = diff_cont.querySelectorAll('ins, del')
-    })
-}
 
 export async function show_diff(a, b) {
     diff_data_all = diff(a, b, {diffTimeout: 30, diffEditCost: 4})
@@ -99,6 +101,19 @@ function summarize(text, TRUNC_AT = 500) {
     if (end_space > -1 && end_i - end_space <= 30) end_i = end_space
     return [true, text.slice(0, start_i), text.slice(end_i)]
 }
+$effect(() => {
+    if (a && b && !pause_diffing) {
+        show_diff(a, b)
+    }
+})
+$effect(() => {
+    if (diff_data && diff_cont) {
+        current_el = -1
+        tick().then(() => {
+            els = diff_cont.querySelectorAll('ins, del')
+        })
+    }
+})
 </script>
 
 <style>

@@ -1,25 +1,39 @@
-<slot name="button" {show} />
+{@render button?.({ show, })}
 
 {#if shown}
     <div class="absolute z-10" transition:fly|local={{duration: 150, y: 10}} bind:this={wrapper}>
-        <slot />
+        {@render children?.()}
     </div>
 {/if}
 
-<svelte:window on:resize={position_cont} />
+<svelte:window onresize={position_cont} />
 <!-- iOS rarely fires window.mouseup, so we need to use document -->
-<svelte:document on:mouseup={e => setTimeout(() => hide_cont(e), 5)} />
+<svelte:document onmouseup={e => setTimeout(() => hide_cont(e), 5)} />
 
 <script>
 import {onDestroy, tick} from 'svelte'
 import {fly} from 'svelte/transition'
 import {computePosition, offset, flip, shift} from '@floating-ui/dom'
 
-export let hide_on_click = true
-export let append_to_body = false
-export let shown = false // rarely needed but useful for debugging
+/**
+ * @typedef {Object} PopoverProps
+ * @property {boolean} [hide_on_click]
+ * @property {boolean} [append_to_body]
+ * @property {boolean} [shown] - rarely needed but useful for debugging
+ * @property {import('svelte').Snippet<[any]>} [button]
+ * @property {import('svelte').Snippet} [children]
+ */
 
-let wrapper
+/** @type {PopoverProps} */
+let {
+    hide_on_click = true,
+    append_to_body = false,
+    shown = $bindable(false),
+    button,
+    children
+} = $props()
+
+let wrapper = $state()
 let show_el = null
 
 async function position_cont() {

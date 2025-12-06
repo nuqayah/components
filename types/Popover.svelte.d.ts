@@ -1,56 +1,26 @@
 export default Popover;
-type Popover = SvelteComponent<$$__sveltets_2_PropsWithChildren<{
-    shown?: boolean;
-    hide_on_click?: boolean;
-    append_to_body?: boolean;
-}, {
-    button: {
-        show: (e: any) => Promise<void>;
-    };
-    default: {};
-}>, {
-    [evt: string]: CustomEvent<any>;
-}, {
-    button: {
-        show: (e: any) => Promise<void>;
-    };
-    default: {};
-}> & {
-    $$bindings?: string;
+type Popover = {
+    $on?(type: string, callback: (e: any) => void): () => void;
+    $set?(props: Partial<PopoverProps>): void;
 };
-declare const Popover: $$__sveltets_2_IsomorphicComponent<$$__sveltets_2_PropsWithChildren<{
-    shown?: boolean;
+declare const Popover: import("svelte").Component<{
     hide_on_click?: boolean;
     append_to_body?: boolean;
-}, {
-    button: {
-        show: (e: any) => Promise<void>;
-    };
-    default: {};
-}>, {
-    [evt: string]: CustomEvent<any>;
-}, {
-    button: {
-        show: (e: any) => Promise<void>;
-    };
-    default: {};
-}, {}, string>;
-type $$__sveltets_2_PropsWithChildren<Props, Slots> = Props & (Slots extends {
-    default: any;
-} ? Props extends Record<string, never> ? any : {
-    children?: any;
-} : {});
-interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
-    new (options: import("svelte").ComponentConstructorOptions<Props>): import("svelte").SvelteComponent<Props, Events, Slots> & {
-        $$bindings?: Bindings;
-    } & Exports;
-    (internal: unknown, props: Props & {
-        $$events?: Events;
-        $$slots?: Slots;
-    }): Exports & {
-        $set?: any;
-        $on?: any;
-    };
-    z_$$bindings?: Bindings;
-}
+    /**
+     * - rarely needed but useful for debugging
+     */
+    shown?: boolean;
+    button?: import("svelte").Snippet<[any]>;
+    children?: import("svelte").Snippet;
+}, {}, "shown">;
+type PopoverProps = {
+    hide_on_click?: boolean;
+    append_to_body?: boolean;
+    /**
+     * - rarely needed but useful for debugging
+     */
+    shown?: boolean;
+    button?: import("svelte").Snippet<[any]>;
+    children?: import("svelte").Snippet;
+};
 //# sourceMappingURL=Popover.svelte.d.ts.map

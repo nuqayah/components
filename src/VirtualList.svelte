@@ -6,7 +6,7 @@
 >
     <div style="padding-top: {top}px; padding-bottom: {bottom}px;">
         {#each visible as row_index (row_index)}
-            <div class="row"><slot index={row_index} /></div>
+            <div class="row">{@render children?.({ index: row_index, })}</div>
         {:else}
             {#if show_no_results}
                 <div class="no-results">{results_message}</div>
@@ -15,13 +15,14 @@
     </div>
 </div>
 
-<svelte:window on:resize={debounce(handle_scroll, 100)} />
+<svelte:window onresize={debounce(handle_scroll, 100)} />
 
 <script>
 import {onMount} from 'svelte'
 import {debounce} from './util.js'
 
 let {
+    children,
     count,
     item_height,
     on_first_changed = undefined,

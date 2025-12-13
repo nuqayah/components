@@ -11,7 +11,7 @@
 {/if}
 
 <script>
-import {ChevronUp} from 'lucide-svelte'
+import {ChevronUp} from '@lucide/svelte'
 import {fade} from 'svelte/transition'
 
 let show_at_pixel = 500

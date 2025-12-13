@@ -1,6 +1,6 @@
 {
     "name": "components",
-    "version": "2.0.66",
+    "version": "2.0.67",
     "type": "module",
     "scripts": {
         "build": "svelte-package --input src --output types && find ./types -type f ! -name '*.d.ts' ! -name '*.d.ts.map' -delete",
@@ -35,7 +35,6 @@
         "es-toolkit": "^1.32.0",
         "escape-string-regexp": "^5.0.0",
         "focus-trap": "^7.5.4",
-        "lucide-svelte": "^0.552.0",
         "tailwind-merge": "^3.3.0"
     },
     "peerDependencies": {

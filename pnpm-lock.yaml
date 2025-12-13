@@ -26,9 +26,6 @@ importers:
       focus-trap:
         specifier: ^7.5.4
         version: 7.6.6
-      lucide-svelte:
-        specifier: ^0.552.0
-        version: 0.552.0(svelte@5.43.2)
       svelte:
         specifier: ^5.0.0
         version: 5.43.2
@@ -155,11 +152,6 @@ packages:
 
   locate-character@3.0.0:
     resolution: {integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==}
-
-  lucide-svelte@0.552.0:
-    resolution: {integrity: sha512-zynJ64KOsuQG3I4tSqfvvl7Kc9x4mWkppbxsuyrbegQwma9HFhBp4aE6HuQNF4c3pS0AHWHki5CAMs5m3QXA5w==}
-    peerDependencies:
-      svelte: ^3 || ^4 || ^5.0.0-next.42
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -318,10 +310,6 @@ snapshots:
   kleur@4.1.5: {}
 
   locate-character@3.0.0: {}
-
-  lucide-svelte@0.552.0(svelte@5.43.2):
-    dependencies:
-      svelte: 5.43.2
 
   magic-string@0.30.21:
     dependencies:

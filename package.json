@@ -1,6 +1,6 @@
 {
     "name": "components",
-    "version": "2.0.67",
+    "version": "2.0.68",
     "type": "module",
     "scripts": {
         "build": "svelte-package --input src --output types && find ./types -type f ! -name '*.d.ts' ! -name '*.d.ts.map' -delete",

@@ -235,6 +235,7 @@ export function init_useragent_info() {
             'ontouchstart' in window ||
             navigator.maxTouchPoints > 0 ||
             navigator.msMaxTouchPoints > 0,
+        no_keyboard: matchMedia('(any-pointer: coarse) and (not (any-pointer: fine))').matches,
     }
     if (window._useragent.safari) doc_classes.add('safari')
 

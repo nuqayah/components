@@ -9,6 +9,48 @@ import {debounce} from './util.js'
  */
 
 /**
+ * Usage notes:
+ * - Svelte 5: avoid passing deeply reactive `$state` proxies as `props.items` (especially large arrays/objects).
+ *   Prefer plain arrays, or store the list in `$state.raw(...)` and update it by reassigning.
+ * - Let Svelte drive the action update: pass a `$derived({ set_items, items })` object to `use:lazy_load={...}`.
+ *   Update the list by reassigning the `items` source (don’t mutate `lazy_load_props.items`).
+ * - `update()` uses an items-length heuristic to decide append vs reset. If you are replacing the dataset (not appending),
+ *   clear first (`items = []`) then set the new items.
+ *
+ * Example (recommended pattern):
+ * ```svelte
+ * <script>
+ * import {tick} from 'svelte'
+ * import lazy_load from 'components/lazy_load'
+ *
+ * let visible = $state([])
+ * let items = $state.raw(all_items)
+ *
+ * const lazy_load_props = $derived({
+ *     set_items: v => (visible = v),
+ *     items,
+ * })
+ *
+ * function set_list(next) {
+ *     items = next
+ * }
+ *
+ * async function replace_list(next) {
+ *     items = []
+ *     await tick()
+ *     items = next
+ * }
+ * </script>
+ *
+ * <ul use:lazy_load={lazy_load_props}>
+ * {#each visible as item (item.id)}
+ * <li>{item.name}</li>
+ * {/each}
+ * </ul>
+ * ```
+ */
+
+/**
  * @template T
  * @param {HTMLElement} el
  * @param {LazyLoadProps<T>} props

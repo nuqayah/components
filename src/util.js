@@ -236,6 +236,7 @@ export function init_useragent_info() {
             navigator.maxTouchPoints > 0 ||
             navigator.msMaxTouchPoints > 0,
         no_keyboard: matchMedia('(any-pointer: coarse) and (not (any-pointer: fine))').matches,
+        is_desktop: matchMedia('(hover: hover) and (pointer: fine)').matches,
     }
     if (window._useragent.safari) doc_classes.add('safari')
 
@@ -243,7 +244,7 @@ export function init_useragent_info() {
 
     if (UA.includes('Firefox')) doc_classes.add('firefox')
 
-    if (/Windows NT|Intel Mac OS X/.test(UA)) doc_classes.add('non-mobile')
+    if (window._useragent.is_desktop || /Windows NT|Intel Mac OS X/.test(UA)) doc_classes.add('non-mobile')
     else if (/Android.*Chrome\//.test(UA)) doc_classes.add('chrome-android')
 }
 

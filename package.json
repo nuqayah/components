@@ -17,7 +17,8 @@
         },
         "./*.svelte": {
             "types": "./types/*.svelte.d.ts",
-            "svelte": "./src/*.svelte"
+            "svelte": "./src/*.svelte",
+            "default": "./src/*.svelte"
         },
         "./*": {
             "types": "./types/*.d.ts",

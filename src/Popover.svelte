@@ -1,19 +1,22 @@
 {@render button?.({ show, })}
 
 {#if shown}
-    <div class="absolute z-10" transition:fly|local={{duration: 150, y: 10}} bind:this={wrapper}>
+    <div
+        class={append_to_body ? 'fixed z-10' : 'absolute z-10'}
+        transition:fly|local={{duration: 150, y: 10}}
+        bind:this={wrapper}
+    >
         {@render children?.()}
     </div>
 {/if}
 
-<svelte:window onresize={position_cont} />
 <!-- iOS rarely fires window.mouseup, so we need to use document -->
 <svelte:document onmouseup={e => setTimeout(() => hide_cont(e), 5)} />
 
 <script>
+import {autoUpdate, computePosition, flip, offset, shift} from '@floating-ui/dom'
 import {onDestroy, tick} from 'svelte'
 import {fly} from 'svelte/transition'
-import {computePosition, offset, flip, shift} from '@floating-ui/dom'
 
 /**
  * @typedef {Object} PopoverProps
@@ -35,33 +38,41 @@ let {
 
 let wrapper = $state()
 let show_el = null
+let cleanup_position = null
+
+function close() {
+    shown = false
+    cleanup_position?.()
+    cleanup_position = null
+}
 
 async function position_cont() {
-    if (shown && wrapper) {
-        const reference = wrapper.previousElementSibling
-        const {x, y} = await computePosition(reference, wrapper, {
-            placement: 'bottom',
-            middleware: [offset(10), flip(), shift()],
-        })
+    if (!shown || !wrapper) return
 
-        Object.assign(wrapper.style, {
-            left: `${x}px`,
-            top: `${y}px`,
-        })
-    }
+    const {x, y} = await computePosition(show_el, wrapper, {
+        placement: 'bottom',
+        strategy: append_to_body ? 'fixed' : 'absolute',
+        middleware: [offset(10), flip(), shift()],
+    })
+
+    Object.assign(wrapper.style, {
+        left: `${x}px`,
+        top: `${y}px`,
+    })
 }
+
 async function show(e) {
-    show_el = e.target
+    show_el = e.currentTarget
     // For mobile, as this runs first, hide_cont will hide
     await new Promise(r => setTimeout(r, 50))
     if (shown) {
-        if (!e.screenX) shown = false // Only hide if kbd click; hide_cont takes care of mouse click.
+        if (!e.screenX) close() // Only hide if kbd click; hide_cont takes care of mouse click.
         return
     }
     shown = true
     await tick()
-    position_cont()
     if (append_to_body) document.body.appendChild(wrapper)
+    cleanup_position = autoUpdate(show_el, wrapper, position_cont)
 }
 function hide_cont(e) {
     if (!e.screenX)
@@ -72,10 +83,19 @@ function hide_cont(e) {
     if (shown && wrapper && (!wrapper.contains(el) || (hide_on_click && el.tagName !== 'INPUT')))
         // Delay so that show runs first. Note: mouseup and click run in
         // opposite order on mobile devices, so might not be needed by mobile
-        setTimeout(() => (shown = false), e.target === show_el ? 200 : 80)
+        setTimeout(close, show_el?.contains(el) ? 200 : 80)
 }
 
 onDestroy(() => {
+    cleanup_position?.()
+    // eslint-disable-next-line svelte/no-dom-manipulating
     if (append_to_body) wrapper?.remove()
+})
+
+$effect(() => {
+    if (!shown) {
+        cleanup_position?.()
+        cleanup_position = null
+    }
 })
 </script>

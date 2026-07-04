@@ -21,7 +21,7 @@
 />
 
 <script>
-import {ar_nums, en_nums, cn} from './util.js'
+import {fmt_num, en_nums, cn} from './util.js'
 import {clamp} from 'es-toolkit'
 
 let {
@@ -45,7 +45,7 @@ let {
 } = $props()
 
 $effect(() => {
-    display_value = ar_nums(value)
+    display_value = fmt_num(value)
 })
 
 function handle_keydown(e) {
@@ -89,7 +89,7 @@ function handle_wheel(e) {
 
 function handle_change(e) {
     const raw_input = e.currentTarget.value.trim()
-    display_value = ar_nums(raw_input)
+    display_value = fmt_num(raw_input)
 
     if (!raw_input) {
         onpreinput(default_value)

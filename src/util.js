@@ -263,12 +263,10 @@ export const unescape_str = s =>
 
 /** @param {string} str */
 export function add_zwj(str) {
-    return window._useragent?.safari
-        ? str.replace(
-              /([ئبت-خس-غف-نهيی])([^ء-يی\n ]*<[^>]+>[ً-ْٰۖۗۚۛۜ]*)(?=[آ-يی])/g,
-              '$1&zwj;$2&zwj;',
-          )
-        : str
+    return str.replace(
+        /([ئبت-خس-غف-نهيی])([^ء-يی\n ]*<[^>]+>[ً-ْٰۖۗۚۛۜ]*)(?=[آ-يی])/g,
+        '$1&zwj;$2&zwj;',
+    )
 }
 
 export const multi_match_map = {

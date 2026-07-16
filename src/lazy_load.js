@@ -14,13 +14,11 @@ import {debounce} from './util.js'
  *   Prefer plain arrays, or store the list in `$state.raw(...)` and update it by reassigning.
  * - Let Svelte drive the action update: pass a `$derived({ set_items, items })` object to `use:lazy_load={...}`.
  *   Update the list by reassigning the `items` source (don’t mutate `lazy_load_props.items`).
- * - `update()` uses an items-length heuristic to decide append vs reset. If you are replacing the dataset (not appending),
- *   clear first (`items = []`) then set the new items.
+ * - `update()` preserves visible items when the previous list is a prefix of the new list. Other updates reset the list.
  *
  * Example (recommended pattern):
  * ```svelte
  * <script>
- * import {tick} from 'svelte'
  * import lazy_load from 'components/lazy_load'
  *
  * let visible = $state([])
@@ -32,12 +30,6 @@ import {debounce} from './util.js'
  * })
  *
  * function set_list(next) {
- *     items = next
- * }
- *
- * async function replace_list(next) {
- *     items = []
- *     await tick()
  *     items = next
  * }
  * </script>
@@ -59,7 +51,6 @@ export default function lazy_load(el, props) {
     let OFFSET = 200
     let PER_PAGE = 25
     let visible = []
-    let prev_items_length = 0
 
     function add_results() {
         if (
@@ -85,15 +76,14 @@ export default function lazy_load(el, props) {
     }
 
     function update(props_updated) {
-        const old_length = prev_items_length
+        const items_appended =
+            props_updated.items.length > props.items.length &&
+            props.items.every((item, index) => item === props_updated.items[index])
         props = props_updated
-        prev_items_length = props.items.length
 
-        // If items were appended (length grew and visible already has items), just add more
-        if (old_length > 0 && props.items.length > old_length && visible.length > 0) {
+        if (items_appended && visible.length > 0) {
             add_results()
         } else {
-            // Fresh data, reset everything
             pad_results()
         }
     }

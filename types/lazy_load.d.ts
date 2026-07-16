@@ -10,13 +10,11 @@
  *   Prefer plain arrays, or store the list in `$state.raw(...)` and update it by reassigning.
  * - Let Svelte drive the action update: pass a `$derived({ set_items, items })` object to `use:lazy_load={...}`.
  *   Update the list by reassigning the `items` source (don’t mutate `lazy_load_props.items`).
- * - `update()` uses an items-length heuristic to decide append vs reset. If you are replacing the dataset (not appending),
- *   clear first (`items = []`) then set the new items.
+ * - `update()` preserves visible items when the previous list is a prefix of the new list. Other updates reset the list.
  *
  * Example (recommended pattern):
  * ```svelte
  * <script>
- * import {tick} from 'svelte'
  * import lazy_load from 'components/lazy_load'
  *
  * let visible = $state([])
@@ -28,12 +26,6 @@
  * })
  *
  * function set_list(next) {
- *     items = next
- * }
- *
- * async function replace_list(next) {
- *     items = []
- *     await tick()
  *     items = next
  * }
  * </script>
